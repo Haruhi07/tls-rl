@@ -81,7 +81,8 @@ def extract_dates(annotated_text):
             continue
         value = extract_time_tag_value(time_tag)
         if value != None:
-            time_values.append(str(value))
+            v = str(value).split(' ')[0]
+            time_values.append(v)
 
     return time_values
 

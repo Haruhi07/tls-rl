@@ -33,6 +33,7 @@ def calc_sim(X, metric='euclidean'):
 
 
 def str2datetime(s):
+    t = None
     formats = ['%Y-%m-%d', '%Y-%m', '%Y']
     for time_format in formats:
         try:

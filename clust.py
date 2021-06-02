@@ -37,7 +37,7 @@ def str2datetime(s):
     formats = ['%Y-%m-%d', '%Y-%m', '%Y']
     for time_format in formats:
         try:
-            t = datetime.datetime.strptime(date, time_format)
+            t = datetime.datetime.strptime(s, time_format)
         except:
             pass
     return t
@@ -82,10 +82,11 @@ def main():
             cluster = clusters[c]
             date_count = collections.defaultdict(int)
             max_count = 0
-            max_date = str2datetime(cluster.articles[0].dct)
+            max_date = None
             for article in cluster.articles:
                 for date in article.dates:
                     t = str2datetime(date)
+                    print("t = ", str(t))
                     date_count[t] += 1
                     if date_count[t] > max_count:
                         max_count = date_count[t]

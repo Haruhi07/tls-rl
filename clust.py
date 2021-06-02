@@ -83,7 +83,7 @@ def main():
             date_count = collections.defaultdict(int)
             max_count = 0
             max_date = str2datetime(cluster.articles[0].dct)
-            for article in c.articles:
+            for article in cluster.articles:
                 for date in article.dates:
                     t = str2datetime(date)
                     date_count[t] += 1

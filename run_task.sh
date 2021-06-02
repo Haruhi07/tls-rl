@@ -7,7 +7,7 @@
 #PBS -o tls_rl_output.log
 
 # Error file
-#PBS -e tls_rl__err.log
+#PBS -e tls_rl_err.log
 
 # request resources and set limits
 #PBS -l walltime=72:00:00
@@ -21,17 +21,15 @@ source activate tls_rl
 
 # We might need to add the global paths to our code to the pythonpath. Also set the data directories globally.
 cd /home/hs20307/news-tls
-export PYTHONPATH=$PYTHONPATH:"/home/hs20307/news-tls/"
+export PYTHONPATH=$PYTHONPATH:"/home/hs20307/tls-rl/"
 
 #  run the script
-export DATASET=/work/hs20307/Dataset
-export RESULT=./result
-export TOKENIZERS_PARALLELISM=false
+export DATASET=./dataset/t1
 export PERL5LIB="/home/hs20307/perl5/lib/perl5"
 
-python -u ./experiments/evaluate.py --dataset $DATASET/t17 --method clust --output $RESULT/t17.clust.json
+python -u clust.py --dataset $DATASET
 
-# To submit: qsub run_NER_EMNLP19.sh
+# To submit: qsub run_task.sh
 # To display the queue: qstat -Q gpu (this is usually where the GPU job ends up)
 # Display server status: qstat -B <server>
 # Display job information: qstat <jobID>

@@ -15,8 +15,8 @@ class ClusteredDataset(Dataset):
             self.topics.append(topic)
             cluster_path = dataset_path / topic / "cluster.pkl"
             with open(cluster_path, "rb") as f:
-                cluster = pickle.load(f)
-            self.clusters.append(cluster)
+                cluster_list = pickle.load(f)
+            self.clusters.append(cluster_list)
             for file in os.listdir(dataset_path / topic):
                 if 'timeline' not in file:
                     continue

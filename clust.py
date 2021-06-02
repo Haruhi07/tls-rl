@@ -74,31 +74,40 @@ def main():
         n_centers = len(centers)
 
         clusters = collections.defaultdict(Cluster)
+        for i in centers:
+            clusters[i].centroid = articles[i]
         for i in range(n_articles):
             clusters[centers[labels[i]]].articles.append(articles[i])
 
         # Assigning dates to clusters
+        clusters_list = []
         for c in clusters:
             cluster = clusters[c]
             date_count = collections.defaultdict(int)
             max_count = 0
             max_date = None
             for article in cluster.articles:
-                for date in article.dates:
-                    t = str2datetime(date)
-                    print("t = ", str(t))
+                for d in article.dates:
+                    t = str2datetime(d)
                     date_count[t] += 1
                     if date_count[t] > max_count:
                         max_count = date_count[t]
                         max_date = t
+            cluster.date_count = max_count
             cluster.date = max_date
-            print(cluster.date)
+            clusters_list.append(cluster)
+
         # Ranking all clusters
+        def get_count_date(cluster):
+            return cluster.date_count
+        clusters_list = sorted(clusters_list, reverse=True, key=get_count_date)
+        for cluster in clusters_list:
+            print(cluster.articles, cluster.date, cluster.date_count)
 
         # Saving ranked clusters
         cluster_path = topic_path / "cluster.pkl"
         with open(cluster_path, "wb") as f:
-            pickle.dump(clusters, f)
+            pickle.dump(clusters_list, f)
 
 
 if __name__=="__main__":

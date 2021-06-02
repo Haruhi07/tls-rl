@@ -8,5 +8,7 @@ class Article:
 
 class Cluster:
     def __init__(self):
-        self.date = ""
+        self.date = None
+        self.date_count = 0
         self.articles = []
+        self.centroid = None

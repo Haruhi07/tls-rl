@@ -10,10 +10,12 @@ from argparse import ArgumentParser
 import numpy as np
 import torch
 from ignite.engine import Engine, Events
-from transformers import PegasusTokenizer, PegasusForConditionalGeneration, AdamW, WarmupLinearSchedule
+from transformers import PegasusTokenizer, PegasusForConditionalGeneration, AdamW, get_linear_schedule_with_warmup
 from torch.nn import CrossEntropyLoss
 import torch.nn.functional as F
 from torch.utils.data import DataLoader, RandomSampler, SequentialSampler
+from tqdm import tqdm
+from tqdm.notebook import tnrange
 
 from dataset import ClusteredDataset
 
@@ -34,11 +36,11 @@ def reset_seed(seed):
 
 # Training function and trainer
 def sl_train(device, model, tokenizer, dataset, num_workers, lr, n_epochs, seed):
-    train_sampler = RandomSampler()
+    train_sampler = RandomSampler(dataset)
     train_dl = DataLoader(dataset, sampler=train_sampler, num_workers=num_workers)
     loss = CrossEntropyLoss()
     optimizer = AdamW(model.parameters(), lr=lr)
-    scheduler = WarmupLinearSchedule(optimizer, 100, 80000)
+    scheduler = get_linear_schedule_with_warmup(optimizer, num_warmup_steps=10, num_training_steps=-1)
 
     global_step = 0
     tr_loss, logging_loss = 0.0, 0.0
@@ -49,13 +51,21 @@ def sl_train(device, model, tokenizer, dataset, num_workers, lr, n_epochs, seed)
     for _ in train_iterator:
         epoch_iterator = tqdm(train_dl, desc="Training")
         for step, batch in enumerate(epoch_iterator):
-            clusters, ref_timelines = batch
-            inputs = ' '.join([article.text for article in cluster.articles for cluster in clusters])
-            model.train()
-            batch = tokenizer(src_text, truncation=True, padding='longest', return_tensors="pt").to(self.device)
-            translated = model.generate(**batch)
-            tgt_text = tokenizer.batch_decode(translated, skip_special_tokens=True)
-            print(tgt_text)
+            clustered_articles, ref_timelines = batch
+            n_timelines = len(ref_timelines)
+            tgt_timeline = []
+            for count, article in enumerate(clustered_articles):
+                if count == n_timelines:
+                    break
+                inputs, date = article
+                print(inputs)
+                model.train()
+                batch = tokenizer(inputs, truncation=True, padding='longest', return_tensors="pt").to(device)
+                translated = model.generate(**batch)
+                summary = tokenizer.batch_decode(translated, skip_special_tokens=True)
+                tgt_timeline.append({'date': date, 'text': summary[0]})
+
+            print(tgt_timeline)
 
 
 def rl_update(engine, batch):
@@ -105,7 +115,7 @@ def main():
     model = PegasusForConditionalGeneration.from_pretrained(model_name).to(device)
 
     start_time = time.time()
-    sl_train(device, model, tokenizer, dataset, args.num_workers, args.n_epochs, args.seed)
+    sl_train(device, model, tokenizer, dataset, args.num_workers, args.lr, args.n_epochs, args.seed)
     end_time = time.time()
     print('time: ', (end_time - start_time) / 60, ' minutes', end='\n\n')
 
@@ -113,8 +123,8 @@ def main():
     model_folder = pathlib.Path(args.model_dir)
     if not model_folder.exists():
         os.mkdir(model_folder)
-    model_file = model_folder / "model_{}_data_{}_trained_after_{}_epochs.pkl".format(model_name, os.basename(args.dataset), epoch_times)
-    config_file = model_folder / "config_{}_data_{}_trained_after_{}_epochs.json".format(model_name, os.basename(args.dataset), epoch_times)
+    model_file = model_folder / "model_{}_data_{}_trained_after_{}_epochs.pkl".format(model_name, os.path.basename(args.dataset), epoch_times)
+    config_file = model_folder / "config_{}_data_{}_trained_after_{}_epochs.json".format(model_name, os.path.basename(args.dataset), epoch_times)
     torch.save(model.state_dict(), model_file)
     model.config.to_json_file(config_file)
 

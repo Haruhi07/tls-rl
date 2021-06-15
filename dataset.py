@@ -9,14 +9,19 @@ from torch.utils.data import Dataset
 class ClusteredDataset(Dataset):
     def __init__(self, dataset_path):
         self.topics = []
-        self.clusters = []
+        self.articles = []
         self.timelines = []  # element of this should also be list to solve multiple timelines
         for topic in os.listdir(dataset_path):
             self.topics.append(topic)
             cluster_path = dataset_path / topic / "cluster.pkl"
             with open(cluster_path, "rb") as f:
                 cluster_list = pickle.load(f)
-            self.clusters.append(cluster_list)
+            cluster = []
+            for c in cluster_list:
+                c_articles = c.articles
+                article = ' '.join([a.text for a in c_articles])
+                cluster.append((article, str(c.date)))
+            self.articles.append(cluster)
             for file in os.listdir(dataset_path / topic):
                 if 'timeline' not in file:
                     continue
@@ -29,4 +34,4 @@ class ClusteredDataset(Dataset):
         return len(self.topics)
 
     def __getitem__(self, idx):
-        return self.clusters[idx], self.timelines[idx]
+        return self.articles[idx], self.timelines[idx]

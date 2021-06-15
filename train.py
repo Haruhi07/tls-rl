@@ -16,6 +16,7 @@ import torch.nn.functional as F
 from torch.utils.data import DataLoader, RandomSampler, SequentialSampler
 from tqdm import tqdm
 from tqdm.notebook import tnrange
+from utils import concatenate
 
 from dataset import ClusteredDataset
 
@@ -38,7 +39,7 @@ def reset_seed(seed):
 def sl_train(device, model, tokenizer, dataset, num_workers, lr, n_epochs, seed):
     train_sampler = RandomSampler(dataset)
     train_dl = DataLoader(dataset, sampler=train_sampler, num_workers=num_workers)
-    loss = CrossEntropyLoss()
+    loss_fct = CrossEntropyLoss()
     optimizer = AdamW(model.parameters(), lr=lr)
     scheduler = get_linear_schedule_with_warmup(optimizer, num_warmup_steps=10, num_training_steps=-1)
 
@@ -53,19 +54,35 @@ def sl_train(device, model, tokenizer, dataset, num_workers, lr, n_epochs, seed)
         for step, batch in enumerate(epoch_iterator):
             clustered_articles, ref_timelines = batch
             n_timelines = len(ref_timelines)
+            print("n_timelines: ", n_timelines)
             tgt_timeline = []
-            for count, article in enumerate(clustered_articles):
-                if count == n_timelines:
-                    break
+            used_date = []
+            for article in clustered_articles:
                 inputs, date = article
-                print(inputs)
+                print(date)
                 model.train()
                 batch = tokenizer(inputs, truncation=True, padding='longest', return_tensors="pt").to(device)
                 translated = model.generate(**batch)
-                summary = tokenizer.batch_decode(translated, skip_special_tokens=True)
-                tgt_timeline.append({'date': date, 'text': summary[0]})
+                summary = tokenizer.batch_decode(translated, skip_special_tokens=True)#
+                date = date[0].split()[0]
+                if date not in used_date:
+                    tgt_timeline.append({'date': date, 'text': summary[0]})
+                if len(tgt_timeline) == n_timelines:
+                    break
 
             print(tgt_timeline)
+            cct_tgt_timeline = concatenate(tgt_timeline)
+            cct_ref_timeline = concatenate(ref_timelines)
+            loss = loss_fct(cct_ref_timeline, cct_tgt_timeline)
+            loss.backward()
+            # help to prevent gradient explosion or vanish
+            # torch.nn.utils.clip_grad_norm_(model.parameters(), args.max_grad_norm)
+            tr_loss += loss.item()
+            optimizer.step()
+            scheduler.step()
+            logging_loss = tr_loss
+            print("loss: ", loss.item(), end='\n\n')
+
 
 
 def rl_update(engine, batch):
@@ -123,8 +140,8 @@ def main():
     model_folder = pathlib.Path(args.model_dir)
     if not model_folder.exists():
         os.mkdir(model_folder)
-    model_file = model_folder / "model_{}_data_{}_trained_after_{}_epochs.pkl".format(model_name, os.path.basename(args.dataset), epoch_times)
-    config_file = model_folder / "config_{}_data_{}_trained_after_{}_epochs.json".format(model_name, os.path.basename(args.dataset), epoch_times)
+    model_file = model_folder / "model_{}_data_{}_trained_after_{}_epochs.pkl".format(model_name, os.path.basename(args.dataset), arg.n_epochs)
+    config_file = model_folder / "config_{}_data_{}_trained_after_{}_epochs.json".format(model_name, os.path.basename(args.dataset), arg.n_epochs)
     torch.save(model.state_dict(), model_file)
     model.config.to_json_file(config_file)
 

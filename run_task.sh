@@ -27,7 +27,7 @@ export PYTHONPATH=$PYTHONPATH:"/home/hs20307/tls-rl/"
 export DATASET=./dataset/t1
 export PERL5LIB="/home/hs20307/perl5/lib/perl5"
 
-python -u clust.py --dataset $DATASET
+python -u train.py --dataset $DATASET
 
 # To submit: qsub run_task.sh
 # To display the queue: qstat -Q gpu (this is usually where the GPU job ends up)

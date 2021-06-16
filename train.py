@@ -63,17 +63,20 @@ def sl_train(device, model, tokenizer, dataset, num_workers, lr, n_epochs, seed)
                 model.train()
                 batch = tokenizer(inputs, truncation=True, padding='longest', return_tensors="pt").to(device)
                 translated = model.generate(**batch)
-                summary = tokenizer.batch_decode(translated, skip_special_tokens=True)#
+                summary = tokenizer.batch_decode(translated, skip_special_tokens=True)[0]
+                print("summary: ", summary)
                 date = date[0].split()[0]
                 if date not in used_date:
-                    tgt_timeline.append({'date': date, 'text': summary[0]})
+                    tgt_timeline.append({'date': date, 'text': summary})
                 if len(tgt_timeline) == n_timelines:
                     break
 
             print(tgt_timeline)
             cct_tgt_timeline = concatenate(tgt_timeline)
             cct_ref_timeline = concatenate(ref_timelines)
-            loss = loss_fct(cct_ref_timeline, cct_tgt_timeline)
+            tgt = tokenizer(cct_tgt_timeline, truncation=True, padding='longest', return_tensors="pt").to(device)
+            ref = tokenizer(cct_ref_timeline, truncation=True, padding='longest', return_tensors="pt").to(device)
+            loss = loss_fct(tgt, ref)
             loss.backward()
             # help to prevent gradient explosion or vanish
             # torch.nn.utils.clip_grad_norm_(model.parameters(), args.max_grad_norm)

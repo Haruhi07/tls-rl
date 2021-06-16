@@ -1,9 +1,8 @@
 def concatenate(timeline):
-    if len(timeline) != 0:
-        cct_timeline = timeline[0]
-    else:
-        return ''
+    cct_timeline = ''
+
     for summary in timeline:
-        cct_timeline = ' '.join(cct_timeline, summary['text'])
+        cct_timeline = cct_timeline + ' ' + summary['text'][0]
+
     return cct_timeline
 

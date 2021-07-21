@@ -1,5 +1,17 @@
-Epoch:   0%|          | 0/1 [00:00<?, ?it/s]
-n_timelines:  48
-('2010-06-01 00:00:00',)
-summary:  – Interior Secretary Ken Salazar is threatening to "keep our boot on BP's neck" until the Gulf oil spill is fixed, the BBC reports. "We are going to stay on this and stay on BP until this gets done and it gets done the right way," said Homeland Security Secretary Janet Napolitano during a visit to the Gulf. Meanwhile, two Greenpeace protesters who unfurled a flag showing the company's logo smudged in oil and the words "British Polluters" came down unassisted at BP's London headquarters. Six others held banners as they greeted staff at a side entrance. Police were called to the building, but no arrests were made. "This is the start of a sustained campaign and not the last they'll hear from us," said a Greenpeace spokesman. "We wanted to draw attention to the discrepancy between BP's bright green logo and the reality of operations in places like the Gulf of Mexico."
-[{'date': '2010-06-01', 'text': '– Interior Secretary Ken Salazar is threatening to "keep our boot on BP\'s neck" until the Gulf oil spill is fixed, the BBC reports. "We are going to stay on this and stay on BP until this gets done and it gets done the right way," said Homeland Security Secretary Janet Napolitano during a visit to the Gulf. Meanwhile, two Greenpeace protesters who unfurled a flag showing the company\'s logo smudged in oil and the words "British Polluters" came down unassisted at BP\'s London headquarters. Six others held banners as they greeted staff at a side entrance. Police were called to the building, but no arrests were made. "This is the start of a sustained campaign and not the last they\'ll hear from us," said a Greenpeace spokesman. "We wanted to draw attention to the discrepancy between BP\'s bright green logo and the reality of operations in places like the Gulf of Mexico."'}]
+tensor([[   0, 1310,  131,  116,    1]])
+tensor([[   0, 1310,  131,  116]])
+tensor([[[ 0.0000,  3.7384,  0.6873,  ..., -3.2820, -2.0062,  1.4238],
+         [ 0.0000,  2.5424,  0.2606,  ..., -3.1369, -0.7040, -1.5695],
+         [ 0.0000,  4.6257, -0.2300,  ..., -1.9319, -0.6327, -0.6271],
+         [ 0.0000,  2.0284,  0.7656,  ..., -2.3375, -0.7681, -0.1624]]],
+       grad_fn=<AddBackward0>)
+tensor([[[6.6129e-07, 2.7796e-05, 1.3149e-06,  ..., 2.4834e-08,
+          8.8942e-08, 2.7462e-06],
+         [6.3420e-07, 8.0605e-06, 8.2301e-07,  ..., 2.7535e-08,
+          3.1367e-07, 1.3201e-07],
+         [1.2019e-06, 1.2268e-04, 9.5497e-07,  ..., 1.7412e-07,
+          6.3840e-07, 6.4199e-07],
+         [2.3106e-07, 1.7565e-06, 4.9684e-07,  ..., 2.2313e-08,
+          1.0719e-07, 1.9643e-07]]])
+[[1310  131  116 1368]]
+["California's largest"]

@@ -1,6 +1,24 @@
 Traceback (most recent call last):
   File "/home/hs20307/tls-rl/rl.py", line 90, in <module>
     main()
-  File "/home/hs20307/tls-rl/rl.py", line 53, in main
-    critic = Critic(actor.state_dim, device, args)
-TypeError: __init__() missing 1 required positional argument: 'args'
+  File "/home/hs20307/tls-rl/rl.py", line 65, in main
+    action = actor.choose_action(state, device) # action should be the index of words, which means selecting this word
+  File "/home/hs20307/tls-rl/Actor.py", line 31, in choose_action
+    lm_logits = self.model.forward(input_ids=encoder_input_ids, decoder_input_ids=decoder_input_ids).logits
+  File "/home/hs20307/.conda/envs/tls_rl/lib/python3.9/site-packages/transformers/models/pegasus/modeling_pegasus.py", line 1269, in forward
+    outputs = self.model(
+  File "/home/hs20307/.conda/envs/tls_rl/lib/python3.9/site-packages/torch/nn/modules/module.py", line 889, in _call_impl
+    result = self.forward(*input, **kwargs)
+  File "/home/hs20307/.conda/envs/tls_rl/lib/python3.9/site-packages/transformers/models/pegasus/modeling_pegasus.py", line 1135, in forward
+    encoder_outputs = self.encoder(
+  File "/home/hs20307/.conda/envs/tls_rl/lib/python3.9/site-packages/torch/nn/modules/module.py", line 889, in _call_impl
+    result = self.forward(*input, **kwargs)
+  File "/home/hs20307/.conda/envs/tls_rl/lib/python3.9/site-packages/transformers/models/pegasus/modeling_pegasus.py", line 721, in forward
+    inputs_embeds = self.embed_tokens(input_ids) * self.embed_scale
+  File "/home/hs20307/.conda/envs/tls_rl/lib/python3.9/site-packages/torch/nn/modules/module.py", line 889, in _call_impl
+    result = self.forward(*input, **kwargs)
+  File "/home/hs20307/.conda/envs/tls_rl/lib/python3.9/site-packages/torch/nn/modules/sparse.py", line 156, in forward
+    return F.embedding(
+  File "/home/hs20307/.conda/envs/tls_rl/lib/python3.9/site-packages/torch/nn/functional.py", line 1916, in embedding
+    return torch.embedding(weight, input, padding_idx, scale_grad_by_freq, sparse)
+RuntimeError: Input, output and indices must be on the current device

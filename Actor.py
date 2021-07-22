@@ -32,7 +32,7 @@ class Actor():
         print(lm_logits)
         with torch.no_grad():
             prob = F.softmax(lm_logits, dim=2).detach().cpu().numpy()
-        prob.reshape((1,-1))
+        prob = prob.reshape((1,-1))
         print(prob.shape)
         action = np.random.choice(range(prob.shape[2]), p=prob)
         return action

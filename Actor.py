@@ -26,7 +26,7 @@ class Actor():
         decoder_input = timeline["text"]
 
         encoder_input_ids = self.tokenizer(encoder_input, padding=True, truncation=True, return_tensors="pt").input_ids.to(device)
-        decoder_input_ids = format_decoder_input(self.tokenizer(decoder_input, return_tensors="pt").input_ids.to(device))
+        decoder_input_ids = format_decoder_input(self.tokenizer(decoder_input, return_tensors="pt").input_ids).to(device)
         
         lm_logits = self.model.forward(input_ids=encoder_input_ids, decoder_input_ids=decoder_input_ids).logits
         print(lm_logits)

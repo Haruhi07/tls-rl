@@ -31,7 +31,7 @@ class Actor():
         lm_logits = self.model.forward(input_ids=encoder_input_ids, decoder_input_ids=decoder_input_ids).logits
         print(lm_logits)
         with torch.no_grad():
-            prob = F.softmax(lm_logits, dim=2).numpy()
+            prob = F.softmax(lm_logits, dim=2).detach().cpu().numpy()
         print(prob.shape)
         action = np.random.choice(range(prob.shape[0]), p=prob_weights)
         return action

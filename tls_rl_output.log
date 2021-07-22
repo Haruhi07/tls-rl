@@ -1,0 +1,7 @@
+ 
+ University of Bristol ACRC HPC Bluepebble Service
+ -------------------------------------------------
+ Job tls_rl, jobid 3400576.bp1, username hs20307 - started execution at 01:36:01 Thu 22/07/21 on node bp1-gpu00004.data.bp.acrc.priv
+ 
+state_dim = 96103
+actor initialized...

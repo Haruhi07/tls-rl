@@ -44,9 +44,9 @@ def main():
     # Real Actor network
     model_name = 'google/pegasus-multi_news'
     tokenizer = PegasusTokenizer.from_pretrained(model_name)
-    model = PegasusForConditionalGeneration.from_pretrained(model_name)
-    optimizer = torch.optim.Adam(model.parameters(), lr=args.lr)
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
+    model = PegasusForConditionalGeneration.from_pretrained(model_name).to(device)
+    optimizer = torch.optim.Adam(model.parameters(), lr=args.lr)
 
     actor = Actor(tokenizer, model, optimizer, device)
     print("actor initialized...")

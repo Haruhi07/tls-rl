@@ -3,8 +3,8 @@ Traceback (most recent call last):
     main()
   File "/home/hs20307/tls-rl/rl.py", line 68, in main
     td_error = critic.train_Q_network(state, reward, next_state)
-  File "/home/hs20307/tls-rl/Critic.py", line 38, in train_Q_network
-    s = self.tokenizer(state, return_tensors="pt").input_ids
+  File "/home/hs20307/tls-rl/Critic.py", line 40, in train_Q_network
+    s = self.tokenizer(state, return_tensors="pt").input_ids.to(self.device)
   File "/home/hs20307/.conda/envs/tls_rl/lib/python3.9/site-packages/transformers/tokenization_utils_base.py", line 2262, in __call__
     raise ValueError(
 ValueError: text input must of type `str` (single example), `List[str]` (batch or single pretokenized example) or `List[List[str]]` (batch of pretokenized examples).

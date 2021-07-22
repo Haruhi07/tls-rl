@@ -1,7 +1,7 @@
 import torch
 import torch.nn.functional as F
 import numpy as np
-from utils import nfirst
+from utils import nfirst, format_decoder_input
 
 
 class Actor():
@@ -13,8 +13,8 @@ class Actor():
         self.optimizer = optimizer
         self.nfirst = nfirst
 
-        self.state_dim = len(self.vocab)
-        self.action_dim = len(self.vocab)
+        self.state_dim = self.tokenizer.vocab_size
+        self.action_dim = self.tokenizer.vocab_size
         print('state_dim = {}'.format(self.state_dim))
 
         self.time_step = 0
@@ -23,7 +23,8 @@ class Actor():
         cluster, timeline = observation
         encoder_input = [nfirst(a.text, self.nfirst) for a in cluster.articles]
         print(encoder_input)
-        decoder_input = timeline["text"]
+        decoder_input = format_decoder_input(timeline["text"])
+        print(decoder_input)
 
         encoder_input_ids = self.tokenizer(encoder_input, padding=True, truncation=True, return_tensors="pt").input_ids.to(device)
         decoder_input_ids = self.tokenizer(decoder_input, return_tensors="pt").input_ids.to(device)

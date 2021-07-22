@@ -20,10 +20,11 @@ class Q_network(nn.Module):
             nn.init.constant_(m.bias.data, 0.01)
 
 class Critic():
-    def __init__(self, state_dim, tokenizer, device, args):
-        self.state_dim =state_dim
-
+    def __init__(self, tokenizer, device, args):
         self.tokenizer = tokenizer
+        self.state_dim = self.tokenizer.vocab_size()
+
+
         self.device = device
         self.network = Q_network(state_dim=self.state_dim).to(self.device)
         self.optimizer = torch.optim.Adam(self.network.parameters(), lr=args.lr)

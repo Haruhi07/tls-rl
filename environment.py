@@ -2,9 +2,9 @@ import env_utils
 
 
 class Environment:
-    def __init__(self, vocab, clusters, keywords, t_length):
+    def __init__(self, tokenizer, clusters, keywords, t_length):
         print(keywords)
-        self.vocab = vocab
+        self.tokenizer = tokenizer
         self.clusters = clusters
         self.keywords = set(keywords)
         self.t_length = t_length
@@ -28,7 +28,7 @@ class Environment:
         
     
     def step(self, action):
-        new_word = self.vocab[action]
+        new_word = self.tokenizer.decode([action], skip_special_tokens=True, clean_up_tokenization_spaces=False)
         done = False
         if action == 1:
             self.date_pt += 1

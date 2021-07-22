@@ -11,7 +11,7 @@ import json
 import pickle
 
 
-def setup_env(vocab, args):
+def setup_env(tokenizer, args):
     dataset_path = pathlib.Path(args.dataset)
     keywords = []
     length = 0
@@ -25,7 +25,7 @@ def setup_env(vocab, args):
                 timelines = json.load(f)
             length = len(timelines)
             print("length = ", length)
-    env = Environment(vocab, clusters, keywords, length)
+    env = Environment(tokenizer, clusters, keywords, length)
     return env
 
 def main():
@@ -47,13 +47,12 @@ def main():
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
     model = PegasusForConditionalGeneration.from_pretrained(model_name).to(device)
     optimizer = torch.optim.Adam(model.parameters(), lr=args.lr)
-    vocab = tokenizer.get_vocab()
 
     actor = Actor(tokenizer, model, optimizer, device)
     print("actor initialized...")
-    critic = Critic(actor.state_dim, tokenizer, device, args)
+    critic = Critic(tokenizer, device, args)
     print("critic initialized...")
-    env = setup_env(vocab, args)
+    env = setup_env(tokenizer, args)
     print("env initialized...")
 
     for episode in range(args.episode):

@@ -1,9 +1,8 @@
 Traceback (most recent call last):
   File "/home/hs20307/tls-rl/rl.py", line 90, in <module>
     main()
-  File "/home/hs20307/tls-rl/rl.py", line 65, in main
-    action = actor.choose_action(state, device) # action should be the index of words, which means selecting this word
-  File "/home/hs20307/tls-rl/Actor.py", line 37, in choose_action
-    action = np.random.choice(range(prob.shape[1]), p=prob)
-  File "mtrand.pyx", line 924, in numpy.random.mtrand.RandomState.choice
-ValueError: 'p' must be 1-dimensional
+  File "/home/hs20307/tls-rl/rl.py", line 67, in main
+    next_state, reward, done = env.step(action)
+  File "/home/hs20307/tls-rl/environment.py", line 30, in step
+    new_word = self.vocab[action]
+AttributeError: 'Environment' object has no attribute 'vocab'

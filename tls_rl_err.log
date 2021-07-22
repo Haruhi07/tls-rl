@@ -3,6 +3,6 @@ Traceback (most recent call last):
     main()
   File "/home/hs20307/tls-rl/rl.py", line 65, in main
     action = actor.choose_action(state, device) # action should be the index of words, which means selecting this word
-  File "/home/hs20307/tls-rl/Actor.py", line 34, in choose_action
-    prob = F.softmax(lm_logits, dim=2).numpy()
-TypeError: can't convert cuda:0 device type tensor to numpy. Use Tensor.cpu() to copy the tensor to host memory first.
+  File "/home/hs20307/tls-rl/Actor.py", line 36, in choose_action
+    action = np.random.choice(range(prob.shape[0]), p=prob_weights)
+NameError: name 'prob_weights' is not defined

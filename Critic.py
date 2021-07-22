@@ -35,8 +35,10 @@ class Critic():
         self.gamma = args.gamma
 
     def train_Q_network(self, state, reward, next_state):
-        s = self.tokenizer(state, return_tensors="pt").input_ids
-        s_ = self.tokenizer(next_state, return_tensors="pt").input_ids
+        print(state)
+        print(next_state)
+        s = self.tokenizer(state, return_tensors="pt").input_ids.to(self.device)
+        s_ = self.tokenizer(next_state, return_tensors="pt").input_ids.to(self.device)
 
         # Forward Propagation
         v = self.network.forward(s)

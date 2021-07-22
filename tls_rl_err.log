@@ -5,5 +5,4 @@ Traceback (most recent call last):
     action = actor.choose_action(state, device) # action should be the index of words, which means selecting this word
   File "/home/hs20307/tls-rl/Actor.py", line 37, in choose_action
     action = np.random.choice(range(prob.shape[2]), p=prob)
-  File "mtrand.pyx", line 924, in numpy.random.mtrand.RandomState.choice
-ValueError: 'p' must be 1-dimensional
+IndexError: tuple index out of range

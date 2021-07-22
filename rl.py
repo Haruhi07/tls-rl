@@ -1,19 +1,23 @@
 from argparse import ArgumentParser
 from env_utils import extract_keywords
 from environment import Environment
-from transformers import PegasusTokenizer, PegasusModel
+from transformers import PegasusTokenizer, PegasusForConditionalGeneration
 from Actor import Actor
 from Critic import Critic
 import os
 import pathlib
 import torch
 import json
+import pickle
 
 
 def setup_env(args):
     dataset_path = pathlib.Path(args.dataset)
     keywords = []
     length = 0
+    with open(dataset_path / "cluster.pkl", 'rb') as f:
+        clusters = pickle.load(f)
+
     for file in os.listdir(dataset_path):
         if "timeline" in file:
             keywords.extend(extract_keywords(dataset_path / file))
@@ -21,7 +25,7 @@ def setup_env(args):
                 timelines = json.load(f)
             length = len(timelines)
             print("length = ", length)
-    env = Environment(keywords, length)
+    env = Environment(clusters, keywords, length)
     return env
 
 def main():
@@ -40,7 +44,7 @@ def main():
     # Real Actor network
     model_name = 'google/pegasus-multi_news'
     tokenizer = PegasusTokenizer.from_pretrained(model_name)
-    model = PegasusModel.from_pretrained(model_name)
+    model = PegasusForConditionalGeneration.from_pretrained(model_name)
     optimizer = torch.optim.Adam(model.parameters(), lr=args.lr)
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
@@ -54,15 +58,16 @@ def main():
     for episode in range(args.episode):
         # initialize task
         env.reset()
+        state = env.observation()
         #Train
         for step in range(args.max_length):
-            observation = env.observation()
-            print("observation = ", observation)
-            action = actor.choose_action(observation, device) # action should be the index of words, which means selecting this word
+            print("observation = ", state)
+            action = actor.choose_action(state, device) # action should be the index of words, which means selecting this word
+            print("action = ", action)
             next_state, reward, done = env.step(action)
-            td_error = critic.train_Q_network(observation, reward, next_state)
-            actor.learn(observation, action, td_error)
-            observation = next_state
+            td_error = critic.train_Q_network(state, reward, next_state)
+            actor.learn(state, action, td_error)
+            state = next_state
             if done:
                 break
 

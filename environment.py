@@ -2,15 +2,16 @@ import env_utils
 
 
 class Environment:
-    def __init__(self, keywords, t_length):
+    def __init__(self, clusters, keywords, t_length):
         print(keywords)
+        self.clusters = clusters
         self.keywords = set(keywords)
         self.t_length = t_length
         self.timelines = [{"date": None, "text": ""} for i in range(t_length)]
         self.date_pt = 0
 
     def observation(self):
-        return self.date_pt, self.timelines
+        return self.clusters[self.date_pt], self.timelines[self.date_pt]
 
     def count_keyword(self, text):
         word_list = text.lower().split()
@@ -28,12 +29,12 @@ class Environment:
     def step(self, action):
         new_word = self.vocab[action]
         done = False
-        if new_word == "<eos>":
+        if action == 1:
             self.date_pt += 1
-            if date == len(self.timelines):
+            if self.date_pt >= len(self.timelines):
                 done = True
         else:
-            self.timelines[self.date_pt]["text"] += new_word
+            self.timelines[self.date_pt]["text"] += " " + new_word
         reward = self.calc_reward()
         state = self.timelines
         return state, reward, done

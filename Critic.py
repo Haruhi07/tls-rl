@@ -20,9 +20,10 @@ class Q_network(nn.Module):
             nn.init.constant_(m.bias.data, 0.01)
 
 class Critic():
-    def __init__(self, state_dim, device, args):
+    def __init__(self, state_dim, tokenizer, device, args):
         self.state_dim =state_dim
 
+        self.tokenizer = tokenizer
         self.device = device
         self.network = Q_network(state_dim=self.state_dim).to(self.device)
         self.optimizer = torch.optim.Adam(self.network.parameters(), lr=args.lr)
@@ -33,8 +34,8 @@ class Critic():
         self.gamma = args.gamma
 
     def train_Q_network(self, state, reward, next_state):
-        s = torch.FloatTensor(state).to(self.device)
-        s_ = torch.FloatTensor(next_state).to(self.device)
+        s = self.tokenizer(state, return_tensors="pt").input_ids
+        s_ = self.tokenizer(next_state, return_tensors="pt").input_ids
 
         # Forward Propagation
         v = self.network.forward(s)
@@ -47,5 +48,5 @@ class Critic():
         self.optimizer.step()
 
         with torch.no_grad():
-            td_error = reward + GAMMA * v_ - v
+            td_error = reward + self.gamma * v_ - v
         return td_error

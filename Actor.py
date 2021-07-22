@@ -1,15 +1,17 @@
 import torch
 import torch.nn.functional as F
 import numpy as np
+from utils import nfirst
 
 
 class Actor():
-    def __init__(self, tokenizer, model, optimizer, device):
+    def __init__(self, tokenizer, model, optimizer, device, nfirst=5):
         self.vocab = tokenizer.get_vocab()
         self.device = device
         self.model = model.to(self.device)
         self.tokenizer = tokenizer
         self.optimizer = optimizer
+        self.nfirst = nfirst
 
         self.state_dim = len(self.vocab)
         self.action_dim = len(self.vocab)
@@ -18,16 +20,20 @@ class Actor():
         self.time_step = 0
 
     def choose_action(self, observation, device):
-        cur_date, timelines = observation
-        encoder_input = 
-        decoder_input = timelines[cur_date]
-        state = self.tokenizer(observation).input_ids
-        state = torch.FloatTensor(state).to(device)
-        # observation should be a contextual vector(?)
-        network_output = self.model.forward(observation)
+        cluster, timeline = observation
+        encoder_input = [nfirst(a.text, self.nfirst) for a in cluster.articles]
+        print(encoder_input)
+        decoder_input = timeline["text"]
+
+        encoder_input_ids = self.tokenizer(encoder_input, padding=True, truncation=True, return_tensors="pt").input_ids
+        decoder_input_ids = self.tokenizer(decoder_input, return_tensors="pt").input_ids
+        
+        lm_logits = self.model.forward(input_ids=encoder_input_ids, decoder_input_ids=decoder_input_ids).logits
+        print(lm_logits)
         with torch.no_grad():
-            prob_weights = F.softmax(network_output, dim=0).numpy()
-        action = np.random.choice(range(prob_weights.shape[0]), p=prob_weights)
+            prob = F.softmax(lm_logits, dim=2).numpy()
+        print(prob.shape)
+        action = np.random.choice(range(prob.shape[0]), p=prob_weights)
         return action
 
     def learn(self, state, action, td_error, device):

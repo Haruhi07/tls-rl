@@ -1,7 +1,23 @@
 import os
 import json
 import pickle
+import torch
 
+
+def nfirst(text, n):
+    sentences = text.split('.')
+    return '.'.join(sentences[:n])
+
+def format_decoder_input(t):
+    shape = list(t.size())
+    shape[-1] = 1
+    starts = torch.zeros(shape, dtype=torch.int)
+    t = torch.cat((starts, t), -1)
+
+    shape = list(t.size())
+    last_dim = shape[-1]
+    t = torch.split(t, [last_dim - 1, 1], -1)[0]
+    return t
 
 def datetime2str(date):
     return str(date).split()[0]

@@ -1,8 +1,6 @@
 Traceback (most recent call last):
-  File "/home/hs20307/tls-rl/rl.py", line 90, in <module>
+  File "/home/hs20307/tls-rl/rl.py", line 91, in <module>
     main()
-  File "/home/hs20307/tls-rl/rl.py", line 67, in main
-    next_state, reward, done = env.step(action)
-  File "/home/hs20307/tls-rl/environment.py", line 30, in step
-    new_word = self.vocab[action]
-AttributeError: 'Environment' object has no attribute 'vocab'
+  File "/home/hs20307/tls-rl/rl.py", line 56, in main
+    env = setup_env(vocab, args)
+TypeError: setup_env() takes 1 positional argument but 2 were given

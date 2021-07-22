@@ -24,7 +24,7 @@ def extract_keywords(timeline_path, metric = 'tfidf'):
 def concatenate(timeline):
     ret = ""
     for item in timeline:
-        ret += timeline["text"]
+        ret += item["text"]
     return ret
 
 

@@ -25,7 +25,7 @@ def setup_env(args):
                 timelines = json.load(f)
             length = len(timelines)
             print("length = ", length)
-    env = Environment(clusters, keywords, length)
+    env = Environment(vocab, clusters, keywords, length)
     return env
 
 def main():
@@ -47,12 +47,13 @@ def main():
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
     model = PegasusForConditionalGeneration.from_pretrained(model_name).to(device)
     optimizer = torch.optim.Adam(model.parameters(), lr=args.lr)
+    vocab = tokenizer.get_vocab()
 
     actor = Actor(tokenizer, model, optimizer, device)
     print("actor initialized...")
     critic = Critic(actor.state_dim, tokenizer, device, args)
     print("critic initialized...")
-    env = setup_env(args)
+    env = setup_env(vocab, args)
     print("env initialized...")
 
     for episode in range(args.episode):

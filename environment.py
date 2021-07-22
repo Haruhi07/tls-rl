@@ -2,8 +2,9 @@ import env_utils
 
 
 class Environment:
-    def __init__(self, clusters, keywords, t_length):
+    def __init__(self, vocab, clusters, keywords, t_length):
         print(keywords)
+        self.vocab = vocab
         self.clusters = clusters
         self.keywords = set(keywords)
         self.t_length = t_length

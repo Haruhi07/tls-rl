@@ -34,7 +34,7 @@ class Actor():
             prob = F.softmax(lm_logits, dim=2).detach().cpu().numpy()
         prob = prob.reshape((1,-1))
         print(prob.shape)
-        action = np.random.choice(range(prob.shape[2]), p=prob)
+        action = np.random.choice(range(prob.shape[1]), p=prob)
         return action
 
     def learn(self, state, action, td_error, device):

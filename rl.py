@@ -50,7 +50,7 @@ def main():
 
     actor = Actor(tokenizer, model, optimizer, device)
     print("actor initialized...")
-    critic = Critic(actor.state_dim, device, args)
+    critic = Critic(actor.state_dim, tokenizer, device, args)
     print("critic initialized...")
     env = setup_env(args)
     print("env initialized...")

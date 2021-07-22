@@ -33,7 +33,7 @@ class Actor():
         with torch.no_grad():
             prob = F.softmax(lm_logits, dim=2).detach().cpu().numpy()
         print(prob.shape)
-        action = np.random.choice(range(prob.shape[0]), p=prob_weights)
+        action = np.random.choice(range(prob.shape[2]), p=prob)
         return action
 
     def learn(self, state, action, td_error, device):

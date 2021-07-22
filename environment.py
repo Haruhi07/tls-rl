@@ -37,6 +37,6 @@ class Environment:
         else:
             self.timelines[self.date_pt]["text"] += " " + new_word
         reward = self.calc_reward()
-        state = self.timelines
+        state = (self.clusters[self.date_pt], self.timelines[self.date_pt])
         return state, reward, done
         

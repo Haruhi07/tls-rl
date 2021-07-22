@@ -22,7 +22,7 @@ class Q_network(nn.Module):
 class Critic():
     def __init__(self, tokenizer, device, args):
         self.tokenizer = tokenizer
-        self.state_dim = self.tokenizer.vocab_size()
+        self.state_dim = self.tokenizer.vocab_size
 
 
         self.device = device

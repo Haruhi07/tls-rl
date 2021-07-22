@@ -23,11 +23,10 @@ class Actor():
         cluster, timeline = observation
         encoder_input = [nfirst(a.text, self.nfirst) for a in cluster.articles]
         print(encoder_input)
-        decoder_input = format_decoder_input(timeline["text"])
-        print(decoder_input)
+        decoder_input = timeline["text"]
 
         encoder_input_ids = self.tokenizer(encoder_input, padding=True, truncation=True, return_tensors="pt").input_ids.to(device)
-        decoder_input_ids = self.tokenizer(decoder_input, return_tensors="pt").input_ids.to(device)
+        decoder_input_ids = format_decoder_input(self.tokenizer(decoder_input, return_tensors="pt").input_ids.to(device))
         
         lm_logits = self.model.forward(input_ids=encoder_input_ids, decoder_input_ids=decoder_input_ids).logits
         print(lm_logits)

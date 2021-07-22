@@ -11,7 +11,7 @@ import json
 import pickle
 
 
-def setup_env(args):
+def setup_env(vocab, args):
     dataset_path = pathlib.Path(args.dataset)
     keywords = []
     length = 0

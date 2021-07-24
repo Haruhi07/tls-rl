@@ -16,7 +16,7 @@
 # 'select' chooses number of nodes.
 
 #  load required modules
-module load lang/python/anaconda/ lang/cuda
+module lang/python/anaconda/3.8.8-2021.05-torch lang/cuda
 source activate tls_rl
 
 # We might need to add the global paths to our code to the pythonpath. Also set the data directories globally.

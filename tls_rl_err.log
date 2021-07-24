@@ -1,16 +1,2 @@
-Traceback (most recent call last):
-  File "/home/hs20307/tls-rl/rl.py", line 90, in <module>
-    main()
-  File "/home/hs20307/tls-rl/rl.py", line 68, in main
-    td_error = critic.train_Q_network(state, reward, next_state)
-  File "/home/hs20307/tls-rl/Critic.py", line 48, in train_Q_network
-    v = self.network.forward(s)
-  File "/home/hs20307/tls-rl/Critic.py", line 13, in forward
-    out = F.relu(self.fc1(x))
-  File "/home/hs20307/.conda/envs/tls_rl/lib/python3.9/site-packages/torch/nn/modules/module.py", line 889, in _call_impl
-    result = self.forward(*input, **kwargs)
-  File "/home/hs20307/.conda/envs/tls_rl/lib/python3.9/site-packages/torch/nn/modules/linear.py", line 94, in forward
-    return F.linear(input, self.weight, self.bias)
-  File "/home/hs20307/.conda/envs/tls_rl/lib/python3.9/site-packages/torch/nn/functional.py", line 1753, in linear
-    return torch._C._nn.linear(input, weight, bias)
-RuntimeError: mat1 dim 1 must match mat2 dim 0
+No modules loaded
+/var/spool/pbs/mom_priv/jobs/3405210.bp1.SC: line 20: source: activate: file not found

@@ -2,11 +2,15 @@ from argparse import ArgumentParser
 from env_utils import extract_keywords
 from environment import Environment
 from transformers import PegasusTokenizer, PegasusForConditionalGeneration
-from Actor import Actor
-from Critic import Critic
+from itertools import count
+from utils import first_n_sents, format_decoder_input
+from torch.distributions import Categorical
+
 import os
 import pathlib
 import torch
+import torch.nn as nn
+import torch.nn.functional as F
 import json
 import pickle
 
@@ -28,63 +32,118 @@ def setup_env(tokenizer, args):
     env = Environment(tokenizer, clusters, keywords, length)
     return env
 
+class Critic(nn.Module):
+    def __init__(self, state_size):
+        super(Critic, self).__init__()
+        self.state_size = state_size
+
+        self.linear1 = nn.Linear(self.state_size, 128)
+        self.linear2 = nn.Linear(128, 256)
+        self.linear3 = nn.Linear(256, 1)
+
+    def forward(self, state):
+        output = F.relu(self.linear1(state))
+        output = F.relu(self.linear2(output))
+        value = self.linear3(output)
+        return value
+
+def compute_returns(next_value, rewards, masks, gamma):
+    R = next_value
+    returns = []
+    for step in reversed(range(len(rewards))):
+        R = rewards[step] + gamma * R * masks[step]
+        returns.insert(0, R)
+    return returns
+
+def get_logits(observation, tokenizer, actor, device, nfirst):
+    cluster, timeline = observation
+
+    encoder_input = [first_n_sents(a.text, nfirst) for a in cluster.articles]
+    decoder_input = timeline["text"]
+
+    encoder_input_ids = tokenizer(encoder_input, padding=True, truncation=True, return_tensors="pt").input_ids.to(device)
+    decoder_input_ids = format_decoder_input(tokenizer(decoder_input, return_tensors="pt").input_ids).to(device)
+
+    logits = actor(input_ids=encoder_input_ids, decoder_input_ids=decoder_input_ids).logits  # state
+    return logits
+
 def main():
     parser = ArgumentParser()
     # Configuration
     parser.add_argument("--dataset", type=str, required=True)
     # RL
     parser.add_argument("--lr", type=float, default=0.01)
-    parser.add_argument("--episode", type=int, default=10)
+    parser.add_argument("--episodes", type=int, default=10)
     parser.add_argument("--max_length", type=int, default=500)
     parser.add_argument("--test_size", type=int, default=10)
     parser.add_argument("--epsilon", type=float, default=0.01)
-    parser.add_argument("--gamma", type=float, default=0.95)
+    parser.add_argument("--gamma", type=float, default=0.99)
+    parser.add_argument("--nfirst", type=int, default=5)
     args = parser.parse_args()
 
-    # Real Actor network
+    device = 'cuda' if torch.cuda.is_available() else 'cpu'
     model_name = 'google/pegasus-multi_news'
     tokenizer = PegasusTokenizer.from_pretrained(model_name)
-    device = 'cuda' if torch.cuda.is_available() else 'cpu'
-    model = PegasusForConditionalGeneration.from_pretrained(model_name).to(device)
-    optimizer = torch.optim.Adam(model.parameters(), lr=args.lr)
-
-    actor = Actor(tokenizer, model, optimizer, device)
-    print("actor initialized...")
-    critic = Critic(tokenizer, device, args)
-    print("critic initialized...")
+    actor = PegasusForConditionalGeneration.from_pretrained(model_name).to(device)
+    critic = Critic(tokenizer.vocab_size).to(device)
+    
+    # Define Environment
     env = setup_env(tokenizer, args)
     print("env initialized...")
+    
+    optimizerA = torch.optim.Adam(actor.parameters())
+    optimizerC = torch.optim.Adam(critic.parameters())
 
-    for episode in range(args.episode):
-        # initialize task
+    for iter in range(args.episodes):
         env.reset()
-        state = env.observation()
-        #Train
-        for step in range(args.max_length):
-            print("observation = ", state)
-            action = actor.choose_action(state, device) # action should be the index of words, which means selecting this word
-            print("action = ", action)
-            next_state, reward, done = env.step(action)
-            td_error = critic.train_Q_network(state, reward, next_state)
-            actor.learn(state, action, td_error)
-            state = next_state
+        observation = env.observation()
+        log_probs = []
+        values = []
+        rewards = []
+        masks = []
+        
+        for i in count():
+            logits = get_logits(observation, tokenizer, actor, device, args.nfirst)
+
+            dist = Categorical(F.softmax(logits, dim=-1))
+            value = critic(logits)
+
+            action = dist.sample()
+            next_observation, reward, done = env.step(action)
+
+            log_prob = dist.log_prob(action).unsqueeze(0)
+
+            log_probs.append(log_prob)
+            values.append(value)
+            rewards.append(torch.tensor([reward], dtype=torch.float, device=device))
+            masks.append(torch.tensor([1 - done], dtype=torch.float, device=device))
+
+            observation = next_observation
+
             if done:
+                print('Iteration: {}, Score: {}'.format(iter, i))
                 break
 
-        # Test every 100 episodes
-        if episode % 100 == 0:
-            total_reward = 0
-            for i in range(args.test_size):
-                state = env.reset()
-                for j in range(args.max_length):
-                    action = actor.choose_action(state)  # direct action for test
-                    state, reward, done = env.step(action)
-                    total_reward += reward
-                    if done:
-                        break
+        logits = get_logits(next_observation, tokenizer, actor, device, args.nfirst)
+        next_value = critic(logits)
+        returns = compute_returns(next_value, rewards, masks, args.gamma)
 
-            ave_reward = total_reward / TEST
-            print('episode: ', episode, 'Evaluation Average Reward:', ave_reward)
+        log_probs = torch.cat(log_probs)
+        returns = torch.cat(returns).detach()
+        values = torch.cat(values)
+
+        advantage = returns - values
+
+        actor_loss = -(log_probs * advantage.detach()).mean()
+        critic_loss = advantage.pow(2).mean()
+
+        optimizerA.zero_grad()
+        optimizerC.zero_grad()
+        actor_loss.backward()
+        critic_loss.backward()
+        optimizerA.step()
+        optimizerC.step()
+
 
 if __name__ == "__main__":
     main()

@@ -64,7 +64,7 @@ def get_logits(observation, tokenizer, actor, device, nfirst):
     encoder_input_ids = tokenizer(encoder_input, padding=True, truncation=True, return_tensors="pt").input_ids.to(device)
     decoder_input_ids = format_decoder_input(tokenizer(decoder_input, return_tensors="pt").input_ids).to(device)
 
-    logits = actor(input_ids=encoder_input_ids, decoder_input_ids=decoder_input_ids).logits  # state
+    logits = actor.forward(input_ids=encoder_input_ids, decoder_input_ids=decoder_input_ids).logits  # state
     return logits
 
 def main():

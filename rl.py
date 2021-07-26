@@ -108,7 +108,7 @@ def main():
             dist = Categorical(F.softmax(logits, dim=-1))
             value = critic(logits)
 
-            action = dist.sample().item
+            action = dist.sample().item()
             print(action)
             next_observation, reward, done = env.step(action)
 

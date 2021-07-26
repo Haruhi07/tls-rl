@@ -110,7 +110,7 @@ def main():
 
             action = dist.sample()
             print(action)
-            next_observation, reward, done = env.step(action.item())
+            next_observation, reward, done = env.step(action.cpu().tolist())
 
             log_prob = dist.log_prob(action).unsqueeze(0)
 

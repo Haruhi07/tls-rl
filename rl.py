@@ -81,11 +81,11 @@ def main():
     parser.add_argument("--nfirst", type=int, default=5)
     args = parser.parse_args()
 
-    device = 'cuda' if torch.cuda.is_available() else 'cpu'
+    dvc = 'cuda' if torch.cuda.is_available() else 'cpu'
     model_name = 'google/pegasus-multi_news'
     tokenizer = PegasusTokenizer.from_pretrained(model_name)
-    actor = PegasusForConditionalGeneration.from_pretrained(model_name).to(device)
-    critic = Critic(tokenizer.vocab_size).to(device)
+    actor = PegasusForConditionalGeneration.from_pretrained(model_name).to(dvc)
+    critic = Critic(tokenizer.vocab_size).to(dvc)
     
     # Define Environment
     env = setup_env(tokenizer, args)
@@ -103,7 +103,7 @@ def main():
         masks = []
         
         for i in count():
-            logits = get_logits(observation, tokenizer, actor, device, args.nfirst)
+            logits = get_logits(observation, tokenizer, actor, dvc, args.nfirst)
 
             dist = Categorical(F.softmax(logits, dim=-1))
             value = critic(logits)
@@ -115,8 +115,8 @@ def main():
 
             log_probs.append(log_prob)
             values.append(value)
-            rewards.append(torch.tensor([reward], dtype=torch.float, device=device))
-            masks.append(torch.tensor([1 - done], dtype=torch.float, device=device))
+            rewards.append(torch.tensor([reward], dtype=torch.float, device=dvc))
+            masks.append(torch.tensor([1 - done], dtype=torch.float, device=dvc))
 
             observation = next_observation
 
@@ -124,7 +124,7 @@ def main():
                 print('Iteration: {}, Score: {}'.format(iter, i))
                 break
 
-        logits = get_logits(next_observation, tokenizer, actor, device, args.nfirst)
+        logits = get_logits(next_observation, tokenizer, actor, dvc, args.nfirst)
         next_value = critic(logits)
         returns = compute_returns(next_value, rewards, masks, args.gamma)
 

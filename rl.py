@@ -107,6 +107,7 @@ def main():
         
         for i in count():
             logits = get_logits(observation, args.nfirst)
+            print("logits = ", logits)
 
             dist = Categorical(F.softmax(logits, dim=-1))
             value = critic(logits)

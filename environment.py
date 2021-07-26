@@ -29,6 +29,7 @@ class Environment:
     
     def step(self, action):
         new_word = self.tokenizer.decode(action, skip_special_tokens=True, clean_up_tokenization_spaces=False)
+        print("new word = ", new_word)
         done = False
         if action == 1:
             self.date_pt += 1

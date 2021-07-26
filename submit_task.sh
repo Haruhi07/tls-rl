@@ -16,8 +16,8 @@
 # 'select' chooses number of nodes.
 
 #  load required modules
-module load lang/python/anaconda/ lang/cuda
-source activate tls_rl
+module load lang/python/anaconda/ lang/cuda/11.1
+source activate env
 
 # We might need to add the global paths to our code to the pythonpath. Also set the data directories globally.
 cd /home/hs20307/tls-rl

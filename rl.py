@@ -109,6 +109,7 @@ def main():
             value = critic(logits)
 
             action = dist.sample()
+            print(action)
             next_observation, reward, done = env.step(action)
 
             log_prob = dist.log_prob(action).unsqueeze(0)

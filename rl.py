@@ -20,22 +20,23 @@ class Critic(nn.Module):
         super(Critic, self).__init__()
         self.state_size = state_size
 
-        self.linear1 = nn.Linear(self.state_size, 128)
-        self.linear2 = nn.Linear(128, 256)
-        self.linear3 = nn.Linear(256, 1)
+        self.linear1 = nn.Linear(self.state_size, 256)
+        self.linear2 = nn.Linear(256, 1)
 
     def forward(self, state):
         output = F.relu(self.linear1(state))
-        output = F.relu(self.linear2(output))
-        value = self.linear3(output)
+        value = self.linear2(output)
         return value
 
 dvc = 'cuda' if torch.cuda.is_available() else 'cpu'
+device_ids=range(torch.cuda.device_count())
 model_name = 'sshleifer/distill-pegasus-cnn-16-4'
 tokenizer = PegasusTokenizer.from_pretrained(model_name)
 actor = PegasusForConditionalGeneration.from_pretrained(model_name).to(dvc)
 state_size = tokenizer.vocab_size
 critic = Critic(state_size).to(dvc)
+if len(device_ids)>1:
+    actor = torch.nn.DataParallel(actor)
 
 def setup_env(args):
     dataset_path = pathlib.Path(args.dataset)

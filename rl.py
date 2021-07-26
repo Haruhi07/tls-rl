@@ -15,7 +15,29 @@ import json
 import pickle
 
 
-def setup_env(tokenizer, args):
+class Critic(nn.Module):
+    def __init__(self, state_size):
+        super(Critic, self).__init__()
+        self.state_size = state_size
+
+        self.linear1 = nn.Linear(self.state_size, 128)
+        self.linear2 = nn.Linear(128, 256)
+        self.linear3 = nn.Linear(256, 1)
+
+    def forward(self, state):
+        output = F.relu(self.linear1(state))
+        output = F.relu(self.linear2(output))
+        value = self.linear3(output)
+        return value
+
+dvc = 'cuda' if torch.cuda.is_available() else 'cpu'
+model_name = 'sshleifer/distill-pegasus-cnn-16-4'
+tokenizer = PegasusTokenizer.from_pretrained(model_name)
+actor = PegasusForConditionalGeneration.from_pretrained(model_name).to(dvc)
+state_size = tokenizer.vocab_size
+critic = Critic(state_size).to(dvc)
+
+def setup_env(args):
     dataset_path = pathlib.Path(args.dataset)
     keywords = []
     length = 0
@@ -32,21 +54,6 @@ def setup_env(tokenizer, args):
     env = Environment(tokenizer, clusters, keywords, length)
     return env
 
-class Critic(nn.Module):
-    def __init__(self, state_size):
-        super(Critic, self).__init__()
-        self.state_size = state_size
-
-        self.linear1 = nn.Linear(self.state_size, 128)
-        self.linear2 = nn.Linear(128, 256)
-        self.linear3 = nn.Linear(256, 1)
-
-    def forward(self, state):
-        output = F.relu(self.linear1(state))
-        output = F.relu(self.linear2(output))
-        value = self.linear3(output)
-        return value
-
 def compute_returns(next_value, rewards, masks, gamma):
     R = next_value
     returns = []
@@ -55,7 +62,7 @@ def compute_returns(next_value, rewards, masks, gamma):
         returns.insert(0, R)
     return returns
 
-def get_logits(observation, tokenizer, actor, dvc, nfirst):
+def get_logits(observation, nfirst):
     cluster, timeline = observation
 
     encoder_input = [first_n_sents(a.text, nfirst) for a in cluster.articles]
@@ -81,14 +88,8 @@ def main():
     parser.add_argument("--nfirst", type=int, default=5)
     args = parser.parse_args()
 
-    dvc = 'cuda' if torch.cuda.is_available() else 'cpu'
-    model_name = 'sshleifer/distill-pegasus-cnn-16-4'
-    tokenizer = PegasusTokenizer.from_pretrained(model_name)
-    actor = PegasusForConditionalGeneration.from_pretrained(model_name).to(dvc)
-    critic = Critic(tokenizer.vocab_size).to(dvc)
-    
     # Define Environment
-    env = setup_env(tokenizer, args)
+    env = setup_env(args)
     print("env initialized...")
     
     optimizerA = torch.optim.Adam(actor.parameters())
@@ -97,13 +98,14 @@ def main():
     for iter in range(args.episodes):
         env.reset()
         observation = env.observation()
+        next_observation = None
         log_probs = []
         values = []
         rewards = []
         masks = []
         
         for i in count():
-            logits = get_logits(observation, tokenizer, actor, dvc, args.nfirst)
+            logits = get_logits(observation, args.nfirst)
 
             dist = Categorical(F.softmax(logits, dim=-1))
             value = critic(logits)
@@ -125,7 +127,7 @@ def main():
                 print('Iteration: {}, Score: {}'.format(iter, i))
                 break
 
-        logits = get_logits(next_observation, tokenizer, actor, dvc, args.nfirst)
+        logits = get_logits(next_observation, args.nfirst)
         next_value = critic(logits)
         returns = compute_returns(next_value, rewards, masks, args.gamma)
 

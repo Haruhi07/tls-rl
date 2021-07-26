@@ -55,14 +55,14 @@ def compute_returns(next_value, rewards, masks, gamma):
         returns.insert(0, R)
     return returns
 
-def get_logits(observation, tokenizer, actor, device, nfirst):
+def get_logits(observation, tokenizer, actor, dvc, nfirst):
     cluster, timeline = observation
 
     encoder_input = [first_n_sents(a.text, nfirst) for a in cluster.articles]
     decoder_input = timeline["text"]
 
-    encoder_input_ids = tokenizer(encoder_input, padding=True, truncation=True, return_tensors="pt").input_ids.to(device)
-    decoder_input_ids = format_decoder_input(tokenizer(decoder_input, return_tensors="pt").input_ids).to(device)
+    encoder_input_ids = tokenizer(encoder_input, padding=True, truncation=True, return_tensors="pt").input_ids.to(dvc)
+    decoder_input_ids = format_decoder_input(tokenizer(decoder_input, return_tensors="pt").input_ids).to(dvc)
 
     logits = actor.forward(input_ids=encoder_input_ids, decoder_input_ids=decoder_input_ids).logits  # state
     return logits

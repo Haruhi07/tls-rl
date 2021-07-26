@@ -65,6 +65,7 @@ def compute_returns(next_value, rewards, masks, gamma):
 
 def get_logits(observation, nfirst):
     cluster, timeline = observation
+    print(timeline)
 
     encoder_input = [first_n_sents(a.text, nfirst) for a in cluster.articles]
     decoder_input = timeline["text"]

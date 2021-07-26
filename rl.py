@@ -106,10 +106,10 @@ def main():
         masks = []
         
         for i in count():
-            logits = get_logits(observation, args.nfirst)
-            print("logits = ", logits.squeeze(0)[-1])
+            logits = get_logits(observation, args.nfirst).squeeze(0)[-1]
+            print("logits = ", logits)
 
-            dist = Categorical(F.softmax(logits, dim=-1))
+            dist = Categorical(F.softmax(logits))
             print("dist = ", dist)
             value = critic(logits)
 

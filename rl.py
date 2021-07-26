@@ -127,6 +127,10 @@ def main():
             act_loss = -log_prob * adv.detach()
             ctc_loss = adv.pow(2)
 
+            print("value = ", value)
+            print("next_value = ", value)
+            print("log_prob = ", log_prob)
+
             optimizerA.zero_grad()
             optimizerC.zero_grad()
             act_loss.backward()

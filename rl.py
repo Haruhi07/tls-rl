@@ -131,7 +131,7 @@ def main():
             print("reward = ", reward)
             print("advantage = ", adv)
             print("value = ", value)
-            print("next_value = ", value)
+            print("next_value = ", next_value)
             print("log_prob = ", log_prob)
             print("actor_loss = ", act_loss)
             print("critic_loss = ", ctc_loss)

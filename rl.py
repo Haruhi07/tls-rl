@@ -124,7 +124,7 @@ def main():
 
             log_prob = dist.log_prob(action).unsqueeze(0)
             ret = args.gamma * next_value + reward
-            adv = ret - value
+            adv = ret - value.detach()
             act_loss = -(log_prob * adv.detach()).sum()
             ctc_loss = adv.pow(2).sum()
 

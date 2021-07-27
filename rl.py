@@ -127,6 +127,7 @@ def main():
             act_loss = -log_prob * adv.detach()
             ctc_loss = adv.pow(2)
 
+            print("return = ", ret)
             print("reward = ", reward)
             print("advantage = ", adv)
             print("value = ", value)

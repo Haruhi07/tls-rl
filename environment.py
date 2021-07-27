@@ -3,7 +3,6 @@ import env_utils
 
 class Environment:
     def __init__(self, tokenizer, clusters, keywords, t_length):
-        print(keywords)
         self.tokenizer = tokenizer
         self.clusters = clusters
         self.keywords = set(keywords)
@@ -32,9 +31,12 @@ class Environment:
         print("new word = ", new_word)
         done = False
         if action == 1:
+            self.timelines[self.date_pt]["date"] = self.clusters[self.date_pt].date
             self.date_pt += 1
             if self.date_pt >= len(self.timelines):
                 done = True
+        elif self.timelines[self.date_pt]["text"] == '':
+            self.timelines[self.date_pt]["text"] = new_word
         else:
             self.timelines[self.date_pt]["text"] += " " + new_word
         reward = self.calc_reward()

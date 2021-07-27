@@ -11,6 +11,7 @@ import pathlib
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+import numpy as np
 import json
 import pickle
 
@@ -77,6 +78,29 @@ def get_logits(observation, nfirst):
     logits = actor.forward(input_ids=encoder_input_ids, decoder_input_ids=decoder_input_ids).logits  # state
     return logits
 
+def generate(observation, nfirst=5):
+    output = ""
+    cluster, timeline = observation
+    print(timeline)
+
+    encoder_input = [first_n_sents(a.text, nfirst) for a in cluster.articles]
+    decoder_input = output
+    encoder_input_ids = tokenizer(encoder_input, padding=True, truncation=True, return_tensors="pt").input_ids.to(dvc)
+    with torch.no_grad():
+        for i in count():
+            decoder_input = output
+            decoder_input_ids = format_decoder_input(tokenizer(decoder_input, return_tensors="pt").input_ids).to(dvc)
+            logits = actor.forward(input_ids=encoder_input_ids, decoder_input_ids=decoder_input_ids).logits.squeeze(0)
+            prob = F.softmax(logits, dim=-1)
+            print(prob)
+            g = np.argmax(prob.detach().numpy(), axis=1)
+            print(g)
+            output = tokenizer.decode(g, skip_special_tokens=True, clean_up_tokenization_spaces=False)
+            if g[-1] == 1:
+                break
+    return output
+
+
 def main():
     parser = ArgumentParser()
     # Configuration
@@ -101,6 +125,8 @@ def main():
     for iter in range(args.episodes):
         env.reset()
         observation = env.observation()
+        print(generate(observation))
+        break
         next_observation = None
         log_probs = []
         values = []

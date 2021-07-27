@@ -101,13 +101,13 @@ def main():
     for iter in range(args.episodes):
         env.reset()
         observation = env.observation()
-        next_observation = None
-        log_probs = []
-        values = []
-        rewards = []
-        masks = []
 
         for i in count():
+            next_observation = None
+            log_probs = []
+            values = []
+            rewards = []
+            masks = []
             for j in count():
                 logits = get_logits(observation, args.nfirst).squeeze(0)[-1]
                 print("logits = ", logits)

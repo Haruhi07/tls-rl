@@ -119,6 +119,7 @@ def main():
             print(action)
             next_observation, reward, done = env.step(action.squeeze(0).cpu().tolist())
             next_logits = get_logits(next_observation, args.nfirst)
+            print("next_logits = ", next_logits)
             next_value = critic.forward(next_logits)
 
             log_prob = dist.log_prob(action).unsqueeze(0)

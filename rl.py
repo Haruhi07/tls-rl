@@ -149,7 +149,7 @@ def main():
 
             optimizerA.zero_grad()
             optimizerC.zero_grad()
-            actor_loss.backward()
+            actor_loss.backward(retain_graph=True)
             critic_loss.backward()
             optimizerA.step()
             optimizerC.step()

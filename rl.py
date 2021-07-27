@@ -132,6 +132,8 @@ def main():
             print("value = ", value)
             print("next_value = ", value)
             print("log_prob = ", log_prob)
+            print("actor_loss = ", act_loss)
+            print("critic_loss = ", ctc_loss)
 
             optimizerA.zero_grad()
             optimizerC.zero_grad()

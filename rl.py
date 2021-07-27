@@ -93,7 +93,7 @@ def generate(observation, nfirst=5):
             logits = actor.forward(input_ids=encoder_input_ids, decoder_input_ids=decoder_input_ids).logits.squeeze(0)
             prob = F.softmax(logits, dim=-1)
             print(prob)
-            g = np.argmax(prob.detach().numpy(), axis=1)
+            g = np.argmax(prob.detach().cpu().numpy(), axis=1)
             print(g)
             output = tokenizer.decode(g, skip_special_tokens=True, clean_up_tokenization_spaces=False)
             if g[-1] == 1:

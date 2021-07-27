@@ -101,62 +101,79 @@ def main():
     for iter in range(args.episodes):
         env.reset()
         observation = env.observation()
+        next_observation = None
+        log_probs = []
+        values = []
+        rewards = []
+        masks = []
 
         for i in count():
-            next_observation = None
-            log_probs = []
-            values = []
-            rewards = []
-            masks = []
-            for j in count():
-                logits = get_logits(observation, args.nfirst).squeeze(0)[-1]
-                print("logits = ", logits)
+            logits = get_logits(observation, args.nfirst).squeeze(0)[-1]
+            print("logits = ", logits)
 
-                dist = Categorical(F.softmax(logits))
-                print("dist = ", dist)
-                value = critic.forward(logits)
+            dist = Categorical(F.softmax(logits))
+            print("dist = ", dist)
+            value = critic.forward(logits)
 
-                action = dist.sample()
-                print(action)
-                next_observation, reward, done = env.step(action.squeeze(0).cpu().tolist())
-                log_prob = dist.log_prob(action).unsqueeze(0)
+            action = dist.sample()
+            print(action)
+            next_observation, reward, done = env.step(action.squeeze(0).cpu().tolist())
+            next_logits = get_logits(next_observation, args.nfirst).squeeze(0)[-1]
+            print("next_logits = ", next_logits)
+            next_value = critic.forward(next_logits)
 
-                log_probs.append(log_prob)
-                values.append(value)
-                rewards.append(torch.tensor([reward], dtype=torch.float, device=dvc))
-                masks.append(torch.tensor([1 - done], dtype=torch.float, device=dvc))
+            log_prob = dist.log_prob(action).unsqueeze(0)
+            ret = args.gamma * next_value + reward
+            adv = ret - value
+            act_loss = -(log_prob * adv.detach()).sum()
+            ctc_loss = adv.pow(2).sum()
 
-                observation = next_observation
-
-                if done:
-                    print('Iteration: {}, Reward: {}'.format(iter, reward))
-                    break
-                if j%2 == 0:
-                    break
-
-            logits = get_logits(next_observation, args.nfirst).squeeze(0)[-1]
-            next_value = critic(logits)
-            returns = compute_returns(next_value, rewards, masks, args.gamma)
-
-            log_probs = torch.cat(log_probs)
-            returns = torch.cat(returns).detach()
-            values = torch.cat(values)
-
-            advantage = returns - values
-
-            actor_loss = -(log_probs * advantage.detach()).mean()
-            critic_loss = advantage.pow(2).mean()
+            print("return = ", ret)
+            print("reward = ", reward)
+            print("advantage = ", adv)
+            print("value = ", value)
+            print("next_value = ", next_value)
+            print("log_prob = ", log_prob)
+            print("actor_loss = ", act_loss)
+            print("critic_loss = ", ctc_loss)
 
             optimizerA.zero_grad()
             optimizerC.zero_grad()
-            actor_loss.backward(retain_graph=True)
-            critic_loss.backward()
+            act_loss.backward(retain_graph=True)
+            ctc_loss.backward()
             optimizerA.step()
             optimizerC.step()
+
+            #log_probs.append(log_prob)
+            #values.append(value)
+            #rewards.append(torch.tensor([reward], dtype=torch.float, device=dvc))
+            #masks.append(torch.tensor([1 - done], dtype=torch.float, device=dvc))
+
+            observation = next_observation
 
             if done:
                 print('Iteration: {}, Reward: {}'.format(iter, reward))
                 break
+
+        #logits = get_logits(next_observation, args.nfirst)
+        #next_value = critic(logits)
+        #returns = compute_returns(next_value, rewards, masks, args.gamma)
+
+        #log_probs = torch.cat(log_probs)
+        #returns = torch.cat(returns).detach()
+        #values = torch.cat(values)
+
+        #advantage = returns - values
+
+        #actor_loss = -(log_probs * advantage.detach()).mean()
+        #critic_loss = advantage.pow(2).mean()
+
+        #optimizerA.zero_grad()
+        #optimizerC.zero_grad()
+        #actor_loss.backward()
+        #critic_loss.backward()
+        #optimizerA.step()
+        #optimizerC.step()
 
 
 if __name__ == "__main__":

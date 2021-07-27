@@ -131,7 +131,7 @@ def main():
                 if done:
                     print('Iteration: {}, Reward: {}'.format(iter, reward))
                     break
-                if j%3 == 0:
+                if j%2 == 0:
                     break
 
             logits = get_logits(next_observation, args.nfirst).squeeze(0)[-1]

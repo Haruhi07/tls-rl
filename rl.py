@@ -72,9 +72,10 @@ def generate(observation, tokenizer, actor, device, args):
     inputs = [first_n_sents(a.text, args.nfirst) for a in cluster.articles]
     input_ids = tokenizer(inputs, padding=True, truncation=True, return_tensors="pt").input_ids.to(device)
     logits = actor.generate(input_ids)
-    #print([tokenizer.decode(g, skip_special_tokens=True, clean_up_tokenization_spaces=False) for g in logits])
-
+    
     print(logits)
+    print([tokenizer.decode(g, skip_special_tokens=True, clean_up_tokenization_spaces=False) for g in logits])
+
     return 1, 2
 
 def main():

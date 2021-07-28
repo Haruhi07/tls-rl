@@ -76,7 +76,7 @@ def generate(observation, tokenizer, actor, device, args):
         token_ids = actor.generate(input_ids)
         decoder_input_ids = [0]
         while len(decoder_input_ids) < args.max_length:
-            decoder_input_ids_tensor = torch.LongTensor(decoder_input_ids).to(device)
+            decoder_input_ids_tensor = torch.LongTensor([decoder_input_ids]).to(device)
             logits = actor(input_ids=input_ids, decoder_input_ids=decoder_input_ids_tensor).logits
             dist = Categorical(F.softmax(logits))
             #TODO: Add top_k here

@@ -98,8 +98,6 @@ def main():
     actor = PegasusForConditionalGeneration.from_pretrained(model_name).to(device)
     state_size = tokenizer.vocab_size
     critic = Critic(state_size).to(device)
-    if len(device_ids) > 1:
-        actor = torch.nn.DataParallel(actor)
 
     # Define Environment
     env = setup_env(tokenizer, args)

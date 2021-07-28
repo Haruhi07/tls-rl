@@ -75,7 +75,7 @@ def generate(observation, tokenizer, actor, device, args):
     logits = actor.generate(input_ids)
 
     print(logits)
-    print(tokenizer.decode(logits, skip_special_tokens=True, clean_up_tokenization_spaces=False))
+    print(tokenizer.batch_decode(logits, skip_special_tokens=True, clean_up_tokenization_spaces=False))
 
     return 1, 2
 

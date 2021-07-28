@@ -72,9 +72,19 @@ def generate(observation, tokenizer, actor, device, args):
     inputs = ' '.join([first_n_sents(a.text, args.nfirst) for a in cluster.articles])
     input_ids = tokenizer(inputs, padding=True, truncation=True, return_tensors="pt").input_ids.to(device)
     print(input_ids)
-    logits = actor.generate(input_ids)
+    with torch.no_grad():
+        token_ids = actor.generate(input_ids)
+        decoder_input_ids = [[0]]
+        while decoder_input_ids.size()[-1] < args.max_length:
+            decoder_input_ids_tensor = torch.Tensor(decoder_input_ids, device=device)
+            logits = actor(input_ids=input_ids, decoder_input_ids=decoder_input_ids_tensor).logits
+            dist = Categorical(F.softmax(logits))
+            #TODO: Add top_k here
+            action = dist.sample()
+            print(action)
+            break
 
-    print(logits)
+    print("token_ids = ", token_ids)
     print(tokenizer.batch_decode(logits, skip_special_tokens=True, clean_up_tokenization_spaces=False))
 
     return 1, 2
@@ -87,6 +97,7 @@ def main():
     parser.add_argument("--lr", type=float, default=0.01)
     parser.add_argument("--episodes", type=int, default=10)
     parser.add_argument("--max_length", type=int, default=500)
+    parser.add_argument("--top_k", type=int, default=5)
     parser.add_argument("--test_size", type=int, default=10)
     parser.add_argument("--epsilon", type=float, default=0.01)
     parser.add_argument("--gamma", type=float, default=0.99)

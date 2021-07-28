@@ -71,6 +71,7 @@ def generate(observation, tokenizer, actor, device, args):
     cluster, timeline = observation
     inputs = ' '.join([first_n_sents(a.text, args.nfirst) for a in cluster.articles])
     input_ids = tokenizer(inputs, padding=True, truncation=True, return_tensors="pt").input_ids.to(device)
+    print(input_ids)
     logits = actor.generate(input_ids)
 
     print(logits)

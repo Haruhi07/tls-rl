@@ -11,7 +11,6 @@ import pathlib
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-import numpy as np
 import json
 import pickle
 
@@ -29,17 +28,7 @@ class Critic(nn.Module):
         value = self.linear2(output)
         return value
 
-dvc = 'cuda' if torch.cuda.is_available() else 'cpu'
-device_ids=range(torch.cuda.device_count())
-model_name = 'sshleifer/distill-pegasus-cnn-16-4'
-tokenizer = PegasusTokenizer.from_pretrained(model_name)
-actor = PegasusForConditionalGeneration.from_pretrained(model_name).to(dvc)
-state_size = tokenizer.vocab_size
-critic = Critic(state_size).to(dvc)
-if len(device_ids)>1:
-    actor = torch.nn.DataParallel(actor)
-
-def setup_env(args):
+def setup_env(tokenizer, args):
     dataset_path = pathlib.Path(args.dataset)
     keywords = []
     length = 0
@@ -78,28 +67,13 @@ def get_logits(observation, nfirst):
     logits = actor.forward(input_ids=encoder_input_ids, decoder_input_ids=decoder_input_ids).logits  # state
     return logits
 
-def generate(observation, nfirst=5):
-    output = ""
+def generate(observation, tokenizer, actor, device, args):
     cluster, timeline = observation
-    print(timeline)
-
-    encoder_input = [first_n_sents(a.text, nfirst) for a in cluster.articles]
-    decoder_input = output
-    encoder_input_ids = tokenizer(encoder_input, padding=True, truncation=True, return_tensors="pt").input_ids.to(dvc)
-    with torch.no_grad():
-        for i in count():
-            decoder_input = output
-            decoder_input_ids = format_decoder_input(tokenizer(decoder_input, return_tensors="pt").input_ids).to(dvc)
-            logits = actor.forward(input_ids=encoder_input_ids, decoder_input_ids=decoder_input_ids).logits.squeeze(0)
-            prob = F.softmax(logits, dim=-1)
-            print(prob)
-            g = np.argmax(prob.detach().cpu().numpy(), axis=1)
-            print(g)
-            output = tokenizer.decode(g, skip_special_tokens=True, clean_up_tokenization_spaces=False)
-            if g[-1] == 1:
-                break
-    return output
-
+    inputs = [first_n_sents(a.text, args.nfirst) for a in cluster.articles]
+    input_ids = tokenizer(inputs, padding=True, truncation=True, return_tensors="pt").input_ids.to(device)
+    logits = actor(input_ids)
+    print(logits)
+    return 1, 2
 
 def main():
     parser = ArgumentParser()
@@ -115,18 +89,27 @@ def main():
     parser.add_argument("--nfirst", type=int, default=5)
     args = parser.parse_args()
 
+    device = 'cuda' if torch.cuda.is_available() else 'cpu'
+    device_ids = range(torch.cuda.device_count())
+    model_name = 'sshleifer/distill-pegasus-cnn-16-4'
+    tokenizer = PegasusTokenizer.from_pretrained(model_name)
+    actor = PegasusForConditionalGeneration.from_pretrained(model_name).to(device)
+    state_size = tokenizer.vocab_size
+    critic = Critic(state_size).to(device)
+    if len(device_ids) > 1:
+        actor = torch.nn.DataParallel(actor)
+
     # Define Environment
-    env = setup_env(args)
+    env = setup_env(tokenizer, args)
     print("env initialized...")
-    
+
     optimizerA = torch.optim.Adam(actor.parameters())
     optimizerC = torch.optim.Adam(critic.parameters())
 
     for iter in range(args.episodes):
         env.reset()
         observation = env.observation()
-        print(generate(observation))
-        break
+        output, output_ids = generate(observation, tokenizer, actor, device, args)
         next_observation = None
         log_probs = []
         values = []
@@ -150,7 +133,7 @@ def main():
 
             log_prob = dist.log_prob(action).unsqueeze(0)
             ret = args.gamma * next_value + reward
-            adv = ret - value.detach()
+            adv = ret - value
             act_loss = -(log_prob * adv.detach()).sum()
             ctc_loss = adv.pow(2).sum()
 

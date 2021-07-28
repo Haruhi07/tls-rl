@@ -72,7 +72,7 @@ def generate(observation, tokenizer, actor, device, args):
     inputs = [first_n_sents(a.text, args.nfirst) for a in cluster.articles]
     input_ids = tokenizer(inputs, padding=True, truncation=True, return_tensors="pt").input_ids.to(device)
     logits = actor.generate(input_ids)
-    print([tokenizer.decode(g, skip_special_tokens=True, clean_up_tokenization_spaces=False) for g in logits])
+    #print([tokenizer.decode(g, skip_special_tokens=True, clean_up_tokenization_spaces=False) for g in logits])
 
     print(logits)
     return 1, 2
@@ -93,7 +93,7 @@ def main():
 
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
     device_ids = range(torch.cuda.device_count())
-    model_name = 'google/pegasus-multi_news'
+    model_name = 'sshleifer/distill-pegasus-cnn-16-4'
     tokenizer = PegasusTokenizer.from_pretrained(model_name)
     actor = PegasusForConditionalGeneration.from_pretrained(model_name).to(device)
     state_size = tokenizer.vocab_size

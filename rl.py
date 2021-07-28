@@ -69,12 +69,12 @@ def get_logits(observation, nfirst):
 
 def generate(observation, tokenizer, actor, device, args):
     cluster, timeline = observation
-    inputs = [first_n_sents(a.text, args.nfirst) for a in cluster.articles]
+    inputs = ' '.join([first_n_sents(a.text, args.nfirst) for a in cluster.articles])
     input_ids = tokenizer(inputs, padding=True, truncation=True, return_tensors="pt").input_ids.to(device)
     logits = actor.generate(input_ids)
-    
+
     print(logits)
-    print([tokenizer.decode(g, skip_special_tokens=True, clean_up_tokenization_spaces=False) for g in logits])
+    print(tokenizer.decode(logits, skip_special_tokens=True, clean_up_tokenization_spaces=False))
 
     return 1, 2
 

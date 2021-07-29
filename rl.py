@@ -76,7 +76,7 @@ def generate(observation, tokenizer, actor, device, args):
     with torch.no_grad():
         #token_ids = actor.generate(input_ids)
         decoder_input_ids = [0]
-        while len(decoder_input_ids) < 6:
+        while len(decoder_input_ids) < args.max_length:
             decoder_input_ids_tensor = torch.LongTensor([decoder_input_ids]).to(device)
             logits = actor(input_ids=input_ids, decoder_input_ids=decoder_input_ids_tensor).logits[0, -1]
             print(logits)

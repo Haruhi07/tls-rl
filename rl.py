@@ -87,9 +87,9 @@ def generate(observation, tokenizer, actor, device, args):
             decoder_input_ids = decoder_input_ids + [action]
             if action == 1:
                 break
-            print(decoder_input_ids)
 
         decoder_input_ids_tensor = torch.LongTensor([decoder_input_ids]).to(device)[0]
+        print("generated_ids = ", decoder_input_ids)
         print(tokenizer.decode(decoder_input_ids_tensor, skip_special_tokens=True, clean_up_tokenization_spaces=False))
         print("token_ids = ", token_ids)
         print(tokenizer.batch_decode(logits, skip_special_tokens=True, clean_up_tokenization_spaces=False))

@@ -74,7 +74,7 @@ def generate(observation, tokenizer, actor, device, args):
     input_ids = tokenizer(inputs, padding=True, truncation=True, return_tensors="pt").input_ids.to(device)
     print(input_ids)
     with torch.no_grad():
-        #token_ids = actor.generate(input_ids)
+        token_ids = actor.generate(input_ids)
         decoder_input_ids = [0]
         while len(decoder_input_ids) < args.max_length:
             decoder_input_ids_tensor = torch.LongTensor([decoder_input_ids]).to(device)

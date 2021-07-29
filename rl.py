@@ -90,7 +90,7 @@ def generate(observation, tokenizer, actor, device, args):
             print(decoder_input_ids)
 
         decoder_input_ids_tensor = torch.LongTensor([decoder_input_ids]).to(device)
-        print(tokenizer.decode([decoder_input_ids_tensor], skip_special_tokens=True, clean_up_tokenization_spaces=False))
+        print(tokenizer.decode(decoder_input_ids_tensor, skip_special_tokens=True, clean_up_tokenization_spaces=False))
         print("token_ids = ", token_ids)
         print(tokenizer.batch_decode(logits, skip_special_tokens=True, clean_up_tokenization_spaces=False))
 

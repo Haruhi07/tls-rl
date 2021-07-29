@@ -1,43 +1,21 @@
+/home/hs20307/.conda/envs/env/lib/python3.9/site-packages/torch/_tensor.py:575: UserWarning: floor_divide is deprecated, and will be removed in a future version of pytorch. It currently rounds toward 0 (like the 'trunc' function NOT 'floor'). This results in incorrect rounding for negative values.
+To keep the current behavior, use torch.div(a, b, rounding_mode='trunc'), or for actual floor division, use torch.div(a, b, rounding_mode='floor'). (Triggered internally at  /opt/conda/conda-bld/pytorch_1623448255797/work/aten/src/ATen/native/BinaryOps.cpp:467.)
+  return torch.floor_divide(self, other)
 Traceback (most recent call last):
-  File "/home/hs20307/tls-rl/rl.py", line 154, in <module>
+  File "/home/hs20307/tls-rl/rl.py", line 209, in <module>
     main()
-  File "/home/hs20307/tls-rl/rl.py", line 109, in main
-    logits = get_logits(observation, args.nfirst)
-  File "/home/hs20307/tls-rl/rl.py", line 75, in get_logits
-    logits = actor.forward(input_ids=encoder_input_ids, decoder_input_ids=decoder_input_ids).logits  # state
-  File "/home/hs20307/.conda/envs/env/lib/python3.9/site-packages/torch/nn/parallel/data_parallel.py", line 168, in forward
-    outputs = self.parallel_apply(replicas, inputs, kwargs)
-  File "/home/hs20307/.conda/envs/env/lib/python3.9/site-packages/torch/nn/parallel/data_parallel.py", line 178, in parallel_apply
-    return parallel_apply(replicas, inputs, kwargs, self.device_ids[:len(replicas)])
-  File "/home/hs20307/.conda/envs/env/lib/python3.9/site-packages/torch/nn/parallel/parallel_apply.py", line 86, in parallel_apply
-    output.reraise()
-  File "/home/hs20307/.conda/envs/env/lib/python3.9/site-packages/torch/_utils.py", line 425, in reraise
-    raise self.exc_type(msg)
-RuntimeError: Caught RuntimeError in replica 0 on device 0.
-Original Traceback (most recent call last):
-  File "/home/hs20307/.conda/envs/env/lib/python3.9/site-packages/torch/nn/parallel/parallel_apply.py", line 61, in _worker
-    output = module(*input, **kwargs)
-  File "/home/hs20307/.conda/envs/env/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1051, in _call_impl
-    return forward_call(*input, **kwargs)
-  File "/home/hs20307/.conda/envs/env/lib/python3.9/site-packages/transformers/models/pegasus/modeling_pegasus.py", line 1278, in forward
-    outputs = self.model(
-  File "/home/hs20307/.conda/envs/env/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1051, in _call_impl
-    return forward_call(*input, **kwargs)
-  File "/home/hs20307/.conda/envs/env/lib/python3.9/site-packages/transformers/models/pegasus/modeling_pegasus.py", line 1144, in forward
-    encoder_outputs = self.encoder(
-  File "/home/hs20307/.conda/envs/env/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1051, in _call_impl
-    return forward_call(*input, **kwargs)
-  File "/home/hs20307/.conda/envs/env/lib/python3.9/site-packages/transformers/models/pegasus/modeling_pegasus.py", line 769, in forward
-    layer_outputs = encoder_layer(
-  File "/home/hs20307/.conda/envs/env/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1051, in _call_impl
-    return forward_call(*input, **kwargs)
-  File "/home/hs20307/.conda/envs/env/lib/python3.9/site-packages/transformers/models/pegasus/modeling_pegasus.py", line 330, in forward
-    hidden_states = self.fc2(hidden_states)
-  File "/home/hs20307/.conda/envs/env/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1051, in _call_impl
-    return forward_call(*input, **kwargs)
-  File "/home/hs20307/.conda/envs/env/lib/python3.9/site-packages/torch/nn/modules/linear.py", line 96, in forward
-    return F.linear(input, self.weight, self.bias)
-  File "/home/hs20307/.conda/envs/env/lib/python3.9/site-packages/torch/nn/functional.py", line 1847, in linear
-    return torch._C._nn.linear(input, weight, bias)
-RuntimeError: CUDA out of memory. Tried to allocate 20.00 MiB (GPU 0; 10.76 GiB total capacity; 9.13 GiB already allocated; 5.44 MiB free; 9.58 GiB reserved in total by PyTorch)
-
+  File "/home/hs20307/tls-rl/rl.py", line 132, in main
+    output, output_ids = generate(observation, tokenizer, actor, device, args)
+  File "/home/hs20307/tls-rl/rl.py", line 95, in generate
+    print(tokenizer.batch_decode(logits, skip_special_tokens=True, clean_up_tokenization_spaces=False))
+  File "/home/hs20307/.conda/envs/env/lib/python3.9/site-packages/transformers/tokenization_utils_base.py", line 3126, in batch_decode
+    return [
+  File "/home/hs20307/.conda/envs/env/lib/python3.9/site-packages/transformers/tokenization_utils_base.py", line 3127, in <listcomp>
+    self.decode(
+  File "/home/hs20307/.conda/envs/env/lib/python3.9/site-packages/transformers/tokenization_utils_base.py", line 3165, in decode
+    return self._decode(
+  File "/home/hs20307/.conda/envs/env/lib/python3.9/site-packages/transformers/tokenization_utils.py", line 743, in _decode
+    filtered_tokens = self.convert_ids_to_tokens(token_ids, skip_special_tokens=skip_special_tokens)
+  File "/home/hs20307/.conda/envs/env/lib/python3.9/site-packages/transformers/tokenization_utils.py", line 717, in convert_ids_to_tokens
+    for index in ids:
+TypeError: 'float' object is not iterable

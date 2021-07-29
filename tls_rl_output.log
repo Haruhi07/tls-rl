@@ -1,31 +1,427 @@
  
  University of Bristol ACRC HPC Bluepebble Service
  -------------------------------------------------
- Job tls_rl, jobid 3458383.bp1, username hs20307 - started execution at 18:10:01 Mon 26/07/21 on node bp1-gpu00019.data.bp.acrc.priv
+ Job tls_rl, jobid 3484636.bp1, username hs20307 - started execution at 06:21:41 Thu 29/07/21 on node bp1-gpu00018.data.bp.acrc.priv
  
 length =  48
-['ahead', 'adviser', 'help', 'receives', 'control', 'cost', 'complacency', 'junk', 'president', 'commerce', 'biggest', 'higher', 'declares', 'collect', 'containment', 'officials', 'hayward', 'inside', 'media', 'resume', 'fund', 'blame', 'natural', 'identity', 'drill', 'dividend', 'says', 'massive', 'grants', 'oil', 'reaches', 'concerns', 'horizon', 'complaints', '36', 'confirms', 'report', 'ruptured', 'box', 'criticised', '17bn', 'sign', 'cleaning', '000', 'seal', 'leave', 'overseeing', 'firm', 'accumulate', 'kill', 'package', 'flow', 'addresses', 'dealing', 'removed', 'containing', 'blocks', 'valdez', '20bn', 'activate', 'efforts', 'david', 'order', 'heavy', 'sets', 'anti', 'drifted', 'browner', 'caused', 'way', 'military', 'declared', 'future', 'integrity', 'pipe', 'learn', 'ocean', 'loop', 'million', 'dome', 'examined', 'company', 'trip', 'ft', 'sends', 'kit', 'estimated', 'page', 'dozens', 'day', 'economy', 'macondo', 'margin', 'cameron', 'transocean', '12', 'exxon', 'reveal', 'failed', 'place', 'approval', 'storm', 'consulting', 'victims', 'obama', 'began', 'assessment', 'hit', 'cement', 'bbc', 'hundreds', 'pay', 'vowing', 'history', 'wells', 'gulf', 'lrb', 'raised', 'final', 'work', 'catastrophic', 'astonishing', 'fourth', 'scientists', 'seep', 'allen', 'home', 'hearing', 'chairman', '10', 'cleared', '800', 'deepwater', '70', 'minister', 'used', 'guard', 'crystals', 'ashore', 'quarters', 'brown', 'october', 'carry', 'official', 'bore', 'remaining', 'floor', 'anomalies', 'called', 'patches', 'center', 'faster', 'policy', 'secure', 'fails', 'rig', 'kick', 'leak', 'known', 'congressional', 'stem', 'agency', 'finally', 'dispersant', 'shareholder', 'just', 'freely', 'estimates', 'drilling', 'pump', 'study', 'stages', 'condemns', 'allowed', 'companies', '8bn', 'british', '193', 'new', 'error', '84km', 'sinks', 'coastguard', 'raising', 'disaster', 'kilometres', 'damage', 'intercepted', 'deal', 'inquiry', '600', 'gallons', 'positive', 'decision', 'survey', 'shore', 'taking', '300', 'operation', 'allow', 'compensation', 'engineers', '53', 'worst', 'burning', 'executive', 'mounted', 'federal', 'insensitive', 'chemical', 'gas', 'ass', 'blown', 'rate', 'maneuver', '525', 'block', 'test', 'forces', 'make', 'benefits', 'year', 'caps', 'worse', 'geological', '11', 'days', 'cementing', 'lower', 'congress', 'leading', 'reverse', 'texas', 'increased', 'current', 'sea', 'cleaned', 'damaged', 'collecting', '400', 'accepts', 'ordered', 'hands', 'attempt', 'includes', 'areas', 'warns', 'bn', 'experts', 'coast', 'effectively', 'announces', 'resource', 'plug', 'florida', 'scientific', 'sealed', 'fifth', 'given', 'analyzed', '32', 'series', 'commander', 'earlier', 'potentially', 'office', '100', 'effort', 'allows', '5ft', '206m', 'bid', 'east', 'broken', 'visits', 'ice', 'applications', 'blames', '55', 'ban', 'age', 'hails', 'aboard', 'fitting', 'investigators', 'administration', 'detected', 'permanently', 'americans', 'seeping', 'available', 'internal', '147m', 'leaking', 'risk', 'capped', 'hat', 'draw', 'past', 'seven', 'presence', 'figure', 'june', 'long', 'issues', '1m', 'ending', 'marine', 'plumes', 'forced', 'involved', 'exchanged', 'approaches', 'traveled', '350m', 'fully', 'lashing', '40', 'methane', 'adm', 'prevent', 'leaked', 'balls', 'protection', 'bonnie', 'later', 'hours', 'spill', 'moratorium', 'operations', 'resulting', 'concrete', 'barrels', 'annual', '2bn', 'nation', 'extend', 'golf', 'pumps', 'residue', 'criticism', 'expected', 'failure', 'stops', '1989', 'reaching', 'rrb', 'committee', 'matter', 'officially', '233m', 'piece', 'brought', 'say', 'livelihoods', 'criminal', 'post', 'procedure', '15', 'unclear', 'indication', 'meaning', 'releasing', 'alaska', 'shut', 'debris', 'device', 'total', 'responsibility', 'pledges', 'temporarily', 'undetermined', 'national', 'mr', 'contain', 'bans', 'halliburton', 'fragile', 'near', 'paying', 'relief', 'buck', 'weakened', 'kilometre', 'entered', 'spreads', 'region', 'cap', 'makes', 'delayed', 'concerned', 'jeopardise', 'journal', 'captured', 'dead', 'carol', 'surface', '52', 'oval', 'reports', 'amounts', 'thad', 'oceanographers', 'cause', 'henry', 'poses', 'prepares', 'consequences', 'come', 'fallen', 'compensate', 'hearings', 'robots', 'progress', 'bp', '319m', 'encouraging', 'despite', 'places', 'environmental']
 env initialized...
-logits =  tensor([[[ 0.0000,  3.2548,  0.2932,  ..., -2.2906, -0.9243,  0.1137]]],
-       device='cuda:0', grad_fn=<GatherBackward>)
-tensor([[202]], device='cuda:0')
-logits =  tensor([[[ 0.0000,  3.2548,  0.2932,  ..., -2.2906, -0.9243,  0.1137],
-         [ 0.0000,  1.5628,  0.2093,  ..., -3.6049, -1.5663, -3.4226]]],
-       device='cuda:0', grad_fn=<GatherBackward>)
-tensor([[5079, 1034]], device='cuda:0')
-logits =  tensor([[[ 0.0000,  3.2548,  0.2932,  ..., -2.2906, -0.9243,  0.1137],
-         [ 0.0000,  1.5628,  0.2093,  ..., -3.6049, -1.5663, -3.4226],
-         [ 0.0000,  2.4455,  0.0252,  ..., -2.9262, -0.1394, -0.7186],
-         [ 0.0000,  1.7920,  1.9780,  ..., -1.3579, -0.5565, -0.1812]]],
-       device='cuda:0', grad_fn=<GatherBackward>)
-tensor([[  202, 27769,   166,   457]], device='cuda:0')
-logits =  tensor([[[ 0.0000,  3.2548,  0.2932,  ..., -2.2906, -0.9243,  0.1137],
-         [ 0.0000,  1.5628,  0.2093,  ..., -3.6049, -1.5663, -3.4226],
-         [ 0.0000,  2.4455,  0.0252,  ..., -2.9262, -0.1394, -0.7186],
-         ...,
-         [ 0.0000, -0.1259,  0.8904,  ..., -1.7088,  0.5712, -4.0665],
-         [ 0.0000, -0.3697, -0.1028,  ..., -3.6539,  0.6917, -2.7307],
-         [ 0.0000,  0.1575,  0.5452,  ..., -4.6775, -1.9926, -1.9977]]],
-       device='cuda:0', grad_fn=<GatherBackward>)
-tensor([[75048, 87590,   370, 47112,   131,  7306,   131, 55334]],
+Greenpeace has accused BP of slashing investment in clean energy A balcony protest at BP 's London headquarters over the Gulf of Mexico oil spill has ended with no arrests . Two Greenpeace campaigners who unfurled a flag showing the company 's logo smudged in oil and the words `` British Polluters '' came down unassisted . Six others held banners as they greeted staff at a side entrance on the ground . Oil has been spewing into the Gulf since the explosion on the Deepwater Horizon drilling rig on 20 April , which killed 11 workers . A Greenpeace spokesman said the protesters chose to come down because they had `` made their point ''  Gulf spill : US to keep boot on BP 's neck - Salazar BP says it shares public frustration at its inability to plug the leaking well The US government has toughened its rhetoric towards BP as frustration builds about the company 's inability to plug a leaking Gulf of Mexico oil well . Interior Secretary Ken Salazar pledged to `` keep our boot on their neck until the job gets done '' . BP Plc would be accountable , `` civilly and in whatever way is necessary '' , he said on a tour of the Gulf . Earlier on Monday , BP pledged $ 500m -LRB- # 346m -RRB- to study the spill 's impact on the environment . The company says it will be Wednesday before it tries a so-called `` top kill '' bid to plug the leak - firing heavy mud and cement down into the blown out well 5,000 ft -LRB- 1,500 m -RRB- below the surface of the Gulf  Obama pledges to triple oil response manpower in Gulf President Barack Obama : `` It 's an assault on the shores and our people '' US President Barack Obama has ordered a tripling of manpower in coastal areas where oil has washed ashore or threatens to within 24 hours . Speaking on a tour of oil-hit areas , Mr Obama said the US would `` do whatever it takes '' to help those affected . The oil company BP says operations to seal the hole in the damaged well are continuing . BP chief executive Tony Hayward said the outcome would not be clear for another 48 hours . He said the new `` top kill '' effort - untested before at this depth of 5,000 ft -LRB- 1 Oil firm BP has lowered a cap on to a leaking oil well in the Gulf of Mexico , in the hope of piping some of the oil to ships on the surface . Video footage showed the cap lowered into place against pressure from escaping oil and gas . BP said some oil had started flowing up the pipe attached to the cap , but it could take the rest of the day to determine how much . The US Coast Guard said the cap would only be a temporary , partial fix . Live underwater video footage from the site on Friday showed quantities of oil still escaping into the sea  BP 's Doug Suttles explains how the cap is meant to operate A new cap placed over a ruptured oil well in the Gulf of Mexico has begun to funnel oil to the surface . US Coast Guard chief Adm Thad Allen said rough estimates showed that 1,000 barrels a day were being captured . This is only a small part of the 12,000-19 ,000 barrels a day believed to be leaking and BP says it could take 48 hours to know if the system is working . Meanwhile , President Obama arrived in Louisiana for his third visit to the region since the crisis began . The visit to the Gulf area comes as beaches in the key tourist area of north-west Florida saw their first major signs of oil  Mr Obama has made three visits to Louisiana since the spill US President Barack Obama has pledged to use `` every resource '' available to clean shores and help those affected by the Gulf of Mexico oil spill . In his weekly address , Mr Obama said that BP appeared to be `` making progress '' in containing the leak after placing a cap over the well . But the company 's latest effort , even if successful , will only stop some of the leak . Mr Obama has faced mounting criticism for his handling of the crisis . Correspondents say that , as the political fall-out has increased , the president 's tone has become stronger , saying earlier in the week that he was `` furious '' with how the issue has been managed  BP cap captures ' 10,000 barrels ' a day in US Gulf Tony Hayward , chief executive of BP , on the oil leak and stakeholder dividends A containment cap on a ruptured well in the Gulf of Mexico is now funnelling off 10,000 barrels of oil a day , BP 's chief executive Tony Hayward says . The amount has risen since Saturday , and implies more than half the estimated 12,000 to 19,000 barrels leaking each day is now being captured . The spill has been described as the biggest environmental disaster in US history . Mr Hayward told the BBC that BP would restore the Gulf to its original state . Speaking on the Andrew Marr Show , Mr Hayward said : `` As we speak , the containment cap is producing around 10,000 barrels of oil a day to the surface  Shares in BP fell a further 5 % on Tuesday after US President Barack Obama launched his most strident attack yet on the oil giant . The company - in which most of the UK 's pension funds invest - has seen its shares tumble almost 40 % since April 's oil spill in the Gulf of Mexico . President Obama said earlier he would have fired BP chief executive Tony Hayward over remarks he made . Some analysts have called for the BP boss to announce plans to step down . In an interview with NBC , Mr Obama was asked about comments Mr Hayward made in the wake of the disaster , which killed 11 people , such as `` I want my life back '' and the Gulf is `` a big ocean ''  US Adm Thad Allen says oil clean-up ` will take years ' Coast Guard chief Admiral Thad Allen warns oil will not be fully contained for months The US Coast Guard chief says cleaning up marshlands affected by the Gulf of Mexico oil spill will take years . Adm Thad Allen said oil giant BP needed to do better at getting money to people and businesses affected by the spill . Some 11,000 barrels of oil were being trapped by a containment cap , he said . President Barack Obama defended his response to the spill , using some of his toughest language yet . He said he had frequently consulted with experts in order to learn `` whose ass to kick ''  US President Barack Obama has strongly criticised BP 's chief executive Tony Hayward over the massive oil spill in the Gulf of Mexico . In an interview with NBC , Mr Obama was asked about comments Mr Hayward made in the wake of the disaster , such as `` I want my life back '' and the Gulf is `` a big ocean '' . Mr Obama said : `` He would n't be working for me after any of those statements . '' He said he had visited the Louisiana coast `` so I know whose ass to kick '' . The interview on NBC 's Today show is to be broadcast later on Tuesday  Images of oil-covered birds are fuelling public anger in the US The US government has given BP 72 hours to present its latest plans to clean up the oil spill in the Gulf of Mexico . BP says its containment effort is going well , but there are signs of mistrust between the company and the government . The US justice department is mulling legal action to make sure BP has enough funds to cover the damage and compensate those affected by the slick . That could mean shareholders are not paid dividends , which would infuriate investors and hit pension funds . Amid growing public anger in the US , President Barack Obama will make his fourth visit to the region on Monday  BP accused of ` lack of integrity ' by US House speaker BP is working to contain the spill having failed to plug the leak US House Speaker Nancy Pelosi has accused BP of a `` lack of integrity '' when making its case for deepwater drilling in the Gulf of Mexico . US President Barack Obama has met relatives of the 11 workers killed in the explosion on the BP-leased oil platform in the Gulf . BP shares in the UK have fallen to their lowest level since 1997 amid fears of huge US penalties . The US attorney general said America would `` not pay a dime '' for cleaning up . BP would be held responsible for all damages , Eric Holder said  This is Mr Obama 's fourth visit to the oil-affected area US President Barack Obama has said the oil disaster in the Gulf of Mexico will have the same impact on the US psyche as 9\/11 . The disaster will `` shape how we think about the environment ... for years to come '' , he told US website Politico  President Barack Obama said his government was responding to the largest environmental disaster in US history US President Barack Obama has called on his party and supporters to back a `` new future '' of clean energy . Visiting areas affected by the BP oil spill , he said the full resources of government were being used , with 17,500 National Guard soldiers available . BP 's US head , Lamar McKay , is to return to Congress shortly for further questioning . Oil has been spewing into the Gulf of Mexico since a drilling rig it leased exploded and sank in April . The company has put the cost of the clean-up to date at $ 1 Edward Markey called for `` iron-clad '' oil drilling safety plans Edward Markey told the House energy and commerce sub-committee Exxon-Mobil , Chevron , ConocoPhillips and Shell all have identical response plans to BP . BP 's US chief Lamar McKay and four other oil bosses gave evidence amid accusations BP took shortcuts . President Barack Obama is to make a TV address later from the White House . He will use the prime-time speech , at 2000 -LRB- 0000 GMT -RRB- , to outline the next steps his administration will take against the spill . Those are reported to include new steps to restore the Gulf Coast ecosystem and explicit demands to ensure BP fully compensates those affected  Congress tells Hayward BP ignored oil well dangers During the course of the day , Mr Hayward faced attacks from both politicians and the audience House committee on energy and commerce chairman Henry Waxman said BP 's `` complacency '' before the 20 April rig explosion had been `` astonishing '' . He accused Mr Hayward of `` stonewalling '' for failing to answer his questions . As a public relations exercise for BP , the hearing was a disaster , a BBC correspondent says . David Willis BBC News , Washington Maybe it was President Obama 's decision to dispatch the Attorney General - Eric Holder - to the Gulf Of Mexico a few weeks back to look into the possibility of criminal charges against BP that made the company 's CEO so cautious as he gave testimony . Time after time , to their growing frustration , Tony Hayward told members of Congress that it would be `` premature '' to prejudge the outcome of investigations into the explosion on the Deepwater Horizon well nearly two months ago  BP CEO Tony Hayward criticised for yacht trip Mr Hayward and his son attended the Isle of Wight boat race BP CEO Tony Hayward has faced fresh criticism for taking time off to go sailing with his son instead of dealing with the Gulf of Mexico oil spill . The White House said the move was one of a `` long line of PR gaffes and mistakes '' by Mr Hayward . Environmental groups said the Isle of Wight outing was `` insulting '' to those affected by the environmental disaster . BP defended Mr Hayward , saying it was his first day off since the spill began after a deadly rig blast on 20 April . Mr Hayward spent the day with his son at the JP Morgan Asset Management Round The Island Race , where boats race around the Isle of Wight , off the coast of southern England  Mr Hayward initially said the impact would be ` very modest ' In the wake of the Gulf of Mexico oil spill , BP chief executive Tony Hayward has been criticised for a series of public relations setbacks that have enraged residents of the Gulf coast and US politicians . Earlier this month , President Barack Obama said in a television interview that Mr Hayward `` would n't be working for me after any of those statements '' . Here is a selection of what he has said and done to cause the controversy : President Obama 's Chief of Staff Rahm Emanuel on Mr Hayward 's `` PR gaffe '' Mr Hayward is criticised by White House Chief of Staff Rahm Emanuel for taking time off to go sailing . In an interview with ABC News , Mr Emanuel says it has `` just been part of a long line of PR gaffes and mistakes '' . `` I think we can all conclude that Tony Hayward is not going to have a second career in PR consulting  Environmental activist Dave Janka shows Rajesh Mirchandani oil from the Valdez still in local waters Before the BP accident in the Gulf of Mexico , America 's worst offshore oil leak was the Exxon Valdez spill in Alaska . Twenty-one years later , the BBC 's Rajesh Mirchandani went to a nearby fishing village to see how its people had recovered - and found not all of them had . Surrounded by jagged snow-covered peaks and perched on the edge of a chilly fjord on Prince William Sound , the small Alaskan fishing town of Cordova is in a beautiful part of the world . But 21 years after one of the worst environmental disasters in US history , it remains scarred . In March 1989 , the Exxon Valdez tanker hit a reef and spewed 11m gallons of crude oil into the sound 's pristine waters , and , until April 's BP accident in the Gulf of Mexico , it was America 's worst spill  BP set to begin oil drilling off Libya The Gulf of Mexico spill has raised serious safety concerns for BP Oil giant BP has confirmed it will begin drilling off the Libyan coast in the next few weeks . The deepwater drilling will take place in the Gulf of Sirte following a deal signed in 2007 with Libya on oil and gas development . The news comes amid major concerns over BP 's environmental and safety record following the Gulf of Mexico spill . It also follows claims , denied by BP , that it lobbied for Lockerbie bomber Abdelbaset Ali al-Megrahi 's release . The Libyan was convicted of blowing up a Pan Am jumbo jet over the Scottish town in 1988 , killing 270 people , but was freed by the Scottish government on medical grounds last August  Greenpeace said it wanted the company to adopt greener policies BP filling stations across London have been shut down by activists . Environmental group Greenpeace said it had cut fuel supplies to all 50 BP stations in the city . The oil firm said 35 to 40 had been shut but many of them have now reopened . The protesters stopped the fuel by removing safety switches on forecourts . The action comes as BP reported an # 11bn loss after the oil spill in the Gulf of Mexico and confirmed chief executive Tony Hayward is to step down  Tony Hayward says BP was ` not prepared ' for the Gulf oil spill Former BP boss Tony Hayward says the company was `` not prepared '' to deal with media scrutiny over the Gulf oil disaster The former boss of BP Tony Hayward has admitted that the company was `` not prepared '' to deal with fallout over the Deepwater Horizon drilling rig disaster in the Gulf of Mexico and the media `` feeding frenzy '' surrounding it . In his first interview since resigning Tony Hayward said as the face of BP he had been `` demonised and vilified '' , but he understood why . The blast on 20 April killed 11 workers and caused one of the worst environmental disasters in US history . It took five months for the well to be completely sealed . BP was widely condemned for its slow response to the leak , which pumped out around half a million barrels of oil in to the gulf during the first month 
+tensor([[56337,   148,  6462,  ...,   108,  1263,     1]], device='cuda:0')
+tensor([ 0.0000,  2.3614,  0.5242,  ..., -2.9460,  2.5879, -0.0654],
+       device='cuda:0')
+tensor([4.1396e-07, 4.3904e-06, 6.9923e-07,  ..., 2.1753e-08, 5.5066e-06,
+        3.8776e-07], device='cuda:0')
+5634
+tensor([ 0.0000,  2.4879,  0.2427,  ..., -0.5994, -0.3524, -0.9791],
+       device='cuda:0')
+tensor([3.4062e-07, 4.0997e-06, 4.3417e-07,  ..., 1.8705e-07, 2.3945e-07,
+        1.2795e-07], device='cuda:0')
+4754
+tensor([ 0.0000,  2.8408, -0.1127,  ..., -1.2080, -0.3715, -2.0895],
+       device='cuda:0')
+tensor([1.2126e-06, 2.0770e-05, 1.0834e-06,  ..., 3.6230e-07, 8.3630e-07,
+        1.5005e-07], device='cuda:0')
+6755
+tensor([ 0.0000,  4.1696,  0.0675,  ...,  0.7519,  0.2523, -1.0552],
+       device='cuda:0')
+tensor([9.1828e-07, 5.9402e-05, 9.8237e-07,  ..., 1.9477e-06, 1.1819e-06,
+        3.1967e-07], device='cuda:0')
+50764
+tensor([ 0.0000,  2.4066,  0.0061,  ..., -1.7051, -1.8958, -1.8161],
+       device='cuda:0')
+tensor([6.5294e-07, 7.2448e-06, 6.5695e-07,  ..., 1.1868e-07, 9.8070e-08,
+        1.0620e-07], device='cuda:0')
+35505
+tensor([ 0.0000,  3.1492, -0.2295,  ..., -1.7801,  0.8852, -1.0484],
+       device='cuda:0')
+tensor([1.3685e-06, 3.1908e-05, 1.0878e-06,  ..., 2.3075e-07, 3.3166e-06,
+        4.7967e-07], device='cuda:0')
+112
+tensor([ 0.0000,  3.1214,  0.4454,  ..., -2.2158, -0.1808, -0.2003],
+       device='cuda:0')
+tensor([2.6776e-07, 6.0725e-06, 4.1802e-07,  ..., 2.9205e-08, 2.2348e-07,
+        2.1916e-07], device='cuda:0')
+376
+tensor([ 0.0000,  0.6093,  0.0198,  ..., -1.6751,  0.6736, -3.0628],
+       device='cuda:0')
+tensor([1.5384e-06, 2.8293e-06, 1.5691e-06,  ..., 2.8812e-07, 3.0171e-06,
+        7.1929e-08], device='cuda:0')
+150
+tensor([ 0.0000,  2.7296,  0.3619,  ..., -0.6966, -1.3147, -2.1311],
+       device='cuda:0')
+tensor([2.0423e-07, 3.1302e-06, 2.9329e-07,  ..., 1.0177e-07, 5.4848e-08,
+        2.4244e-08], device='cuda:0')
+5407
+tensor([ 0.0000,  2.3609, -0.0556,  ..., -2.3953, -0.2764, -1.3193],
+       device='cuda:0')
+tensor([6.0750e-07, 6.4400e-06, 5.7464e-07,  ..., 5.5369e-08, 4.6078e-07,
+        1.6240e-07], device='cuda:0')
+124
+tensor([ 0.0000,  1.4667, -0.0295,  ..., -2.8412,  0.4777, -2.2374],
+       device='cuda:0')
+tensor([2.0501e-07, 8.8873e-07, 1.9905e-07,  ..., 1.1964e-08, 3.3055e-07,
+        2.1883e-08], device='cuda:0')
+16036
+tensor([ 0.0000,  2.3375, -0.3432,  ...,  0.4922, -1.1801, -1.8188],
+       device='cuda:0')
+tensor([1.0633e-06, 1.1011e-05, 7.5443e-07,  ..., 1.7396e-06, 3.2669e-07,
+        1.7249e-07], device='cuda:0')
+1034
+tensor([ 0.0000,  2.6149,  0.9491,  ...,  1.6586, -0.5384,  0.1419],
+       device='cuda:0')
+tensor([1.2190e-06, 1.6659e-05, 3.1491e-06,  ..., 6.4020e-06, 7.1147e-07,
+        1.4048e-06], device='cuda:0')
+116
+tensor([ 0.0000,  4.7541,  0.3675,  ...,  1.0342, -0.3925, -2.1053],
+       device='cuda:0')
+tensor([1.9160e-06, 2.2238e-04, 2.7670e-06,  ..., 5.3895e-06, 1.2940e-06,
+        2.3340e-07], device='cuda:0')
+3464
+tensor([ 0.0000,  2.5118, -0.3643,  ..., -2.1090,  1.2945, -2.8759],
+       device='cuda:0')
+tensor([1.3157e-06, 1.6219e-05, 9.1403e-07,  ..., 1.5967e-07, 4.8013e-06,
+        7.4165e-08], device='cuda:0')
+131
+tensor([ 0.0000,  8.4143, -0.5694,  ..., -1.0023,  0.4493, -4.0441],
+       device='cuda:0')
+tensor([1.7053e-06, 7.6931e-03, 9.6496e-07,  ..., 6.2591e-07, 2.6728e-06,
+        2.9888e-08], device='cuda:0')
+112
+tensor([ 0.0000, -0.6068,  0.4263,  ..., -2.9205,  1.4843, -0.9019],
+       device='cuda:0')
+tensor([9.1237e-07, 4.9735e-07, 1.3974e-06,  ..., 4.9184e-08, 4.0253e-06,
+        3.7026e-07], device='cuda:0')
+225
+tensor([ 0.0000,  0.9475,  0.1532,  ..., -4.0278,  1.6624, -0.0695],
+       device='cuda:0')
+tensor([1.3644e-06, 3.5191e-06, 1.5903e-06,  ..., 2.4304e-08, 7.1933e-06,
+        1.2728e-06], device='cuda:0')
+274
+tensor([ 0.0000,  3.0444,  0.6838,  ..., -2.5680,  0.4675,  0.1130],
+       device='cuda:0')
+tensor([4.8510e-07, 1.0186e-05, 9.6119e-07,  ..., 3.7201e-08, 7.7424e-07,
+        5.4314e-07], device='cuda:0')
+2790
+tensor([ 0.0000,  3.3793, -0.3891,  ..., -1.0340, -0.0934, -0.1964],
+       device='cuda:0')
+tensor([1.7070e-06, 5.0100e-05, 1.1568e-06,  ..., 6.0699e-07, 1.5547e-06,
+        1.4026e-06], device='cuda:0')
+110
+tensor([ 0.0000,  3.7218, -0.2121,  ..., -0.2523, -0.0364, -0.0734],
+       device='cuda:0')
+tensor([1.1267e-06, 4.6575e-05, 9.1139e-07,  ..., 8.7541e-07, 1.0864e-06,
+        1.0470e-06], device='cuda:0')
+107
+tensor([ 0.0000,  8.6006,  0.3621,  ..., -1.5011,  1.8082, -0.2237],
+       device='cuda:0')
+tensor([7.0906e-07, 3.8537e-03, 1.0184e-06,  ..., 1.5804e-07, 4.3250e-06,
+        5.6695e-07], device='cuda:0')
+16036
+tensor([ 0.0000,  2.2485, -0.1874,  ..., -1.9040, -0.6929, -1.0808],
+       device='cuda:0')
+tensor([8.2379e-07, 7.8045e-06, 6.8299e-07,  ..., 1.2272e-07, 4.1199e-07,
+        2.7953e-07], device='cuda:0')
+35505
+tensor([ 0.0000,  1.5073,  0.0644,  ..., -1.8200,  3.1853, -1.9503],
+       device='cuda:0')
+tensor([3.4498e-07, 1.5574e-06, 3.6792e-07,  ..., 5.5897e-08, 8.3399e-06,
+        4.9067e-08], device='cuda:0')
+3662
+tensor([ 0.0000,  3.9117,  0.4143,  ...,  0.2618, -0.9304, -2.2156],
+       device='cuda:0')
+tensor([5.9315e-07, 2.9647e-05, 8.9764e-07,  ..., 7.7063e-07, 2.3394e-07,
+        6.4705e-08], device='cuda:0')
+2527
+tensor([ 0.0000,  3.4354,  0.1478,  ..., -0.2281, -1.0086, -0.4924],
+       device='cuda:0')
+tensor([7.9278e-07, 2.4612e-05, 9.1904e-07,  ..., 6.3108e-07, 2.8914e-07,
+        4.8452e-07], device='cuda:0')
+208
+tensor([ 0.0000,  1.3775, -0.2339,  ..., -1.2015,  0.8382, -1.9551],
+       device='cuda:0')
+tensor([6.9728e-07, 2.7647e-06, 5.5184e-07,  ..., 2.0971e-07, 1.6123e-06,
+        9.8700e-08], device='cuda:0')
+233
+tensor([ 0.0000,  3.6320,  0.3575,  ..., -2.1510,  1.0240, -2.4390],
+       device='cuda:0')
+tensor([1.4059e-07, 5.3129e-06, 2.0101e-07,  ..., 1.6360e-08, 3.9144e-07,
+        1.2266e-08], device='cuda:0')
+20447
+tensor([ 0.0000,  2.3760,  0.4866,  ..., -1.0065, -1.0011, -0.4245],
+       device='cuda:0')
+tensor([4.3439e-08, 4.6747e-07, 7.0669e-08,  ..., 1.5876e-08, 1.5962e-08,
+        2.8415e-08], device='cuda:0')
+788
+tensor([ 0.0000,  2.5562, -0.0570,  ..., -0.2116,  1.7192, -0.9052],
+       device='cuda:0')
+tensor([1.6408e-06, 2.1144e-05, 1.5499e-06,  ..., 1.3279e-06, 9.1551e-06,
+        6.6364e-07], device='cuda:0')
+121
+tensor([ 0.0000,  2.3846,  0.4816,  ..., -0.6099,  2.3120, -1.7462],
+       device='cuda:0')
+tensor([2.7957e-08, 3.0348e-07, 4.5254e-08,  ..., 1.5192e-08, 2.8222e-07,
+        4.8768e-09], device='cuda:0')
+1768
+tensor([ 0.0000,  2.8428,  0.6368,  ...,  0.3934,  1.0475, -1.9785],
+       device='cuda:0')
+tensor([2.9154e-07, 5.0037e-06, 5.5112e-07,  ..., 4.3205e-07, 8.3103e-07,
+        4.0314e-08], device='cuda:0')
+37440
+tensor([ 0.0000,  3.5992,  0.0149,  ..., -1.2726, -0.9603, -0.6525],
+       device='cuda:0')
+tensor([1.7385e-07, 6.3571e-06, 1.7646e-07,  ..., 4.8693e-08, 6.6545e-08,
+        9.0533e-08], device='cuda:0')
+208
+tensor([ 0.0000,  2.6192, -0.1814,  ..., -0.1546,  1.0007, -1.2797],
+       device='cuda:0')
+tensor([5.1410e-07, 7.0559e-06, 4.2883e-07,  ..., 4.4048e-07, 1.3985e-06,
+        1.4298e-07], device='cuda:0')
+233
+tensor([ 0.0000,  3.8294,  0.2460,  ..., -1.1963, -1.3737, -3.6306],
+       device='cuda:0')
+tensor([2.9695e-07, 1.3670e-05, 3.7976e-07,  ..., 8.9772e-08, 7.5179e-08,
+        7.8695e-09], device='cuda:0')
+16567
+tensor([ 0.0000,  3.4806,  0.5530,  ..., -1.4821, -0.5717, -2.4925],
+       device='cuda:0')
+tensor([6.6248e-08, 2.1517e-06, 1.1517e-07,  ..., 1.5049e-08, 3.7400e-08,
+        5.4789e-09], device='cuda:0')
+788
+tensor([ 0.0000,  3.3885, -0.0543,  ..., -0.1529,  0.4463, -0.8387],
+       device='cuda:0')
+tensor([1.2274e-06, 3.6359e-05, 1.1625e-06,  ..., 1.0534e-06, 1.9178e-06,
+        5.3059e-07], device='cuda:0')
+121
+tensor([ 0.0000e+00,  3.2601e+00, -1.3227e-03,  ...,  6.0094e-01,
+        -8.4654e-01, -2.3155e+00], device='cuda:0')
+tensor([2.4217e-06, 6.3092e-05, 2.4185e-06,  ..., 4.4168e-06, 1.0387e-06,
+        2.3907e-07], device='cuda:0')
+112
+tensor([ 0.0000,  1.0753,  0.3264,  ..., -0.7339,  1.2525,  1.7808],
+       device='cuda:0')
+tensor([3.4741e-07, 1.0182e-06, 4.8150e-07,  ..., 1.6676e-07, 1.2156e-06,
+        2.0618e-06], device='cuda:0')
+692
+tensor([ 0.0000,  1.2010, -0.1456,  ..., -1.7187,  0.3761,  0.7762],
+       device='cuda:0')
+tensor([1.5322e-06, 5.0923e-06, 1.3247e-06,  ..., 2.7472e-07, 2.2319e-06,
+        3.3300e-06], device='cuda:0')
+109
+tensor([ 0.0000,  1.8664,  0.1929,  ..., -1.2071,  1.4363,  1.4504],
+       device='cuda:0')
+tensor([1.2922e-06, 8.3543e-06, 1.5672e-06,  ..., 3.8644e-07, 5.4338e-06,
+        5.5109e-06], device='cuda:0')
+14567
+tensor([ 0.0000,  1.8499, -0.6102,  ..., -0.6727,  0.0862, -0.1993],
+       device='cuda:0')
+tensor([2.1186e-06, 1.3473e-05, 1.1509e-06,  ..., 1.0812e-06, 2.3095e-06,
+        1.7358e-06], device='cuda:0')
+110
+tensor([ 0.0000,  4.0782, -0.2331,  ..., -0.3045,  0.0642,  0.0300],
+       device='cuda:0')
+tensor([1.1329e-06, 6.6882e-05, 8.9728e-07,  ..., 8.3545e-07, 1.2080e-06,
+        1.1674e-06], device='cuda:0')
+107
+tensor([ 0.0000,  9.8818,  0.3154,  ..., -1.3764,  2.4350,  0.0245],
+       device='cuda:0')
+tensor([7.8913e-07, 1.5444e-02, 1.0818e-06,  ..., 1.9925e-07, 9.0084e-06,
+        8.0871e-07], device='cuda:0')
+16036
+tensor([ 0.0000,  3.1532, -0.1258,  ..., -1.3651, -0.2610, -1.5992],
+       device='cuda:0')
+tensor([2.0198e-06, 4.7286e-05, 1.7811e-06,  ..., 5.1577e-07, 1.5558e-06,
+        4.0813e-07], device='cuda:0')
+649
+tensor([ 0.0000,  0.6105, -0.4444,  ..., -2.7739,  1.2074, -0.0377],
+       device='cuda:0')
+tensor([1.1505e-06, 2.1186e-06, 7.3774e-07,  ..., 7.1817e-08, 3.8484e-06,
+        1.1080e-06], device='cuda:0')
+126
+tensor([ 0.0000,  2.6870, -0.2562,  ...,  0.0320,  0.8553,  0.8999],
+       device='cuda:0')
+tensor([1.9053e-06, 2.7984e-05, 1.4747e-06,  ..., 1.9672e-06, 4.4813e-06,
+        4.6858e-06], device='cuda:0')
+138
+tensor([ 0.0000,  1.1837,  0.0430,  ..., -1.1149,  1.3289, -0.1948],
+       device='cuda:0')
+tensor([8.1178e-07, 2.6516e-06, 8.4744e-07,  ..., 2.6623e-07, 3.0659e-06,
+        6.6809e-07], device='cuda:0')
+129
+tensor([ 0.0000,  1.6752,  0.2098,  ..., -2.8951,  1.0076, -2.3317],
+       device='cuda:0')
+tensor([2.8127e-06, 1.5020e-05, 3.4691e-06,  ..., 1.5552e-07, 7.7042e-06,
+        2.7320e-07], device='cuda:0')
+1900
+tensor([ 0.0000,  0.5096, -0.2213,  ...,  0.3973, -0.9046, -0.8082],
+       device='cuda:0')
+tensor([4.6798e-07, 7.7902e-07, 3.7508e-07,  ..., 6.9623e-07, 1.8939e-07,
+        2.0855e-07], device='cuda:0')
+269
+tensor([ 0.0000e+00,  1.7143e+00, -2.2325e-03,  ..., -1.4559e+00,
+         4.6596e-01, -2.7824e+00], device='cuda:0')
+tensor([1.3194e-06, 7.3260e-06, 1.3164e-06,  ..., 3.0766e-07, 2.1025e-06,
+        8.1654e-08], device='cuda:0')
+847
+tensor([ 0.0000,  2.1835, -0.1220,  ...,  0.0323, -0.2743, -1.1175],
+       device='cuda:0')
+tensor([1.0737e-06, 9.5317e-06, 9.5037e-07,  ..., 1.1090e-06, 8.1610e-07,
+        3.5121e-07], device='cuda:0')
+114
+tensor([ 0.0000,  1.7705,  0.2000,  ...,  1.0356,  0.6909, -0.3240],
+       device='cuda:0')
+tensor([1.2585e-06, 7.3920e-06, 1.5371e-06,  ..., 3.5450e-06, 2.5115e-06,
+        9.1023e-07], device='cuda:0')
+1034
+tensor([0.0000, 1.8618, 1.7445,  ..., 2.3534, 1.0066, 0.5497], device='cuda:0')
+tensor([7.6458e-08, 4.9202e-07, 4.3757e-07,  ..., 8.0447e-07, 2.0920e-07,
+        1.3249e-07], device='cuda:0')
+5891
+tensor([ 0.0000,  4.1113,  0.3823,  ..., -1.2248, -0.1061, -1.1724],
+       device='cuda:0')
+tensor([7.2598e-07, 4.4302e-05, 1.0640e-06,  ..., 2.1330e-07, 6.5292e-07,
+        2.2479e-07], device='cuda:0')
+4017
+tensor([ 0.0000,  2.4219, -0.1104,  ..., -0.2942,  1.3562, -0.7649],
+       device='cuda:0')
+tensor([1.1513e-06, 1.2971e-05, 1.0309e-06,  ..., 8.5784e-07, 4.4686e-06,
+        5.3579e-07], device='cuda:0')
+131
+tensor([ 0.0000,  4.3801,  0.1169,  ...,  1.6197,  2.6672, -2.9376],
+       device='cuda:0')
+tensor([8.0950e-07, 6.4635e-05, 9.0986e-07,  ..., 4.0893e-06, 1.1657e-05,
+        4.2897e-08], device='cuda:0')
+5469
+tensor([ 0.0000,  3.9920, -0.5000,  ..., -0.7225,  0.4790, -1.5589],
+       device='cuda:0')
+tensor([1.5443e-06, 8.3646e-05, 9.3673e-07,  ..., 7.4981e-07, 2.4934e-06,
+        3.2488e-07], device='cuda:0')
+112
+tensor([ 0.0000,  3.4418,  0.3923,  ..., -0.1148,  0.8619, -1.6183],
+       device='cuda:0')
+tensor([2.9997e-07, 9.3723e-06, 4.4408e-07,  ..., 2.6744e-07, 7.1022e-07,
+        5.9467e-08], device='cuda:0')
+4800
+tensor([ 0.0000,  3.8330, -0.3361,  ..., -0.1308, -0.1622,  0.8697],
+       device='cuda:0')
+tensor([1.6033e-06, 7.4075e-05, 1.1456e-06,  ..., 1.4067e-06, 1.3633e-06,
+        3.8260e-06], device='cuda:0')
+109
+tensor([0.0000, 3.1101, 0.1968,  ..., 0.1019, 1.1575, 1.8381], device='cuda:0')
+tensor([9.7896e-07, 2.1951e-05, 1.1919e-06,  ..., 1.0840e-06, 3.1149e-06,
+        6.1524e-06], device='cuda:0')
+8186
+tensor([ 0.0000,  2.9225, -0.4789,  ...,  0.7060,  0.2183, -0.8858],
+       device='cuda:0')
+tensor([2.2554e-06, 4.1923e-05, 1.3971e-06,  ..., 4.5691e-06, 2.8055e-06,
+        9.3012e-07], device='cuda:0')
+110
+tensor([ 0.0000,  4.0236, -0.2720,  ..., -0.1299,  0.0753, -0.1118],
+       device='cuda:0')
+tensor([1.1881e-06, 6.6414e-05, 9.0517e-07,  ..., 1.0433e-06, 1.2810e-06,
+        1.0624e-06], device='cuda:0')
+107
+tensor([ 0.0000, 11.4790,  0.1999,  ..., -1.2556,  1.7099,  0.4861],
+       device='cuda:0')
+tensor([1.0711e-06, 1.0354e-01, 1.3081e-06,  ..., 3.0514e-07, 5.9213e-06,
+        1.7416e-06], device='cuda:0')
+1276
+tensor([ 0.0000,  4.9002,  0.0261,  ..., -2.1270,  0.5307, -0.2666],
+       device='cuda:0')
+tensor([9.0558e-07, 1.2163e-04, 9.2953e-07,  ..., 1.0794e-07, 1.5396e-06,
+        6.9365e-07], device='cuda:0')
+3531
+tensor([ 0.0000,  4.5606, -0.1588,  ..., -4.2006,  0.1112, -0.7637],
+       device='cuda:0')
+tensor([1.1889e-06, 1.1370e-04, 1.0143e-06,  ..., 1.7817e-08, 1.3288e-06,
+        5.5394e-07], device='cuda:0')
+8350
+tensor([ 0.0000,  2.4971, -0.1573,  ..., -2.4664, -0.2434, -0.0244],
+       device='cuda:0')
+tensor([1.0735e-06, 1.3041e-05, 9.1730e-07,  ..., 9.1136e-08, 8.4166e-07,
+        1.0477e-06], device='cuda:0')
+115
+tensor([ 0.0000,  1.7781,  0.2031,  ..., -2.6404,  0.0670, -0.5903],
+       device='cuda:0')
+tensor([8.3270e-07, 4.9284e-06, 1.0202e-06,  ..., 5.9401e-08, 8.9040e-07,
+        4.6146e-07], device='cuda:0')
+7915
+tensor([ 0.0000,  3.2868, -0.4003,  ..., -2.2969, -1.6328, -0.8635],
+       device='cuda:0')
+tensor([8.7196e-07, 2.3331e-05, 5.8430e-07,  ..., 8.7690e-08, 1.7037e-07,
+        3.6769e-07], device='cuda:0')
+118
+tensor([ 0.0000,  2.6390, -0.3081,  ..., -1.6116, -1.0466, -0.0987],
+       device='cuda:0')
+tensor([6.7809e-07, 9.4923e-06, 4.9829e-07,  ..., 1.3533e-07, 2.3810e-07,
+        6.1436e-07], device='cuda:0')
+169
+tensor([ 0.0000,  2.7996, -0.1077,  ...,  1.3571, -1.8760,  1.7177],
+       device='cuda:0')
+tensor([2.9901e-07, 4.9150e-06, 2.6849e-07,  ..., 1.1616e-06, 4.5809e-08,
+        1.6661e-06], device='cuda:0')
+776
+tensor([ 0.0000,  3.3071, -0.0126,  ..., -1.4252,  0.3197,  0.4499],
+       device='cuda:0')
+tensor([4.4984e-07, 1.2283e-05, 4.4422e-07,  ..., 1.0817e-07, 6.1929e-07,
+        7.0541e-07], device='cuda:0')
+558
+tensor([ 0.0000,  2.9281, -0.4658,  ..., -1.1601, -0.2560, -0.3472],
+       device='cuda:0')
+tensor([1.5878e-06, 2.9678e-05, 9.9655e-07,  ..., 4.9769e-07, 1.2291e-06,
+        1.1220e-06], device='cuda:0')
+112
+tensor([ 0.0000, -0.0744,  0.0609,  ..., -3.9876,  0.8903,  0.8873],
+       device='cuda:0')
+tensor([7.2407e-07, 6.7217e-07, 7.6954e-07,  ..., 1.3427e-08, 1.7637e-06,
+        1.7585e-06], device='cuda:0')
+109
+tensor([ 0.0000,  0.9056,  0.1343,  ..., -4.0651,  2.9619,  0.6831],
+       device='cuda:0')
+tensor([4.4783e-07, 1.1077e-06, 5.1221e-07,  ..., 7.6854e-09, 8.6583e-06,
+        8.8667e-07], device='cuda:0')
+1322
+tensor([ 0.0000,  4.4500, -0.3143,  ..., -1.5690, -1.6911, -0.0121],
+       device='cuda:0')
+tensor([1.0637e-06, 9.1087e-05, 7.7689e-07,  ..., 2.2152e-07, 1.9607e-07,
+        1.0510e-06], device='cuda:0')
+381
+tensor([ 0.0000,  2.3598, -0.0411,  ..., -1.6064,  0.8928,  1.8159],
+       device='cuda:0')
+tensor([1.2090e-06, 1.2801e-05, 1.1604e-06,  ..., 2.4253e-07, 2.9525e-06,
+        7.4311e-06], device='cuda:0')
+109
+tensor([ 0.0000,  2.4132,  0.3722,  ..., -1.9516,  2.3281,  1.9812],
+       device='cuda:0')
+tensor([1.5160e-06, 1.6933e-05, 2.1997e-06,  ..., 2.1535e-07, 1.5552e-05,
+        1.0993e-05], device='cuda:0')
+3533
+tensor([ 0.0000,  4.4518, -0.0272,  ..., -1.3117,  0.5028, -1.1983],
+       device='cuda:0')
+tensor([4.4892e-07, 3.8508e-05, 4.3688e-07,  ..., 1.2092e-07, 7.4224e-07,
+        1.3544e-07], device='cuda:0')
+1219
+tensor([ 0.0000,  4.3467, -0.3310,  ..., -0.5728, -0.1217, -0.7034],
+       device='cuda:0')
+tensor([1.0805e-06, 8.3436e-05, 7.7601e-07,  ..., 6.0932e-07, 9.5673e-07,
+        5.3473e-07], device='cuda:0')
+110
+tensor([ 0.0000e+00,  4.4766e+00, -2.1107e-01,  ..., -3.9244e-01,
+        -3.1879e-02,  3.6711e-03], device='cuda:0')
+tensor([1.1170e-06, 9.8222e-05, 9.0441e-07,  ..., 7.5439e-07, 1.0819e-06,
+        1.1211e-06], device='cuda:0')
+107
+tensor([ 0.0000e+00,  1.3314e+01, -7.8158e-03,  ..., -1.5791e+00,
+         5.4516e-01,  1.8787e-01], device='cuda:0')
+tensor([9.8907e-07, 5.9922e-01, 9.8136e-07,  ..., 2.0391e-07, 1.7060e-06,
+        1.1935e-06], device='cuda:0')
+1
+generated_ids =  [0, 5634, 4754, 6755, 50764, 35505, 112, 376, 150, 5407, 124, 16036, 1034, 116, 3464, 131, 112, 225, 274, 2790, 110, 107, 16036, 35505, 3662, 2527, 208, 233, 20447, 788, 121, 1768, 37440, 208, 233, 16567, 788, 121, 112, 692, 109, 14567, 110, 107, 16036, 649, 126, 138, 129, 1900, 269, 847, 114, 1034, 5891, 4017, 131, 5469, 112, 4800, 109, 8186, 110, 107, 1276, 3531, 8350, 115, 7915, 118, 169, 776, 558, 112, 109, 1322, 381, 109, 3533, 1219, 110, 107, 1]
+Interior Secretary Ken Salazar pledges to keep our boot on BP 's neck' to help those affected . BP pledges $ 500m -LRB- #346m -RRB- to study the spill . BP says it will be Wednesday before trying a 'top kill' bid to plug the leak . President Obama arrives in Louisiana for his third visit to the region since the crisis began .
+token_ids =  tensor([[    0, 16036, 35505,  3662,  2527,   208,   233, 20447,   788,   121,
+          1768, 37440,   208,   233, 16567,   788,   121,   112,   692,   109,
+         14567,   131,   116,   979,   124,   109,   849,   110,   107,  5634,
+          4754,  6755, 50764, 35505,   112,   376,   150,  5407,   124, 16036,
+          1034,   116,  3464,   131,   430,   109,   494,  1476,   479,   110,
+           107,  1276,  3531,  8350,   115,  7915,   118,   169,   776,   558,
+           112,   109,  1322,   381,   109,  3533,  1219,   110,   107,     1]],
        device='cuda:0')

@@ -70,23 +70,29 @@ def get_logits(observation, nfirst):
 def generate(observation, tokenizer, actor, device, args):
     cluster, timeline = observation
     inputs = ' '.join([first_n_sents(a.text, args.nfirst) for a in cluster.articles])
+    print(inputs)
     input_ids = tokenizer(inputs, padding=True, truncation=True, return_tensors="pt").input_ids.to(device)
     print(input_ids)
     with torch.no_grad():
-        token_ids = actor.generate(input_ids)
+        #token_ids = actor.generate(input_ids)
         decoder_input_ids = [0]
-        while len(decoder_input_ids) < args.max_length:
+        while len(decoder_input_ids) < 6:
             decoder_input_ids_tensor = torch.LongTensor([decoder_input_ids]).to(device)
-            logits = actor(input_ids=input_ids, decoder_input_ids=decoder_input_ids_tensor).logits
-            action = torch.argmax(F.softmax(logits), dim=-1).item()
+            logits = actor(input_ids=input_ids, decoder_input_ids=decoder_input_ids_tensor).logits[0, -1]
+            print(logits)
+            print(F.softmax(logits, dim=-1))
+            action = torch.argmax(F.softmax(logits, dim=-1), dim=-1).item()
             #TODO: Add top_k here
             print(action)
             decoder_input_ids = decoder_input_ids + [action]
+            if action == 1:
+                break
             print(decoder_input_ids)
-            break
 
-    print("token_ids = ", token_ids)
-    print(tokenizer.batch_decode(logits, skip_special_tokens=True, clean_up_tokenization_spaces=False))
+        decoder_input_ids_tensor = torch.LongTensor([decoder_input_ids]).to(device)
+        print(tokenizer.decode([decoder_input_ids_tensor], skip_special_tokens=True, clean_up_tokenization_spaces=False))
+        print("token_ids = ", token_ids)
+        print(tokenizer.batch_decode(logits, skip_special_tokens=True, clean_up_tokenization_spaces=False))
 
     return 1, 2
 

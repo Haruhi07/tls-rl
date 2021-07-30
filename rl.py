@@ -67,7 +67,7 @@ def get_logits(observation, nfirst):
     logits = actor.forward(input_ids=encoder_input_ids, decoder_input_ids=decoder_input_ids).logits  # state
     return logits
 
-def generate(observation, tokenizer, actor, device, args):
+def generate(input_ids, actor, device, args):
     with torch.no_grad():
         decoder_input_ids = [0]
         while len(decoder_input_ids) < args.max_length:
@@ -83,9 +83,8 @@ def generate(observation, tokenizer, actor, device, args):
                 break
 
         decoder_input_ids_tensor = torch.LongTensor([decoder_input_ids]).to(device)[0]
-        output = tokenizer.decode(decoder_input_ids_tensor, skip_special_tokens=True, clean_up_tokenization_spaces=False)
 
-    return output, decoder_input_ids
+    return decoder_input_ids_tensor
 
 def main():
     parser = ArgumentParser()
@@ -127,7 +126,9 @@ def main():
         print(input)
         input_ids = tokenizer(input, padding=True, truncation=True, return_tensors="pt").input_ids.to(device)
         print(input_ids)
-        output, output_ids = generate(observation, tokenizer, actor, device, args)
+        output_ids = generate(input_ids, actor, device, args)
+        output = tokenizer.decode(output_ids, skip_special_tokens=True,
+                                  clean_up_tokenization_spaces=False)
 
         # calculate the reward of the sample
         reward = env.count_keyword(output)

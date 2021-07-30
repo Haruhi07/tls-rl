@@ -68,11 +68,6 @@ def get_logits(observation, nfirst):
     return logits
 
 def generate(observation, tokenizer, actor, device, args):
-    cluster, timeline = observation
-    inputs = ' '.join([first_n_sents(a.text, args.nfirst) for a in cluster.articles])
-    print(inputs)
-    input_ids = tokenizer(inputs, padding=True, truncation=True, return_tensors="pt").input_ids.to(device)
-    print(input_ids)
     with torch.no_grad():
         decoder_input_ids = [0]
         while len(decoder_input_ids) < args.max_length:
@@ -126,20 +121,28 @@ def main():
     for iter in range(args.episodes):
         env.reset()
         actor.eval()
-        observation = env.observation()
+        cluster, timeline = env.observation()
         # sample
+        input = ' '.join([first_n_sents(a.text, args.nfirst) for a in cluster.articles]) + '.'
+        print(input)
+        input_ids = tokenizer(input, padding=True, truncation=True, return_tensors="pt").input_ids.to(device)
+        print(input_ids)
         output, output_ids = generate(observation, tokenizer, actor, device, args)
 
         # calculate the reward of the sample
         reward = env.count_keyword(output)
 
+        # only tune the lm_head layer
         actor.eval()
         actor.lm_head.train()
         for p in actor.parameters():
             p.requires_grad = False
         for p in actor.lm_head.parameters():
             p.requires_grad = True
-        print("here")
+
+        state = input + output
+        print(state)
+        #logits = actor()
 
 
 

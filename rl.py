@@ -74,7 +74,6 @@ def generate(observation, tokenizer, actor, device, args):
     input_ids = tokenizer(inputs, padding=True, truncation=True, return_tensors="pt").input_ids.to(device)
     print(input_ids)
     with torch.no_grad():
-        token_ids = actor.generate(input_ids)
         decoder_input_ids = [0]
         while len(decoder_input_ids) < args.max_length:
             decoder_input_ids_tensor = torch.LongTensor([decoder_input_ids]).to(device)
@@ -89,12 +88,9 @@ def generate(observation, tokenizer, actor, device, args):
                 break
 
         decoder_input_ids_tensor = torch.LongTensor([decoder_input_ids]).to(device)[0]
-        print("generated_ids = ", decoder_input_ids)
-        print(tokenizer.decode(decoder_input_ids_tensor, skip_special_tokens=True, clean_up_tokenization_spaces=False))
-        print("token_ids = ", token_ids)
-        print(tokenizer.batch_decode(logits, skip_special_tokens=True, clean_up_tokenization_spaces=False))
+        output = tokenizer.decode(decoder_input_ids_tensor, skip_special_tokens=True, clean_up_tokenization_spaces=False)
 
-    return 1, 2
+    return output, decoder_input_ids
 
 def main():
     parser = ArgumentParser()
@@ -126,15 +122,26 @@ def main():
     optimizerA = torch.optim.Adam(actor.parameters())
     optimizerC = torch.optim.Adam(critic.parameters())
 
+    rewards = []
     for iter in range(args.episodes):
         env.reset()
+        actor.eval()
         observation = env.observation()
+        # sample
         output, output_ids = generate(observation, tokenizer, actor, device, args)
-        next_observation = None
-        log_probs = []
-        values = []
-        rewards = []
-        masks = []
+
+        # calculate the reward of the sample
+        reward = env.count_keyword(output)
+
+        actor.eval()
+        actor.lm_head.train()
+        for p in actor.parameters():
+            p.requires_grad = False
+        for p in actor.lm_head.parameters():
+            p.requires_grad = True
+        print("here")
+
+
 
         for i in count():
             logits = get_logits(observation, args.nfirst).squeeze(0)[-1]

@@ -141,13 +141,14 @@ def main():
 
         state = input + ' ' + output
         state_ids = tokenizer(state, padding=True, truncation=True, return_tensors='pt').input_ids.to(device)
+        print("state_ids = ", state_ids)
         labels = [-1] * len(input_ids[0]) + output_ids
         if len(labels) <= args.max_length:
             labels = labels + [-1] * (args.max_length - len(labels))
         else:
             labels = labels[:args.max_length]
         labels_tensor = torch.LongTensor(labels).to(device)
-        print(labels)
+        print(labels_tensor)
         actor_output = actor(input_ids=state_ids, labels=labels_tensor)
         logits = actor_output.logits
         loss = actor_output.loss

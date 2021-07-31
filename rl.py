@@ -140,7 +140,7 @@ def main():
             p.requires_grad = True
 
         state = input + ' ' + output
-        state_ids = tokenizer(state, padding=True, truncation=True, return_tensor='pt').input_ids.to(device)
+        state_ids = tokenizer(state, padding=True, truncation=True, return_tensors='pt').input_ids.to(device)
         labels = [-1] * len(input_ids) + output_ids
         if len(labels) <= args.max_length:
             labels = labels + [-1] * (args.max_length - len(labels))

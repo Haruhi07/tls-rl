@@ -68,21 +68,9 @@ def get_logits(observation, nfirst):
     return logits
 
 def generate(input_ids, actor, device, args):
-    with torch.no_grad():
-        decoder_input_ids = [0]
-        while len(decoder_input_ids) < args.max_length:
-            decoder_input_ids_tensor = torch.LongTensor([decoder_input_ids]).to(device)
-            logits = actor(input_ids=input_ids, decoder_input_ids=decoder_input_ids_tensor).logits
-            probs = F.softmax(logits, dim=-1)
-            action = torch.argmax(probs[0, -1], dim=-1).item()
-            #TODO: Add top_k here
-            print(action)
-            decoder_input_ids = decoder_input_ids + [action]
-            if action == 1:
-                break
-    print(logits)
-    print(probs)
-    return decoder_input_ids
+
+    print("probs = ", probs)
+    return probs, decoder_input_ids
 
 def main():
     parser = ArgumentParser()
@@ -124,13 +112,8 @@ def main():
         print(input)
         input_ids = tokenizer(input, padding=True, truncation=True, return_tensors="pt").input_ids.to(device)
         print(input_ids)
-        output_ids = generate(input_ids, actor, device, args)
-        output = tokenizer.decode(output_ids, skip_special_tokens=True,
-                                  clean_up_tokenization_spaces=False)
-
-        # calculate the reward of the sample
-        reward = env.count_keyword(output)
-
+        rewards = []
+        values = []
         # only tune the lm_head layer
         actor.eval()
         actor.lm_head.train()
@@ -139,21 +122,42 @@ def main():
         for p in actor.lm_head.parameters():
             p.requires_grad = True
 
+        # generate sample
+        decoder_input_ids = [0]
+        while len(decoder_input_ids) < args.max_length:
+            decoder_input_ids_tensor = torch.LongTensor([decoder_input_ids]).to(device)
+            logits = actor(input_ids=input_ids, decoder_input_ids=decoder_input_ids_tensor).logits
+            probs = F.softmax(logits, dim=-1)
+            action = torch.argmax(probs[0, -1], dim=-1).item()
+            # TODO: Add top_k here
+            print(action)
+            decoder_input_ids = decoder_input_ids + [action]
+            # calculate the reward of the sample
+            reward = env.count_keyword(output)
+            rewards.append(reward)
+            print("reward = ", reward)
+
+            state = logits[0, -1]
+            print("state = ", state)
+
+            if action == 1:
+                break
+        output = tokenizer.decode(output_ids, skip_special_tokens=True,
+                                  clean_up_tokenization_spaces=False)
+        return
+
+
+
+
+
+        # calculate value
         state = input + ' ' + output
         state_ids = tokenizer(state, padding=True, truncation=True, return_tensors='pt').input_ids.to(device)
         print("state_ids = ", state_ids)
-        labels = [-1] * len(input_ids[0]) + output_ids
-        if len(labels) <= args.max_length:
-            labels = labels + [-1] * (args.max_length - len(labels))
-        else:
-            labels = labels[:args.max_length]
-        labels_tensor = torch.LongTensor([labels]).to(device)
-        print(labels_tensor)
-        actor_output = actor(input_ids=state_ids, labels=labels_tensor)
-        logits = actor_output.logits
-        loss = actor_output.loss
-        print("state logits = ", logits)
-        print("loss = ", loss)
+        value = critic(state_ids)
+        print("value = ", value)
+
+        #calculate
 
 
         for i in count():

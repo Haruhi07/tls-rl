@@ -82,9 +82,7 @@ def generate(input_ids, actor, device, args):
             if action == 1:
                 break
 
-        decoder_input_ids_tensor = torch.LongTensor([decoder_input_ids]).to(device)[0]
-
-    return decoder_input_ids_tensor
+    return decoder_input_ids
 
 def main():
     parser = ArgumentParser()
@@ -93,7 +91,7 @@ def main():
     # RL
     parser.add_argument("--lr", type=float, default=0.01)
     parser.add_argument("--episodes", type=int, default=10)
-    parser.add_argument("--max_length", type=int, default=500)
+    parser.add_argument("--max_length", type=int, default=1024)
     parser.add_argument("--top_k", type=int, default=5)
     parser.add_argument("--test_size", type=int, default=10)
     parser.add_argument("--epsilon", type=float, default=0.01)
@@ -141,10 +139,19 @@ def main():
         for p in actor.lm_head.parameters():
             p.requires_grad = True
 
-        state = input + output
-        print(state)
-        #logits = actor()
-
+        state = input + ' ' + output
+        state_ids = tokenizer(state, padding=True, truncation=True, return_tensor='pt').input_ids.to(device)
+        labels = [-1] * len(input_ids) + output_ids
+        if len(labels) <= args.max_length:
+            labels = labels + [-1] * (args.max_length - len(labels))
+        else:
+            labels = labels[:args.max_length]
+        print(labels)
+        actor_output = actor(input_ids=state_ids, labels=labels)
+        logits = actor_output.logits
+        loss = actor_output.loss
+        print("state logits = ", logits)
+        print("loss = ", loss)
 
 
         for i in count():

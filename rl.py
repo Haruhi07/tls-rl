@@ -141,15 +141,22 @@ def main():
             print("reward = ", reward)
 
             #calculate value
-            value = critic(logits)
-
-
             state = logits[0, -1]
             print("state = ", state)
+            value = critic(logits)
+            values.append(value)
 
             if action == 1:
                 break
 
+        logits = actor(input_ids=input_ids, decoder_input_ids=decoder_input_ids_tensor).logits
+        last_state = logits[0, -1]
+        last_value = critic(last_state)
+        returns = []
+        for step in reversed(range(len(rewards))):
+            last_value = rewards[step] + args.gamma * last_value
+            returns.append(last_value)
+        print("returns = ", returns)
         return
 
 

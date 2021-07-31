@@ -147,7 +147,7 @@ def main():
             labels = labels + [-1] * (args.max_length - len(labels))
         else:
             labels = labels[:args.max_length]
-        labels_tensor = torch.LongTensor(labels).to(device)
+        labels_tensor = torch.LongTensor([labels]).to(device)
         print(labels_tensor)
         actor_output = actor(input_ids=state_ids, labels=labels_tensor)
         logits = actor_output.logits

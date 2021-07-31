@@ -132,6 +132,8 @@ def main():
             # TODO: Add top_k here
             print(action)
             decoder_input_ids = decoder_input_ids + [action]
+            output = tokenizer.decode(output_ids, skip_special_tokens=True,
+                                      clean_up_tokenization_spaces=False)
             # calculate the reward of the sample
             reward = env.count_keyword(output)
             rewards.append(reward)
@@ -142,8 +144,7 @@ def main():
 
             if action == 1:
                 break
-        output = tokenizer.decode(output_ids, skip_special_tokens=True,
-                                  clean_up_tokenization_spaces=False)
+
         return
 
 

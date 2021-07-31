@@ -127,6 +127,7 @@ def main():
         while len(decoder_input_ids) < args.max_length:
             decoder_input_ids_tensor = torch.LongTensor([decoder_input_ids]).to(device)
             logits = actor(input_ids=input_ids, decoder_input_ids=decoder_input_ids_tensor).logits
+            print("logits = ", logits)
             probs = F.softmax(logits, dim=-1)
             action = torch.argmax(probs[0, -1], dim=-1).item()
             # TODO: Add top_k here
@@ -138,6 +139,10 @@ def main():
             reward = env.count_keyword(output)
             rewards.append(reward)
             print("reward = ", reward)
+
+            #calculate value
+            value = critic(logits)
+
 
             state = logits[0, -1]
             print("state = ", state)

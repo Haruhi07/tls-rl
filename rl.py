@@ -155,14 +155,15 @@ def main():
         # create calculation graph with gradient on lm_head
         final_logits = actor(input_ids=input_ids, decoder_input_ids=decoder_input_ids_tensor).logits
         print("final_logits = ", final_logits)
-        distribution = Categorical(F.softmax(final_logits, dim=-1))
-        print("distribution = ", distribution)
+        distributions = [Categorical(F.softmax(lgt, dim=-1)) for lgt in final_logits[0]]
+        print("distribution = ", distributions)
 
         # calculate values and returns
         for step in reversed(range(len(rewards))):
             last_value = rewards[step] + args.gamma * last_value
             returns.append(last_value)
         print("returns = ", returns)
+        return
 
 
 

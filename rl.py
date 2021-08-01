@@ -105,6 +105,7 @@ def main():
     rewards = []
     values = []
     returns = []
+    actions = []
     for iter in range(args.episodes):
         env.reset()
         actor.eval()
@@ -116,7 +117,6 @@ def main():
         print(input_ids)
 
         # generate sample and calculate value
-        rewards = []
         with torch.no_grad():
             decoder_input_ids = [0]
             while len(decoder_input_ids) < args.max_length:
@@ -125,6 +125,7 @@ def main():
                 print("logits = ", logits)
                 probs = F.softmax(logits, dim=-1)
                 action = torch.argmax(probs[0, -1], dim=-1).item()
+                actions.append(action)
                 # TODO: Add top_k here
                 print(action)
                 decoder_input_ids = decoder_input_ids + [action]
@@ -156,7 +157,9 @@ def main():
         final_logits = actor(input_ids=input_ids, decoder_input_ids=decoder_input_ids_tensor).logits
         print("final_logits = ", final_logits)
         distributions = [Categorical(F.softmax(lgt, dim=-1)) for lgt in final_logits[0]]
+        log_probs = [d.log_prob(a) for d, a in zip(distributions, actions)]
         print("distribution = ", distributions)
+        print("log_probs = ", log_probs)
 
         # calculate values and returns
         for step in reversed(range(len(rewards))):

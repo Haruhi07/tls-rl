@@ -78,7 +78,7 @@ def main():
     parser.add_argument("--dataset", type=str, required=True)
     # RL
     parser.add_argument("--lr", type=float, default=0.01)
-    parser.add_argument("--episodes", type=int, default=10)
+    parser.add_argument("--episodes", type=int, default=300)
     parser.add_argument("--max_length", type=int, default=1024)
     parser.add_argument("--top_k", type=int, default=5)
     parser.add_argument("--test_size", type=int, default=10)
@@ -133,7 +133,7 @@ def main():
                 output = tokenizer.decode(decoder_input_ids, skip_special_tokens=True,
                                           clean_up_tokenization_spaces=False)
                 # calculate the reward of the sample
-                reward = env.count_keyword(output) * 10
+                reward = env.count_keyword(output)
                 rewards.append(reward)
                 print("reward = ", reward)
 

@@ -153,7 +153,7 @@ def main():
             p.requires_grad = True
 
         # create calculation graph with gradient on lm_head
-        final_logits = actor(input_ids=input_ids, decoder_input_ids=decoder_input_ids).logits
+        final_logits = actor(input_ids=input_ids, decoder_input_ids=decoder_input_ids_tensor).logits
         print("final_logits = ", final_logits)
         distribution = Categorical(F.softmax(final_logits, dim=-1))
         print("distribution = ", distribution)

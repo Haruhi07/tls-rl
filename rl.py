@@ -183,8 +183,8 @@ def main():
         advantages = rewards.detach() - values.detach()
         print("advantages = ", advantages)
 
-        actor_loss = -(log_probs * advantages).mean()
-        critic_loss = (values - rewards).pow(2).mean()
+        actor_loss = -(log_probs * advantages.detach()).mean()
+        critic_loss = advantages.pow(2).mean()
 
         print("actor_loss = ", actor_loss)
         print("critic_loss = ", critic_loss)

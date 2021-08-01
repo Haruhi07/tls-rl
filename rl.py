@@ -189,8 +189,8 @@ def main():
 
         optimizerA.zero_grad()
         optimizerC.zero_grad()
-        act_loss.backward(retain_graph=True)
-        ctc_loss.backward()
+        actor_loss.backward()
+        critic_loss.backward()
         optimizerA.step()
         optimizerC.step()
     print("final reward = ", reward)

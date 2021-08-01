@@ -156,7 +156,7 @@ def main():
         final_logits = actor(input_ids=input_ids, decoder_input_ids=decoder_input_ids_tensor).logits
         print("final_logits = ", final_logits)
         distributions = [Categorical(F.softmax(lgt, dim=-1)) for lgt in final_logits[0]]
-        log_probs = [d.log_prob(a) for d, a in zip(distributions, actions)]
+        log_probs = [[d.log_prob(a)] for d, a in zip(distributions, actions)]
         print("distribution = ", distributions)
         print("log_probs = ", log_probs)
 

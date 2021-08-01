@@ -184,7 +184,7 @@ def main():
         print("advantages = ", advantages)
 
         actor_loss = -(log_probs * advantages.detach()).mean()
-        critic_loss = advantages.pow(2).mean()
+        critic_loss = returns.pow(2).mean()
 
         print("actor_loss = ", actor_loss)
         print("critic_loss = ", critic_loss)

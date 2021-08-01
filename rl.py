@@ -140,6 +140,8 @@ def main():
 
             logits = actor(input_ids=input_ids, decoder_input_ids=decoder_input_ids_tensor).logits
             last_state = logits[0, -1]
+            print("last_state = ", last_state)
+            last_value = critic(last_state)
 
         # only tune the lm_head layer
         actor.eval()

@@ -142,6 +142,7 @@ def main():
             last_state = logits[0, -1]
             print("last_state = ", last_state)
             last_value = critic(last_state)
+            print("last_value = ", last_value)
 
         # only tune the lm_head layer
         actor.eval()

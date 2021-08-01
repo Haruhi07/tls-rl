@@ -124,12 +124,12 @@ def main():
             while len(decoder_input_ids) < args.max_length:
                 decoder_input_ids_tensor = torch.LongTensor([decoder_input_ids]).to(device)
                 logits = actor(input_ids=input_ids, decoder_input_ids=decoder_input_ids_tensor).logits
-                print("logits = ", logits)
+                #print("logits = ", logits)
                 probs = F.softmax(logits, dim=-1)
                 action = torch.argmax(probs[0, -1], dim=-1)
                 actions.append(action)
                 # TODO: Add top_k here
-                print("action = ", action)
+                #print("action = ", action)
                 decoder_input_ids = decoder_input_ids + [action.item()]
                 output = tokenizer.decode(decoder_input_ids, skip_special_tokens=True,
                                           clean_up_tokenization_spaces=False)

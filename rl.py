@@ -158,7 +158,7 @@ def main():
         distributions = [Categorical(F.softmax(lgt, dim=-1)) for lgt in final_logits[0]]
         log_probs = [torch.reshape(d.log_prob(a), (-1,1)) for d, a in zip(distributions, actions)]
         print("distribution = ", distributions)
-        print("log_probs = ", log_probs)
+        print("log_probs before cat = ", log_probs)
 
         # calculate values and returns
         ret = last_value
@@ -167,7 +167,8 @@ def main():
             returns.append(ret)
             values.append(critic(final_logits[0, step]))
 
-        #log_probs = torch.cat(log_probs)
+        log_probs = torch.cat(log_probs)
+        print("log_probs = ", log_probs)
         #print("values before cat = ", values)
         #print("returns before cat = ", returns)
         returns = torch.cat(returns).detach()

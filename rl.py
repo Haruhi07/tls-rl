@@ -113,9 +113,9 @@ def main():
         cluster, timeline = env.observation()
         # sample
         input = ' '.join([first_n_sents(a.text, args.nfirst) for a in cluster.articles]) + '.'
-        print(input)
+        #print(input)
         input_ids = tokenizer(input, padding=True, truncation=True, return_tensors="pt").input_ids.to(device)
-        print(input_ids)
+        #print(input_ids)
 
         # generate sample and calculate value
         with torch.no_grad():
@@ -139,6 +139,7 @@ def main():
 
                 if action == 1:
                     break
+            print(output)
 
             logits = actor(input_ids=input_ids, decoder_input_ids=decoder_input_ids_tensor).logits
             last_state = logits[0, -1]

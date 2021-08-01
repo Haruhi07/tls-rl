@@ -171,10 +171,10 @@ def main():
         print("values = ", values)
         print("returns = ", returns)
 
-        log_probs = torch.cat(log_probs)
+        #log_probs = torch.cat(log_probs)
         returns = torch.cat(returns).detach()
         values = torch.cat(values)
-        
+
         advantages = returns - values
         print("advantages = ", advantages)
         return

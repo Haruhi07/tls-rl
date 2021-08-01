@@ -172,18 +172,18 @@ def main():
         #print("returns before cat = ", returns)
         log_probs = torch.cat(log_probs)
         print("log_probs = ", log_probs)
-        print("rewards = ", rewards)
         rewards = torch.LongTensor(rewards).to(device)
+        print("rewards = ", rewards)
         returns = torch.cat(returns).detach()
         values = torch.cat(values)
         print("log_probs size = ", log_probs.size())
         print("values size = ", values.size())
         print("returns size = ", returns.size())
 
-        advantages = returns.detach() - values.detach()
+        advantages = rewards.detach() - values.detach()
         print("advantages = ", advantages)
 
-        actor_loss = -(log_probs * advantages.detach()).mean()
+        actor_loss = -(log_probs * advantages).mean()
         critic_loss = (values - rewards).pow(2).mean()
 
         print("actor_loss = ", actor_loss)

@@ -94,6 +94,7 @@ def main():
     actor = PegasusForConditionalGeneration.from_pretrained(model_name).to(device)
     state_size = tokenizer.vocab_size
     critic = Critic(state_size).to(device)
+    critic_loss_fct = torch.nn.MSELoss(size_average=False)
 
     # Define Environment
     env = setup_env(tokenizer, args)
@@ -183,8 +184,9 @@ def main():
         advantages = rewards.detach() - values.detach()
         print("advantages = ", advantages)
 
-        actor_loss = -(log_probs * advantages.detach()).mean()
-        critic_loss = returns.pow(2).mean()
+        critic_loss = critic_loss_fct(values, rewards)
+        norm_rewards = (rewards.detach() - values.detach())
+        actor_loss = torch.mean(-log_probs.mul(norm_rewards))
 
         print("actor_loss = ", actor_loss)
         print("critic_loss = ", critic_loss)

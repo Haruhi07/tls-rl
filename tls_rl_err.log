@@ -1,6 +1,2 @@
-Traceback (most recent call last):
-  File "/home/hs20307/tls-rl/rl.py", line 219, in <module>
-    main()
-  File "/home/hs20307/tls-rl/rl.py", line 130, in main
-    output, output_ids = generate(observation, tokenizer, actor, device, args)
-UnboundLocalError: local variable 'observation' referenced before assignment
+/home/hs20307/.conda/envs/env/lib/python3.9/site-packages/torch/nn/_reduction.py:42: UserWarning: size_average and reduce args will be deprecated, please use reduction='sum' instead.
+  warnings.warn(warning.format(ret))

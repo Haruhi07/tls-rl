@@ -1,0 +1,8 @@
+/var/spool/pbs/mom_priv/jobs/3495366.bp1.SC: line 2: University: command not found
+/var/spool/pbs/mom_priv/jobs/3495366.bp1.SC: line 3: -------------------------------------------------: command not found
+/var/spool/pbs/mom_priv/jobs/3495366.bp1.SC: line 4: Job: command not found
+/var/spool/pbs/mom_priv/jobs/3495366.bp1.SC: line 6: length: command not found
+env: initialized...: No such file or directory
+/var/spool/pbs/mom_priv/jobs/3495366.bp1.SC: line 8: Greenpeace: command not found
+/var/spool/pbs/mom_priv/jobs/3495366.bp1.SC: line 9: syntax error near unexpected token `[[56337,'
+/var/spool/pbs/mom_priv/jobs/3495366.bp1.SC: line 9: `tensor([[56337,   148,  6462,  ...,   108,  1263,     1]], device='cuda:0')'

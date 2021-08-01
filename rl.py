@@ -168,12 +168,12 @@ def main():
             ret = rewards[step] + args.gamma * ret
             returns.append(ret)
             values.append(critic(final_logits[0, step]))
-        print("values size= ", values.size())
-        print("returns size= ", returns.size())
 
         #log_probs = torch.cat(log_probs)
         returns = torch.cat(returns).detach()
         values = torch.cat(values)
+        print("values size= ", values.size())
+        print("returns size= ", returns.size())
 
         advantages = returns - values
         print("advantages = ", advantages)

@@ -133,7 +133,7 @@ def main():
                 output = tokenizer.decode(decoder_input_ids, skip_special_tokens=True,
                                           clean_up_tokenization_spaces=False)
                 # calculate the reward of the sample
-                reward = env.count_keyword(output)
+                reward = env.count_keyword(output) * 10
                 rewards.append(reward)
                 print("reward = ", reward)
 

@@ -151,12 +151,18 @@ def main():
             p.requires_grad = False
         for p in actor.lm_head.parameters():
             p.requires_grad = True
+
+        # create calculation graph with gradient on lm_head
+        final_logits = actor(input_ids=input_ids, decoder_input_ids=decoder_input_ids).logits
+        print("final_logits = ", final_logits)
+
         # calculate values and returns
         for step in reversed(range(len(rewards))):
             last_value = rewards[step] + args.gamma * last_value
             returns.append(last_value)
         print("returns = ", returns)
-        return
+
+
 
 
 

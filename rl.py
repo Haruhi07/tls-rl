@@ -156,7 +156,7 @@ def main():
         final_logits = actor(input_ids=input_ids, decoder_input_ids=decoder_input_ids_tensor).logits
         print("final_logits = ", final_logits)
         distributions = [Categorical(F.softmax(lgt, dim=-1)) for lgt in final_logits[0]]
-        log_probs = [torch.reshape(d.log_prob(a), (1,-1)) for d, a in zip(distributions, actions)]
+        log_probs = [torch.reshape(d.log_prob(a), (-1,1)) for d, a in zip(distributions, actions)]
         print("distribution = ", distributions)
         print("log_probs = ", log_probs)
 
@@ -168,8 +168,8 @@ def main():
             values.append(critic(final_logits[0, step]))
 
         #log_probs = torch.cat(log_probs)
-        print("values before cat = ", values)
-        print("returns before cat = ", returns)
+        #print("values before cat = ", values)
+        #print("returns before cat = ", returns)
         returns = torch.cat(returns).detach()
         values = torch.cat(values)
         print("values size = ", values.size())

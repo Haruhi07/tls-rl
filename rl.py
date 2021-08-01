@@ -190,7 +190,7 @@ def main():
         optimizerC.step()
 
         norm_rewards = (rewards.detach() - values.detach())
-        actor_loss = torch.mean(-log_probs.mul(norm_rewards))
+        actor_loss = torch.mean(-log_probs.mul(norm_rewards.detach()))
 
         print("actor_loss = ", actor_loss)
         print("critic_loss = ", critic_loss)

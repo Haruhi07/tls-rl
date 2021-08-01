@@ -103,6 +103,8 @@ def main():
     optimizerC = torch.optim.Adam(critic.parameters())
 
     rewards = []
+    values = []
+    returns = []
     for iter in range(args.episodes):
         env.reset()
         actor.eval()
@@ -112,8 +114,33 @@ def main():
         print(input)
         input_ids = tokenizer(input, padding=True, truncation=True, return_tensors="pt").input_ids.to(device)
         print(input_ids)
+
+        # generate sample and calculate value
         rewards = []
-        values = []
+        with torch.no_grad():
+            decoder_input_ids = [0]
+            while len(decoder_input_ids) < args.max_length:
+                decoder_input_ids_tensor = torch.LongTensor([decoder_input_ids]).to(device)
+                logits = actor(input_ids=input_ids, decoder_input_ids=decoder_input_ids_tensor).logits
+                print("logits = ", logits)
+                probs = F.softmax(logits, dim=-1)
+                action = torch.argmax(probs[0, -1], dim=-1).item()
+                # TODO: Add top_k here
+                print(action)
+                decoder_input_ids = decoder_input_ids + [action]
+                output = tokenizer.decode(decoder_input_ids, skip_special_tokens=True,
+                                          clean_up_tokenization_spaces=False)
+                # calculate the reward of the sample
+                reward = env.count_keyword(output)
+                rewards.append(reward)
+                print("reward = ", reward)
+
+                if action == 1:
+                    break
+
+            logits = actor(input_ids=input_ids, decoder_input_ids=decoder_input_ids_tensor).logits
+            last_state = logits[0, -1]
+
         # only tune the lm_head layer
         actor.eval()
         actor.lm_head.train()
@@ -121,38 +148,7 @@ def main():
             p.requires_grad = False
         for p in actor.lm_head.parameters():
             p.requires_grad = True
-
-        # generate sample
-        decoder_input_ids = [0]
-        while len(decoder_input_ids) < args.max_length:
-            decoder_input_ids_tensor = torch.LongTensor([decoder_input_ids]).to(device)
-            logits = actor(input_ids=input_ids, decoder_input_ids=decoder_input_ids_tensor).logits
-            print("logits = ", logits)
-            probs = F.softmax(logits, dim=-1)
-            action = torch.argmax(probs[0, -1], dim=-1).item()
-            # TODO: Add top_k here
-            print(action)
-            decoder_input_ids = decoder_input_ids + [action]
-            output = tokenizer.decode(decoder_input_ids, skip_special_tokens=True,
-                                      clean_up_tokenization_spaces=False)
-            # calculate the reward of the sample
-            reward = env.count_keyword(output)
-            rewards.append(reward)
-            print("reward = ", reward)
-
-            #calculate value
-            state = logits[0, -1]
-            print("state = ", state)
-            value = critic(logits)
-            values.append(value)
-
-            if action == 1:
-                break
-
-        logits = actor(input_ids=input_ids, decoder_input_ids=decoder_input_ids_tensor).logits
-        last_state = logits[0, -1]
-        last_value = critic(last_state)
-        returns = []
+        # calculate values and returns
         for step in reversed(range(len(rewards))):
             last_value = rewards[step] + args.gamma * last_value
             returns.append(last_value)

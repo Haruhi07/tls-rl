@@ -143,6 +143,7 @@ def main():
             last_state = logits[0, -1]
             print("last_state = ", last_state)
             last_value = critic(last_state)
+            values.append(last_value)
             print("last_value = ", last_value)
 
         # only tune the lm_head layer
@@ -162,27 +163,16 @@ def main():
         print("log_probs = ", log_probs)
 
         # calculate values and returns
+        ret = last_value
         for step in reversed(range(len(rewards))):
-            last_value = rewards[step] + args.gamma * last_value
-            returns.append(last_value)
+            ret = rewards[step] + args.gamma * ret
+            returns.append(ret)
+            values.append(critic(final_logits[step]))
+        print("values = ", values)
         print("returns = ", returns)
-        return
 
-
-
-
-
-
-
-        # calculate value
-        state = input + ' ' + output
-        state_ids = tokenizer(state, padding=True, truncation=True, return_tensors='pt').input_ids.to(device)
-        print("state_ids = ", state_ids)
-        value = critic(state_ids)
-        print("value = ", value)
-
-        #calculate
-
+        advantages = returns - values
+        print("advantages = ", advantages)
 
         for i in count():
             logits = get_logits(observation, args.nfirst).squeeze(0)[-1]

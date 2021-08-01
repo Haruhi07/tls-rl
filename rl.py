@@ -154,8 +154,8 @@ def main():
 
         # create calculation graph with gradient on lm_head
         final_logits = actor(input_ids=input_ids, decoder_input_ids=decoder_input_ids).logits
-        distribution = Categorical(F.softmax(output, dim=-1))
         print("final_logits = ", final_logits)
+        distribution = Categorical(F.softmax(output, dim=-1))
         print("distribution = ", distribution)
 
         # calculate values and returns

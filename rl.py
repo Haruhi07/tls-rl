@@ -142,6 +142,7 @@ def main():
             logits = actor(input_ids=input_ids, decoder_input_ids=decoder_input_ids_tensor).logits
             last_state = logits[0, -1]
             print("last_state = ", last_state)
+            last_value = critic(last_state)
 
         # only tune the lm_head layer
         actor.eval()
@@ -169,8 +170,8 @@ def main():
         #log_probs = torch.cat(log_probs)
         returns = torch.cat(returns).detach()
         values = torch.cat(values)
-        print("values size= ", values.size())
-        print("returns size= ", returns.size())
+        print("values size = ", values.size())
+        print("returns size = ", returns.size())
 
         advantages = returns - values
         print("advantages = ", advantages)

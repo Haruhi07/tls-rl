@@ -38,6 +38,7 @@ def setup_env(tokenizer, args):
     for file in os.listdir(dataset_path):
         if "timeline" in file:
             keywords = extract_keywords(dataset_path / file)
+            print(keywords)
             with open(dataset_path /file, 'rb') as f:
                 timelines = json.load(f)
             length = len(timelines)
@@ -156,11 +157,11 @@ def main():
 
         # create calculation graph with gradient on lm_head
         final_logits = actor(input_ids=input_ids, decoder_input_ids=decoder_input_ids_tensor).logits
-        print("final_logits = ", final_logits)
+        #print("final_logits = ", final_logits)
         distributions = [Categorical(F.softmax(lgt, dim=-1)) for lgt in final_logits[0]]
         log_probs = [torch.reshape(d.log_prob(a), (-1,1))[0] for d, a in zip(distributions, actions)]
-        print("distribution = ", distributions)
-        print("log_probs before cat = ", log_probs)
+        #print("distribution = ", distributions)
+        #print("log_probs before cat = ", log_probs)
 
         # calculate values and returns
         ret = last_value
@@ -173,17 +174,17 @@ def main():
         #print("values before cat = ", values)
         #print("returns before cat = ", returns)
         log_probs = torch.cat(log_probs)
-        print("log_probs = ", log_probs)
+        #print("log_probs = ", log_probs)
         rewards = torch.FloatTensor(rewards).to(device)
-        print("rewards = ", rewards)
+        #print("rewards = ", rewards)
         returns = torch.cat(returns).detach()
         values = torch.cat(values)
-        print("log_probs size = ", log_probs.size())
-        print("values size = ", values.size())
-        print("returns size = ", returns.size())
+        #print("log_probs size = ", log_probs.size())
+        #print("values size = ", values.size())
+        #print("returns size = ", returns.size())
 
         advantages = returns.detach() - values.detach()
-        print("advantages = ", advantages)
+        #print("advantages = ", advantages)
 
         critic_loss = critic_loss_fct(values, rewards)
         optimizerC.zero_grad()

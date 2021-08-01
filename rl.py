@@ -167,12 +167,13 @@ def main():
         for step in reversed(range(len(rewards))):
             ret = rewards[step] + args.gamma * ret
             returns.append(ret)
-            values.append(critic(final_logits[step]))
+            values.append(critic(final_logits[0, step]))
         print("values = ", values)
         print("returns = ", returns)
 
         advantages = returns - values
         print("advantages = ", advantages)
+        return
 
         for i in count():
             logits = get_logits(observation, args.nfirst).squeeze(0)[-1]

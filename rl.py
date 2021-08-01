@@ -172,6 +172,7 @@ def main():
         #print("returns before cat = ", returns)
         log_probs = torch.cat(log_probs)
         print("log_probs = ", log_probs)
+        print("rewards = ", rewards)
         returns = torch.cat(returns).detach()
         values = torch.cat(values)
         print("log_probs size = ", log_probs.size())
@@ -182,7 +183,7 @@ def main():
         print("advantages = ", advantages)
 
         actor_loss = -(log_probs * advantages.detach()).mean()
-        critic_loss = advantages.pow(2).mean()
+        critic_loss = (values - rewards).pow(2).mean()
 
         print("actor_loss = ", actor_loss)
         print("critic_loss = ", critic_loss)

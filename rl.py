@@ -103,11 +103,11 @@ def main():
     optimizerA = torch.optim.Adam(actor.lm_head.parameters())
     optimizerC = torch.optim.Adam(critic.parameters())
 
-    rewards = []
-    values = []
-    returns = []
-    actions = []
     for iter in range(args.episodes):
+        rewards = []
+        values = []
+        returns = []
+        actions = []
         env.reset()
         actor.eval()
         cluster, timeline = env.observation()

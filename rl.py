@@ -178,7 +178,7 @@ def main():
         print("values size = ", values.size())
         print("returns size = ", returns.size())
 
-        advantages = returns - values
+        advantages = returns.detach() - values.detach()
         print("advantages = ", advantages)
 
         actor_loss = -(log_probs * advantages.detach()).mean()

@@ -173,7 +173,7 @@ def main():
         #print("returns before cat = ", returns)
         log_probs = torch.cat(log_probs)
         print("log_probs = ", log_probs)
-        rewards = torch.LongTensor(rewards).to(device)
+        rewards = torch.FloatTensor(rewards).to(device)
         print("rewards = ", rewards)
         returns = torch.cat(returns).detach()
         values = torch.cat(values)

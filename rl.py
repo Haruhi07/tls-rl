@@ -185,6 +185,10 @@ def main():
         print("advantages = ", advantages)
 
         critic_loss = critic_loss_fct(values, rewards)
+        optimizerC.zero_grad()
+        critic_loss.backward()
+        optimizerC.step()
+
         norm_rewards = (rewards.detach() - values.detach())
         actor_loss = torch.mean(-log_probs.mul(norm_rewards))
 
@@ -192,11 +196,9 @@ def main():
         print("critic_loss = ", critic_loss)
 
         optimizerA.zero_grad()
-        optimizerC.zero_grad()
         actor_loss.backward()
-        critic_loss.backward()
         optimizerA.step()
-        optimizerC.step()
+
     print("final reward = ", reward)
 
 if __name__ == "__main__":

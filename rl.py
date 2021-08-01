@@ -186,11 +186,11 @@ def main():
 
         critic_loss = critic_loss_fct(values, rewards)
         optimizerC.zero_grad()
-        critic_loss.backward()
+        critic_loss.backward(retain_graph=True)
         optimizerC.step()
 
         norm_rewards = (rewards.detach() - values.detach())
-        actor_loss = torch.mean(-log_probs.mul(norm_rewards.detach()))
+        actor_loss = torch.mean(-log_probs.mul(norm_rewards))
 
         print("actor_loss = ", actor_loss)
         print("critic_loss = ", critic_loss)

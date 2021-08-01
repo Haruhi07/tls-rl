@@ -173,6 +173,7 @@ def main():
         log_probs = torch.cat(log_probs)
         print("log_probs = ", log_probs)
         print("rewards = ", rewards)
+        rewards = torch.LongTensor(rewards).to(device)
         returns = torch.cat(returns).detach()
         values = torch.cat(values)
         print("log_probs size = ", log_probs.size())

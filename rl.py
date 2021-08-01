@@ -167,12 +167,14 @@ def main():
             returns.append(ret)
             values.append(critic(final_logits[0, step]))
 
-        log_probs = torch.cat(log_probs)
-        print("log_probs = ", log_probs)
+        # concatenate values, returns and log_probs
         #print("values before cat = ", values)
         #print("returns before cat = ", returns)
+        log_probs = torch.cat(log_probs)
+        print("log_probs = ", log_probs)
         returns = torch.cat(returns).detach()
         values = torch.cat(values)
+        print("log_probs size = ", log_probs.size())
         print("values size = ", values.size())
         print("returns size = ", returns.size())
 

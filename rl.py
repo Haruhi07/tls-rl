@@ -136,11 +136,12 @@ def main():
                 # calculate the reward of the sample
                 reward = env.count_keyword(output)
                 rewards.append(reward)
-                print("reward = ", reward)
 
                 if action == 1:
                     break
+                    
             print(output)
+            print("reward = ", reward)
 
             logits = actor(input_ids=input_ids, decoder_input_ids=decoder_input_ids_tensor).logits
             last_state = logits[0, -1]

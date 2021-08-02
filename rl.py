@@ -89,7 +89,6 @@ def main():
     args = parser.parse_args()
 
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
-    device_ids = range(torch.cuda.device_count())
     model_name = 'sshleifer/distill-pegasus-cnn-16-4'
     tokenizer = PegasusTokenizer.from_pretrained(model_name)
     actor = PegasusForConditionalGeneration.from_pretrained(model_name).to(device)
@@ -101,8 +100,8 @@ def main():
     env = setup_env(tokenizer, args)
     print("env initialized...")
 
-    optimizerA = torch.optim.Adam(actor.lm_head.parameters())
-    optimizerC = torch.optim.Adam(critic.parameters())
+    optimizerA = torch.optim.Adam(actor.lm_head.parameters(), lr=0.001)
+    optimizerC = torch.optim.Adam(critic.parameters(), lr=0.001)
 
     for iter in range(args.episodes):
         rewards = []

@@ -46,18 +46,13 @@ def setup_env(tokenizer, args):
     env = Environment(tokenizer, clusters, keywords, length)
     return env
 
-def generate(input_ids, actor, device, args):
-
-    print("probs = ", probs)
-    return probs, decoder_input_ids
-
 def main():
     parser = ArgumentParser()
     # Configuration
     parser.add_argument("--dataset", type=str, required=True)
     # RL
     parser.add_argument("--lr", type=float, default=0.01)
-    parser.add_argument("--episodes", type=int, default=60)
+    parser.add_argument("--episodes", type=int, default=3000)
     parser.add_argument("--max_length", type=int, default=1024)
     parser.add_argument("--top_k", type=int, default=5)
     parser.add_argument("--test_size", type=int, default=10)
@@ -117,13 +112,13 @@ def main():
                 if action == 1:
                     break
 
-            print(output)
-            print("reward = ", reward)
-
             logits = actor(input_ids=input_ids, decoder_input_ids=decoder_input_ids_tensor).logits
             last_state = logits[0, -1]
             #print("last_state = ", last_state)
             last_value = critic(last_state)
+            
+        print(output)
+        print("iter = {} reward = {}".format(iter, reward))
 
         # only tune the lm_head layer
         actor.eval()

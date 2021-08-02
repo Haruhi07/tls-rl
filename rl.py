@@ -84,7 +84,7 @@ def main():
     parser.add_argument("--top_k", type=int, default=5)
     parser.add_argument("--test_size", type=int, default=10)
     parser.add_argument("--epsilon", type=float, default=0.01)
-    parser.add_argument("--gamma", type=float, default=0.99)
+    parser.add_argument("--gamma", type=float, default=0.95)
     parser.add_argument("--nfirst", type=int, default=5)
     args = parser.parse_args()
 
@@ -139,13 +139,13 @@ def main():
 
                 if action == 1:
                     break
-                    
+
             print(output)
             print("reward = ", reward)
 
             logits = actor(input_ids=input_ids, decoder_input_ids=decoder_input_ids_tensor).logits
             last_state = logits[0, -1]
-            print("last_state = ", last_state)
+            #print("last_state = ", last_state)
             last_value = critic(last_state)
 
         # only tune the lm_head layer

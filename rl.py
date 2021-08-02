@@ -62,7 +62,7 @@ def main():
     args = parser.parse_args()
 
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
-    model_name = 'sshleifer/distill-pegasus-cnn-16-4'
+    model_name = 'google/pegasus-multi_news'
     tokenizer = PegasusTokenizer.from_pretrained(model_name)
     actor = PegasusForConditionalGeneration.from_pretrained(model_name).to(device)
     state_size = tokenizer.vocab_size
@@ -116,7 +116,7 @@ def main():
             last_state = logits[0, -1]
             #print("last_state = ", last_state)
             last_value = critic(last_state)
-            
+
         print(output)
         print("iter = {} reward = {}".format(iter, reward))
 

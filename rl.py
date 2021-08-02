@@ -46,28 +46,6 @@ def setup_env(tokenizer, args):
     env = Environment(tokenizer, clusters, keywords, length)
     return env
 
-def compute_returns(next_value, rewards, masks, gamma):
-    R = next_value
-    returns = []
-    for step in reversed(range(len(rewards))):
-        R = rewards[step] + gamma * R * masks[step]
-        returns.insert(0, R)
-    return returns
-
-def get_logits(observation, nfirst):
-    cluster, timeline = observation
-    print(timeline)
-
-    encoder_input = [first_n_sents(a.text, nfirst) for a in cluster.articles]
-    decoder_input = timeline["text"]
-
-    encoder_input_ids = tokenizer(encoder_input, padding=True, truncation=True, return_tensors="pt").input_ids.to(dvc)
-    decoder_input_ids = format_decoder_input(tokenizer(decoder_input, return_tensors="pt").input_ids).to(dvc)
-    print(decoder_input_ids)
-
-    logits = actor.forward(input_ids=encoder_input_ids, decoder_input_ids=decoder_input_ids).logits  # state
-    return logits
-
 def generate(input_ids, actor, device, args):
 
     print("probs = ", probs)
@@ -100,8 +78,8 @@ def main():
     env = setup_env(tokenizer, args)
     print("env initialized...")
 
-    optimizerA = torch.optim.Adam(actor.lm_head.parameters(), lr=0.001)
-    optimizerC = torch.optim.Adam(critic.parameters(), lr=0.001)
+    optimizerA = torch.optim.Adam(actor.lm_head.parameters())
+    optimizerC = torch.optim.Adam(critic.parameters())
 
     for iter in range(args.episodes):
         rewards = []

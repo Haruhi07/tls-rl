@@ -169,9 +169,9 @@ def main():
         critic_loss.backward(retain_graph=True)
         optimizerC.step()
 
-        norm_rewards = (rewards.detach() - values.detach())
-        actor_loss = torch.mean(log_probs.mul(norm_rewards))
-        #actor_loss = -(log_probs * advantages.detach()).mean()
+        #norm_rewards = (rewards.detach() - values.detach())
+        #actor_loss = torch.mean(log_probs.mul(norm_rewards))
+        actor_loss = -(log_probs * advantages.detach()).mean()
 
         print("actor_loss = ", actor_loss)
         print("critic_loss = ", critic_loss)

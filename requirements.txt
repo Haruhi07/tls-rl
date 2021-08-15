@@ -1,4 +1,4 @@
-pytorch-ignite
+torch
 sklearn
 arrow
 tilse

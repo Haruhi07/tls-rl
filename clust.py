@@ -29,6 +29,7 @@ def calc_sim(X, metric='euclidean'):
     if metric == 'euclidean':
         return euclidean_distances(X)
     else:
+        # 1 - cos_sim(X)
         return cosine_distances(X)
 
 

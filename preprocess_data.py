@@ -19,17 +19,21 @@ def annotate(source_article_path, heideltime_path):
         'txt'
     ])
 
+topics = ['haiti_bbc', 'IraqWar_guardian', 'LibyaWar_cnn', 'LibyaWar_reuters', 'MJ_bbc', 'SyrianCrisis_bbc', 'SyrianCrisis_reuters']
 
 def annotate_articles(source_path, heideltime_path):
     for topic in sorted(os.listdir(source_path)):
+    #for topic in topics:
         print("Annotating articles in topic: {}".format(topic))
 
         date_path = source_path / topic / "InputDocs"
         for date in sorted(os.listdir(date_path)):
             articles_path = date_path / date
+            print(articles_path)
             if not articles_path.is_dir():
                 continue
             annotated = False
+            #annotate(articles_path, heideltime_path)
             for file in os.listdir(articles_path):
                 if 'timeml' in file:
                     annotated = True
@@ -110,8 +114,11 @@ def convert_articles(source_path, target_path):
                     continue
                 source_article_path = articles_path / article
                 source_annotated_article_path = pathlib.Path(str(source_article_path) + ".timeml")
-                source_article = open(source_article_path, "r")
-                source_annotated_article = open(source_annotated_article_path, "r")
+                try:
+                    source_article = open(source_article_path, "r")
+                    source_annotated_article = open(source_annotated_article_path, "r")
+                except:
+                    continue
                 uid = article[:-8]
                 text = source_article.read().replace('\n', '')
                 annotated_text = source_annotated_article.read()
@@ -173,6 +180,8 @@ def main():
     # source_path is an absolute path starting from ~/
     source_path = pathlib.Path.home() / args.source
     target_path = pathlib.Path(args.target)
+    print(source_path)
+    print(target_path)
     heideltime_path = pathlib.Path(args.heideltime)
 
     if not source_path.exists():

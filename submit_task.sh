@@ -20,8 +20,8 @@ module load lang/python/anaconda/ lang/cuda/11.1
 source activate env
 
 # We might need to add the global paths to our code to the pythonpath. Also set the data directories globally.
-cd /home/hs20307/tls-rl
-export PYTHONPATH=$PYTHONPATH:"/home/hs20307/tls-rl/"
+cd /work/hs20307/tls-rl
+export PYTHONPATH=$PYTHONPATH:"/work/hs20307/tls-rl"
 
 #  run the script
 export DATASET=/work/hs20307/Dataset/t1/bpoil_bbc

@@ -54,8 +54,10 @@ def main():
     embedding_model = SentenceTransformer('paraphrase-distilroberta-base-v1')
     for topic in os.listdir(dataset_path):
         print("clustering topic: ", topic)
-
         topic_path = dataset_path / topic
+        if not topic_path.is_dir():
+            continue
+
         articles = load_articles(topic_path)
         n_articles = len(articles)
         article_embeddings = []

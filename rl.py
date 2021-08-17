@@ -171,6 +171,7 @@ def main():
             for c in clusters.items():
                 date = c[0]
                 tokenized_cluster = c[1]
+                print(tokenized_cluster)
                 reward = rl(tokenized_cluster)
                 print(reward)
 

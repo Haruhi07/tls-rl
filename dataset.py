@@ -9,6 +9,7 @@ from torch.utils.data import Dataset, DataLoader
 # 一个cluster是一次训练的一整个输入
 class ClusteredDataset(Dataset):
     def __init__(self, dataset_path):
+        self.tokenizer = tokenizer
         self.topics = []
         self.clusters = []
         self.timelines = []  # element of this should also be list to solve multiple timelines
@@ -35,11 +36,16 @@ class ClusteredDataset(Dataset):
         return len(self.topics)
 
     def __getitem__(self, idx):
-        return self.topics[idx], self.clusters[idx], self.timelines[idx]
+        cluster = {}
+        for c in self.clusters[idx]:
+            date = c.date
+            articles = [a.text for a in c.articles]
+            cluster[date] = self.tokenizer(articles, truncation=True, padding='longest', return_tensors='pt')
+        return self.topics[idx], cluster, self.timelines[idx]
 
-def build_dataloader(args):
+def build_dataloader(args, tokenizer):
     dataset_path = pathlib.Path(args.dataset)
-    dataset = ClusteredDataset(dataset_path)
+    dataset = ClusteredDataset(dataset_path, tokenizer)
     dataloader = DataLoader(dataset, batch_size=1, shuffle=False, num_workers=8)
     for data in dataloader:
         print(data)

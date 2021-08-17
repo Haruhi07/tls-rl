@@ -77,7 +77,7 @@ def main():
     optimizerA = torch.optim.Adam(actor.lm_head.parameters())
     optimizerC = torch.optim.Adam(critic.parameters())
 
-    data_loader = build_dataloader(args)
+    data_loader = build_dataloader(args, tokenizer)
     return
 
     for iter in range(args.episodes):

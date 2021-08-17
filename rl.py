@@ -78,7 +78,7 @@ def main():
     data_loader = build_dataloader(args, tokenizer)
     for epoch in range(args.epochs):
         for data in data_loader:
-            topic, clusters, timelines = data.topic
+            topic, clusters, timelines = data
             print(topic)
             if len(timelines) > 1:
                 return

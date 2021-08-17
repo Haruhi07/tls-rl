@@ -68,7 +68,6 @@ def main():
             values = []
             returns = []
             actions = []
-            env.reset()
             actor.eval()
 
             input_ids = input_ids.to(device)
@@ -171,8 +170,8 @@ def main():
             print("env initialized...")
             for c in clusters.items():
                 date = c[0]
-                input_ids = c[1]
-                reward = rl(input_ids)
+                tokenized_cluster = c[1]
+                reward = rl(tokenized_cluster)
                 print(reward)
 
 if __name__ == "__main__":

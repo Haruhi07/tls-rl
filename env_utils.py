@@ -4,9 +4,7 @@ import heapq
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 
-def extract_keywords(timeline_path, metric = 'tfidf'):
-    with open(timeline_path, 'rb') as f:
-        timeline = json.load(f)
+def extract_keywords(timeline, metric = 'tfidf'):
     text = [item["text"].lower() for item in timeline]
     if metric == "tfidf":
         vectorizer = TfidfVectorizer(stop_words = 'english')

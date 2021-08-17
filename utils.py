@@ -4,7 +4,7 @@ import pickle
 import torch
 
 
-def first_n_sents(text, n):
+def first_n_sents(text, n=5):
     sentences = text.split('.')
     return '.'.join(sentences[:n])
 

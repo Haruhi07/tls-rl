@@ -4,6 +4,7 @@ import pickle
 import pathlib
 
 from torch.utils.data import Dataset, DataLoader
+from utils import first_n_sents
 
 
 # 一个cluster是一次训练的一整个输入
@@ -39,7 +40,7 @@ class ClusteredDataset(Dataset):
         cluster = {}
         for c in self.clusters[idx]:
             date = c.date
-            articles = [a.text for a in c.articles]
+            articles = [first_n_sents(a.text) for a in c.articles]
             cluster[date] = self.tokenizer(articles, truncation=True, padding='longest', return_tensors='pt')
         return self.topics[idx], cluster, self.timelines[idx]
 

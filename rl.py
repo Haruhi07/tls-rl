@@ -79,9 +79,9 @@ def main():
     for epoch in range(args.epochs):
         for data in data_loader:
             topic, clusters, timelines = data
-            print(topic)
-            if len(timelines) > 1:
-                return
+            for c in clusters.items():
+                print(c)
+            return
             # Define Environment
             # env = setup_env(tokenizer, args)
             print("env initialized...")

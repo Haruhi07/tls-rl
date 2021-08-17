@@ -1,6 +1,7 @@
 import json
 import os
 import pickle
+import pathlib
 
 from torch.utils.data import Dataset
 
@@ -12,11 +13,15 @@ class ClusteredDataset(Dataset):
         self.clusters = []
         self.timelines = []  # element of this should also be list to solve multiple timelines
         for topic in os.listdir(dataset_path):
+            topic_path = dataset_path / topic
+            if not topic_path.is_dir():
+                continue
+            print("adding {} into dataset...".format(topic))
             self.topics.append(topic)
             cluster_path = dataset_path / topic / "cluster.pkl"
             with open(cluster_path, "rb") as f:
                 cluster_list = pickle.load(f)
-            self.clusters.appen(cluster_list)
+            self.clusters.append(cluster_list)
 
             for file in os.listdir(dataset_path / topic):
                 if 'timeline' not in file:
@@ -30,4 +35,10 @@ class ClusteredDataset(Dataset):
         return len(self.topics)
 
     def __getitem__(self, idx):
-        return self.clusters[idx], self.timelines[idx]
+        return self.topics[idx], self.clusters[idx], self.timelines[idx]
+
+def build_dataloader(args):
+    dataset_path = pathlib.Path(args.dataset)
+    dataset = ClusteredDataset(dataset_path)
+    for i in range(len(dataset)):
+        print(dataset[i])

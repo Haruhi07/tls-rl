@@ -5,6 +5,7 @@ from transformers import PegasusTokenizer, PegasusForConditionalGeneration
 from itertools import count
 from utils import first_n_sents, format_decoder_input
 from torch.distributions import Categorical
+from dataset import build_dataloader
 
 import os
 import pathlib
@@ -75,6 +76,9 @@ def main():
 
     optimizerA = torch.optim.Adam(actor.lm_head.parameters())
     optimizerC = torch.optim.Adam(critic.parameters())
+
+    data_loader = build_dataloader(args)
+    return
 
     for iter in range(args.episodes):
         rewards = []

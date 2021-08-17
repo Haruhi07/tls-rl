@@ -71,7 +71,7 @@ def main():
     critic_loss_fct = torch.nn.MSELoss()
 
     # Define Environment
-    env = setup_env(tokenizer, args)
+    #env = setup_env(tokenizer, args)
     print("env initialized...")
 
     optimizerA = torch.optim.Adam(actor.lm_head.parameters())

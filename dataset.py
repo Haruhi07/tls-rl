@@ -48,5 +48,4 @@ def build_dataloader(args, tokenizer):
     dataset_path = pathlib.Path(args.dataset)
     dataset = ClusteredDataset(dataset_path, tokenizer)
     dataloader = DataLoader(dataset, batch_size=1, shuffle=False, num_workers=8)
-    for data in dataloader:
-        print(data)
+    return dataloader

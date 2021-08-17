@@ -52,6 +52,7 @@ def main():
     # Configuration
     parser.add_argument("--dataset", type=str, required=True)
     # RL
+    parser.add_argument("--epochs", type=int, default=5)
     parser.add_argument("--lr", type=float, default=0.01)
     parser.add_argument("--episodes", type=int, default=3000)
     parser.add_argument("--max_length", type=int, default=1024)
@@ -70,15 +71,23 @@ def main():
     critic = Critic(state_size).to(device)
     critic_loss_fct = torch.nn.MSELoss()
 
-    # Define Environment
-    #env = setup_env(tokenizer, args)
-    print("env initialized...")
 
     optimizerA = torch.optim.Adam(actor.lm_head.parameters())
     optimizerC = torch.optim.Adam(critic.parameters())
 
     data_loader = build_dataloader(args, tokenizer)
-    return
+    for epoch in range(args.epochs):
+        for data in data_loader:
+            topic = data.topic
+            clusters = data.clusters
+            timelines = data.timelines
+            print(topic)
+            if len(timelines) > 1:
+                return
+            # Define Environment
+            # env = setup_env(tokenizer, args)
+            print("env initialized...")
+
 
     for iter in range(args.episodes):
         rewards = []

@@ -8,7 +8,7 @@ from torch.utils.data import Dataset, DataLoader
 
 # 一个cluster是一次训练的一整个输入
 class ClusteredDataset(Dataset):
-    def __init__(self, dataset_path):
+    def __init__(self, dataset_path, tokenizer):
         self.tokenizer = tokenizer
         self.topics = []
         self.clusters = []

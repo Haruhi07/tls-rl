@@ -3,7 +3,7 @@ import os
 import pickle
 import pathlib
 
-from torch.utils.data import Dataset
+from torch.utils.data import Dataset, DataLoader
 
 
 # 一个cluster是一次训练的一整个输入
@@ -40,5 +40,6 @@ class ClusteredDataset(Dataset):
 def build_dataloader(args):
     dataset_path = pathlib.Path(args.dataset)
     dataset = ClusteredDataset(dataset_path)
-    for i in range(len(dataset)):
-        print(dataset[i])
+    dataloader = DataLoader(dataset, batch_size=1, shuffle=False, num_workers=8)
+    for data in dataloader:
+        print(data)

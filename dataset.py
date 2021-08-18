@@ -40,7 +40,7 @@ class ClusteredDataset(Dataset):
         cluster = {}
         for c in self.clusters[idx]:
             date = c.date
-            articles = [first_n_sents(a.text) for a in c.articles]
+            articles = ' '.join([first_n_sents(a.text) for a in c.articles])
             cluster[date] = self.tokenizer(articles, truncation=True, padding='longest', return_tensors='pt')
         return self.topics[idx], cluster, self.timelines[idx]
 

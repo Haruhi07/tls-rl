@@ -63,6 +63,7 @@ def main():
     optimizerC = torch.optim.Adam(critic.parameters())
 
     def rl(input_ids):
+        input_ids = input_ids.to(device)
         for iter in range(args.episodes):
             rewards = []
             values = []
@@ -170,7 +171,7 @@ def main():
             print("env initialized...")
             for c in clusters.items():
                 date = c[0]
-                tokenized_cluster = c[1]
+                tokenized_cluster = c[1].input_ids
                 print(tokenized_cluster)
                 reward = rl(tokenized_cluster)
                 print(reward)

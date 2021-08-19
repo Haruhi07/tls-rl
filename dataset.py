@@ -42,7 +42,6 @@ class ClusteredDataset(Dataset):
             date = c.date
             articles = ' '.join([first_n_sents(a.text) for a in c.articles])
             cluster[date] = self.tokenizer(articles, truncation=True, padding='longest', return_tensors='pt')
-            print("cluster: ", cluster)
         return self.topics[idx], cluster, self.timelines[idx]
 
 def build_dataloader(args, tokenizer):

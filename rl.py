@@ -167,6 +167,7 @@ def main():
         for data in data_loader:
             topic, clusters, timelines = data
             print("topic: ", topic)
+            print(clusters)
             # Define Environment
             env = setup_env(args, timelines)
             print("env initialized...")

@@ -175,7 +175,7 @@ def main():
                 print("c: ", c)
                 date, tokenized_cluster = c
                 print(tokenized_cluster)
-                reward = rl(tokenized_cluster)
+                reward = rl(tokenized_cluster['input_ids'])
                 print(reward)
 
 if __name__ == "__main__":

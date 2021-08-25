@@ -51,7 +51,8 @@ def main():
     args = parser.parse_args()
 
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
-    model_name = 'google/pegasus-multi_news'
+    #model_name = 'google/pegasus-multi_news'
+    model_name = "sshleifer/distill-pegasus-cnn-16-4"
     tokenizer = PegasusTokenizer.from_pretrained(model_name)
     actor = PegasusForConditionalGeneration.from_pretrained(model_name).to(device)
     state_size = tokenizer.vocab_size

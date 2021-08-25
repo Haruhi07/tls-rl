@@ -71,7 +71,7 @@ def main():
             actions = []
             actor.eval()
 
-            input_ids = input_ids.to(device)
+            #input_ids = input_ids.to(device)
             # print(input_ids)
 
             # generate sample and calculate value
@@ -114,7 +114,7 @@ def main():
 
             # create calculation graph with gradient on lm_head
             final_logits = actor(input_ids=input_ids, decoder_input_ids=decoder_input_ids_tensor).logits
-            # print("final_logits = ", final_logits)
+            print("final_logits = ", final_logits)
             distributions = [Categorical(F.softmax(lgt, dim=-1)) for lgt in final_logits[0]]
             log_probs = [torch.reshape(d.log_prob(a), (-1, 1))[0] for d, a in zip(distributions, actions)]
             # print("distribution = ", distributions)

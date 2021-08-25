@@ -102,11 +102,6 @@ def main():
                 # print("last_state = ", last_state)
                 last_value = critic(last_state)
 
-            del rewards
-            del values
-            del returns
-            del actions
-
             print(output)
             print("iter = {} reward = {}".format(iter, reward))
 
@@ -164,6 +159,11 @@ def main():
             optimizerA.zero_grad()
             actor_loss.backward()
             optimizerA.step()
+
+            del rewards
+            del values
+            del returns
+            del actions
 
         print("final reward = ", reward)
         return reward

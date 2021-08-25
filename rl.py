@@ -41,7 +41,7 @@ def main():
     # RL
     parser.add_argument("--epochs", type=int, default=5)
     parser.add_argument("--lr", type=float, default=0.01)
-    parser.add_argument("--episodes", type=int, default=3000)
+    parser.add_argument("--episodes", type=int, default=5)
     parser.add_argument("--max_length", type=int, default=1024)
     parser.add_argument("--top_k", type=int, default=5)
     parser.add_argument("--test_size", type=int, default=10)
@@ -101,6 +101,11 @@ def main():
                 last_state = logits[0, -1]
                 # print("last_state = ", last_state)
                 last_value = critic(last_state)
+
+            del rewards
+            del values
+            del returns
+            del actions
 
             print(output)
             print("iter = {} reward = {}".format(iter, reward))

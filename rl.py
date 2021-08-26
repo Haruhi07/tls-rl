@@ -177,7 +177,6 @@ def main():
             env = setup_env(args, timelines)
             print("env initialized...")
             for c in clusters.items():
-                print("c: ", c)
                 date, tokenized_cluster = c
                 print(tokenized_cluster)
                 reward = rl(tokenized_cluster['input_ids'])

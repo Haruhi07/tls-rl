@@ -164,6 +164,10 @@ def main():
             optimizerA.step()
             optimizerC.step()
 
+            torch.cuda.empty_cache()
+            del decoder_input_ids_tensor
+            del logits
+            del final_logits
             del rewards
             del values
             del returns

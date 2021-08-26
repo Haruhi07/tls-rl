@@ -4,6 +4,25 @@ import pickle
 import torch
 
 
+def show_gpu(msg):
+    """
+    ref: https://discuss.pytorch.org/t/access-gpu-memory-usage-in-pytorch/3192/4
+    """
+
+    def query(field):
+        return (subprocess.check_output(
+            ['nvidia-smi', f'--query-gpu={field}',
+             '--format=csv,nounits,noheader'],
+            encoding='utf-8'))
+
+    def to_int(result):
+        return int(result.strip().split('\n')[0])
+
+    used = to_int(query('memory.used'))
+    total = to_int(query('memory.total'))
+    pct = used / total
+    print('\n' + msg, f'{100 * pct:2.1f}% ({used} out of {total})')
+
 def first_n_sents(text, n=5):
     sentences = text.split('.')
     return '.'.join(sentences[:n])

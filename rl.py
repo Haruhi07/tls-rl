@@ -3,7 +3,7 @@ from env_utils import extract_keywords
 from environment import Environment
 from transformers import PegasusTokenizer, PegasusForConditionalGeneration
 from itertools import count
-from utils import first_n_sents, format_decoder_input
+from utils import first_n_sents, format_decoder_input, show_gpu
 from torch.distributions import Categorical
 from dataset import build_dataloader
 
@@ -78,9 +78,11 @@ def main():
             # generate sample and calculate value
             with torch.no_grad():
                 decoder_input_ids = [0]
+                show_gpu("Before Sampling")
                 while len(decoder_input_ids) < args.max_length:
                     decoder_input_ids_tensor = torch.LongTensor([decoder_input_ids]).to(device)
                     logits = actor(input_ids=input_ids, decoder_input_ids=decoder_input_ids_tensor).logits
+                    show_gpu("Everytime after generating next logits")
                     # print("logits = ", logits)
                     probs = F.softmax(logits, dim=-1)
                     action = torch.argmax(probs[0, -1], dim=-1)
@@ -178,6 +180,7 @@ def main():
             # Define Environment
             env = setup_env(args, timelines)
             print("env initialized...")
+            show_gpu("Before training: ")
             for c in clusters.items():
                 date, tokenized_cluster = c
                 print(tokenized_cluster)

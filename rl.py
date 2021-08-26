@@ -126,7 +126,7 @@ def main():
             for step in reversed(range(len(rewards))):
                 ret = rewards[step] + args.gamma * ret
                 returns.append(ret)
-                values.append(critic(final_logits[0, step]))
+                values.append(critic(final_logits[0, step].detach()))
 
             # concatenate values, returns and log_probs
             # print("values before cat = ", values)
@@ -141,12 +141,13 @@ def main():
             # print("values size = ", values.size())
             # print("returns size = ", returns.size())
 
-            advantages = returns.detach() - values.detach()
+            advantages = rewards.detach() - values.detach()
             # print("advantages = ", advantages)
 
             critic_loss = critic_loss_fct(values, rewards)
             optimizerC.zero_grad()
-            critic_loss.backward(retain_graph=True)
+            #critic_loss.backward(retain_graph=True)
+            critic_loss.backward()
 
             # norm_rewards = (rewards.detach() - values.detach())
             # actor_loss = torch.mean(log_probs.mul(norm_rewards))

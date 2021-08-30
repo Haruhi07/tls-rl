@@ -1,12 +1,1 @@
-Traceback (most recent call last):
-  File "/work/hs20307/tls-rl/rl.py", line 195, in <module>
-    main()
-  File "/work/hs20307/tls-rl/rl.py", line 191, in main
-    reward = rl(tokenized_cluster['input_ids'])
-  File "/work/hs20307/tls-rl/rl.py", line 162, in rl
-    actor_loss.backward()
-  File "/home/hs20307/.conda/envs/env/lib/python3.9/site-packages/torch/_tensor.py", line 255, in backward
-    torch.autograd.backward(self, gradient, retain_graph, create_graph, inputs=inputs)
-  File "/home/hs20307/.conda/envs/env/lib/python3.9/site-packages/torch/autograd/__init__.py", line 147, in backward
-    Variable._execution_engine.run_backward(
-RuntimeError: CUDA out of memory. Tried to allocate 348.00 MiB (GPU 0; 10.76 GiB total capacity; 8.55 GiB already allocated; 191.44 MiB free; 9.39 GiB reserved in total by PyTorch)
+=>> PBS: job killed: walltime 259235 exceeded limit 259200

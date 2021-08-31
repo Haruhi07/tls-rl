@@ -166,7 +166,6 @@ def main():
 
             torch.cuda.empty_cache()
             del decoder_input_ids_tensor
-            del decoder_input_ids_tensor
             del decoder_input_ids
             del probs
             del output

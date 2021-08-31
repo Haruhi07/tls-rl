@@ -166,12 +166,20 @@ def main():
 
             torch.cuda.empty_cache()
             del decoder_input_ids_tensor
+            del decoder_input_ids_tensor
+            del decoder_input_ids
+            del probs
+            del output
+            del last_state
+            del last_value
+            del log_probs
             del logits
             del final_logits
             del rewards
             del values
             del returns
             del actions
+            del advantages
 
         print("final reward = ", reward)
         return reward

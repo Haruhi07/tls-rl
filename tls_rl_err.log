@@ -1,8 +1,12 @@
 Traceback (most recent call last):
-  File "/work/hs20307/tls-rl/rl.py", line 203, in <module>
+  File "/work/hs20307/tls-rl/rl.py", line 202, in <module>
     main()
-  File "/work/hs20307/tls-rl/rl.py", line 199, in main
+  File "/work/hs20307/tls-rl/rl.py", line 198, in main
     reward = rl(tokenized_cluster['input_ids'])
-  File "/work/hs20307/tls-rl/rl.py", line 169, in rl
-    del decoder_input_ids_tensor
-UnboundLocalError: local variable 'decoder_input_ids_tensor' referenced before assignment
+  File "/work/hs20307/tls-rl/rl.py", line 152, in rl
+    critic_loss.backward()
+  File "/home/hs20307/.conda/envs/env/lib/python3.9/site-packages/torch/_tensor.py", line 255, in backward
+    torch.autograd.backward(self, gradient, retain_graph, create_graph, inputs=inputs)
+  File "/home/hs20307/.conda/envs/env/lib/python3.9/site-packages/torch/autograd/__init__.py", line 147, in backward
+    Variable._execution_engine.run_backward(
+RuntimeError: CUDA out of memory. Tried to allocate 94.00 MiB (GPU 0; 10.76 GiB total capacity; 9.38 GiB already allocated; 45.44 MiB free; 9.54 GiB reserved in total by PyTorch)

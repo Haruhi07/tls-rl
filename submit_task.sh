@@ -24,7 +24,7 @@ cd /work/hs20307/tls-rl
 export PYTHONPATH=$PYTHONPATH:"/work/hs20307/tls-rl"
 
 #  run the script
-export DATASET=./dataset/t1
+export DATASET=./dataset/t17
 export PERL5LIB="/home/hs20307/perl5/lib/perl5"
 
 python -u rl.py --dataset $DATASET

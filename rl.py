@@ -65,7 +65,7 @@ def main():
     optimizerC = torch.optim.Adam(critic.parameters())
 
     def rl(cluster):
-        input_ids = cluster['input_ids'].to(device)
+        input_ids = cluster['input_ids_dict']['input_ids'].to(device)
         source = cluster['source']
         for iter in range(args.episodes):
             rewards = []

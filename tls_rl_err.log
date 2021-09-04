@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/work/hs20307/tls-rl/rl.py", line 208, in <module>
+    main()
+  File "/work/hs20307/tls-rl/rl.py", line 204, in main
+    reward = rl(tokenized_cluster['input_ids'])
+  File "/work/hs20307/tls-rl/rl.py", line 100, in rl
+    reward = env.calc_reward(batch)
+  File "/work/hs20307/tls-rl/environment.py", line 37, in calc_reward
+    source = batch['source']
+KeyError: 'source'

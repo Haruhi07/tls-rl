@@ -84,7 +84,7 @@ def main():
                 while len(decoder_input_ids) < args.max_length:
                     decoder_input_ids_tensor = torch.LongTensor([decoder_input_ids]).to(device)
                     logits = actor(input_ids=input_ids, decoder_input_ids=decoder_input_ids_tensor).logits
-                    show_gpu("Everytime after generating next logits")
+                    #show_gpu("Everytime after generating next logits")
                     # print("logits = ", logits)
                     probs = F.softmax(logits, dim=-1)
                     action = torch.argmax(probs[0, -1], dim=-1)

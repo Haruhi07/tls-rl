@@ -38,5 +38,5 @@ class Environment:
         summary = batch['summary']
         input_ids = batch['input_ids']
         decoder_input_ids = batch['decoder_input_ids']
-        ret =
-        return self.count_keyword(text)
+        ret = 0
+        return ret

@@ -96,7 +96,6 @@ def main():
                                               clean_up_tokenization_spaces=False)
                     batch['input_ids'] = input_ids
                     batch['decoder_input_ids'] = decoder_input_ids_tensor
-                    batch['source'] =
                     # calculate the reward of the sample
                     reward = env.calc_reward(batch)
                     rewards.append(reward)

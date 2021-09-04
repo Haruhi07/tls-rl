@@ -64,8 +64,9 @@ def main():
     optimizerA = torch.optim.Adam(actor.lm_head.parameters())
     optimizerC = torch.optim.Adam(critic.parameters())
 
-    def rl(input_ids):
-        input_ids = input_ids.to(device)
+    def rl(cluster):
+        input_ids = cluster['input_ids'].to(device)
+        source = cluster['source']
         for iter in range(args.episodes):
             rewards = []
             values = []
@@ -96,6 +97,8 @@ def main():
                                               clean_up_tokenization_spaces=False)
                     batch['input_ids'] = input_ids
                     batch['decoder_input_ids'] = decoder_input_ids_tensor
+                    batch['source'] = source
+                    batch['summary'] = output
                     # calculate the reward of the sample
                     reward = env.calc_reward(batch)
                     rewards.append(reward)
@@ -201,7 +204,7 @@ def main():
             for c in clusters.items():
                 date, tokenized_cluster = c
                 print(tokenized_cluster)
-                reward = rl(tokenized_cluster['input_ids'])
+                reward = rl(tokenized_cluster)
                 print(reward)
 
 if __name__ == "__main__":

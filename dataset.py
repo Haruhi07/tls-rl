@@ -40,9 +40,9 @@ class ClusteredDataset(Dataset):
         cluster = {}
         for c in self.clusters[idx]:
             date = c.date
-            articles = ' '.join([first_n_sents(a.text) for a in c.articles])
-            cluster[date] = self.tokenizer(articles, truncation=True, padding='longest', return_tensors='pt')
-        return self.topics[idx], cluster, self.timelines[idx]
+            articles = [first_n_sents(a.text) for a in c.articles]
+            cluster[date] = self.tokenizer(' '.join(articles), truncation=True, padding='longest', return_tensors='pt')
+        return self.topics[idx], articles, cluster, self.timelines[idx]
 
 def build_dataloader(args, tokenizer):
     dataset_path = pathlib.Path(args.dataset)

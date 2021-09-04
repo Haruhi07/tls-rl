@@ -6,6 +6,7 @@ from itertools import count
 from utils import first_n_sents, format_decoder_input, show_gpu
 from torch.distributions import Categorical
 from dataset import build_dataloader
+from collections import defaultdict
 
 import os
 import pathlib
@@ -70,6 +71,7 @@ def main():
             values = []
             returns = []
             actions = []
+            batch = defaultdict(None)
             actor.eval()
 
             #input_ids = input_ids.to(device)
@@ -92,8 +94,11 @@ def main():
                     decoder_input_ids = decoder_input_ids + [action.item()]
                     output = tokenizer.decode(decoder_input_ids, skip_special_tokens=True,
                                               clean_up_tokenization_spaces=False)
+                    batch['input_ids'] = input_ids
+                    batch['decoder_input_ids'] = decoder_input_ids_tensor
+                    batch['source'] =
                     # calculate the reward of the sample
-                    reward = env.count_keyword(output)
+                    reward = env.calc_reward(batch)
                     rewards.append(reward)
 
                     if action == 1:
@@ -187,7 +192,8 @@ def main():
     data_loader = build_dataloader(args, tokenizer)
     for epoch in range(args.epochs):
         for data in data_loader:
-            topic, clusters, timelines = data
+            print(data)
+            topic, articles, clusters, timelines = data
             print("topic: ", topic)
             # Define Environment
             env = setup_env(args, timelines)

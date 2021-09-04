@@ -1,8 +1,8 @@
-/home/hs20307/.conda/envs/env/lib/python3.9/site-packages/torch/cuda/__init__.py:52: UserWarning: CUDA initialization: CUDA driver initialization failed, you might not have a CUDA gpu. (Triggered internally at  /opt/conda/conda-bld/pytorch_1623448255797/work/c10/cuda/CUDAFunctions.cpp:115.)
-  return torch._C._cuda_getDeviceCount() > 0
 Traceback (most recent call last):
   File "/work/hs20307/tls-rl/rl.py", line 211, in <module>
     main()
-  File "/work/hs20307/tls-rl/rl.py", line 198, in main
-    topic, articles, clusters, timelines = data
-ValueError: not enough values to unpack (expected 4, got 3)
+  File "/work/hs20307/tls-rl/rl.py", line 207, in main
+    reward = rl(tokenized_cluster)
+  File "/work/hs20307/tls-rl/rl.py", line 68, in rl
+    input_ids = cluster['input_ids'].to(device)
+KeyError: 'input_ids'

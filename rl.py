@@ -195,7 +195,7 @@ def main():
     for epoch in range(args.epochs):
         for data in data_loader:
             print(data)
-            topic, articles, clusters, timelines = data
+            topic, clusters, timelines = data
             print("topic: ", topic)
             # Define Environment
             env = setup_env(args, timelines)

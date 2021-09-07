@@ -22,7 +22,9 @@ class Environment:
         print("summary = ", summary)
         source_embedding = self.encoder.encode(source)
         summary_embedding = self.encoder.encode(summary)
-        return cosine_similarity(source_embedding, summary_embedding)
+        ret = cosine_similarity(source_embedding, summary_embedding)
+        print("cos_sim = ", ret)
+        return ret
 
     def topical_coherence(self, summary):
         tokens = text.lower().split()

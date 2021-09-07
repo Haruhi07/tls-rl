@@ -30,10 +30,6 @@ class Critic(nn.Module):
         value = self.linear2(output)
         return value
 
-def setup_env(args, timelines):
-    keywords = extract_keywords(timelines)
-    env = Environment(args, keywords)
-    return env
 
 def main():
     parser = ArgumentParser()
@@ -49,16 +45,19 @@ def main():
     parser.add_argument("--epsilon", type=float, default=0.01)
     parser.add_argument("--gamma", type=float, default=0.99)
     parser.add_argument("--nfirst", type=int, default=5)
+    parser.add_argument("--model_name", type=str, default="sshleifer/distill-pegasus-cnn-16-4")
     args = parser.parse_args()
 
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
     #model_name = 'google/pegasus-multi_news'
-    model_name = "sshleifer/distill-pegasus-cnn-16-4"
+    model_name = args.model_name
     tokenizer = PegasusTokenizer.from_pretrained(model_name)
     actor = PegasusForConditionalGeneration.from_pretrained(model_name).to(device)
     state_size = tokenizer.vocab_size
     critic = Critic(state_size).to(device)
     critic_loss_fct = torch.nn.MSELoss()
+
+    env = Environment(args, device)
 
 
     optimizerA = torch.optim.Adam(actor.lm_head.parameters())
@@ -198,7 +197,8 @@ def main():
             topic, clusters, timelines = data
             print("topic: ", topic)
             # Define Environment
-            env = setup_env(args, timelines)
+            keywords = extract_keywords(timelines)
+            env.update_keywords(keywords)
             print("env initialized...")
             show_gpu("Before training: ")
             for c in clusters.items():

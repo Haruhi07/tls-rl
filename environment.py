@@ -16,7 +16,7 @@ class Environment:
         self.weights = [0.25, 0.25, 0.25, 0.25]
 
     def update_keywords(self, keywords):
-        self.keywords = keywords
+        self.keywords = list(keywords)
         self.keywords_embeddings = self.encoder.encode(keywords)
 
     # R1

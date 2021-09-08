@@ -65,7 +65,7 @@ def main():
 
     def rl(cluster):
         input_ids = cluster['input_ids_dict']['input_ids'].to(device)
-        source = cluster['source']
+        source = cluster['source'][0]
         for iter in range(args.episodes):
             rewards = []
             values = []

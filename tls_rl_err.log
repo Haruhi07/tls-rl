@@ -5,8 +5,8 @@ Traceback (most recent call last):
     reward = rl(tokenized_cluster)
   File "/work/hs20307/tls-rl/rl.py", line 102, in rl
     reward = env.calc_reward(batch)
-  File "/work/hs20307/tls-rl/environment.py", line 64, in calc_reward
+  File "/work/hs20307/tls-rl/environment.py", line 65, in calc_reward
     + self.weights[2] * self.language_quality(input_ids=input_ids, decoder_input_ids=decoder_input_ids) \
-  File "/work/hs20307/tls-rl/environment.py", line 40, in language_quality
+  File "/work/hs20307/tls-rl/environment.py", line 41, in language_quality
     loss = (self.args.alpha - loss) / self.args.alpha
 AttributeError: 'Namespace' object has no attribute 'alpha'

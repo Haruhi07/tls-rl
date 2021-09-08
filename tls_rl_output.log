@@ -1,7 +1,46 @@
  
  University of Bristol ACRC HPC Bluepebble Service
  -------------------------------------------------
- Job tls_rl, jobid 3608751.bp1, username hs20307 - started execution at 02:40:22 Wed 08/09/21 on node bp1-gpu00008.data.bp.acrc.priv
+ Job tls_rl, jobid 3608752.bp1, username hs20307 - started execution at 02:43:35 Wed 08/09/21 on node bp1-gpu00008.data.bp.acrc.priv
  
 adding bpoil_bbc into dataset...
 topic:  ('bpoil_bbc',)
+env initialized...
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+
+Before training:  40.6% (4472 out of 11019)
+{'source': [("` Oil slick ' protest against BP at the British Museum The British Museum says it is grateful to BP for its support An oil-like substance has been poured around one of the British Museum 's statues by activists urging it to end its sponsorship deal with BP . The targeted relic , Hoa Hakananai'a , is a giant carving of a human head and torso and is about 1,000 years old . A group called Culture Beyond Oil carried out the protest . A similar protest targeted Tate Britain in June . The British Museum said the substance involved was molasses , which had not damaged the Easter Island statue ",)], 'input_ids_dict': {'input_ids': tensor([[[  110,   105,  3893, 15737,  1034,  8255,   464, 16036,   134,   109,
+           1816,  2447,   139,  1816,  2447,   649,   126,   117,  4562,   112,
+          16036,   118,   203,   337,   983,   762,   121,  2134,  5626,   148,
+            174, 12832,   279,   156,   113,   109,  1816,  2447,  1034,   116,
+          18072,   141, 10162, 18232,   126,   112,   370,   203, 10971,   818,
+            122, 16036,   110,   107,   139,  4635, 41588,   110,   108, 50595,
+          81452, 60490,   457,   131,   304,   110,   108,   117,   114,  4055,
+          17225,   113,   114,   883,   693,   111, 28286,   111,   117,   160,
+           6155,   231,   459,   110,   107,   202,   456,   568,  7200,  9221,
+           3893,  2777,   165,   109,  8255,   110,   107,   202,   984,  8255,
+           4635, 20678,  4329,   115,  1185,   110,   107,   139,  1816,  2447,
+            243,   109,  5626,  1065,   140, 39059,   110,   108,   162,   196,
+            146,  3954,   109,  4976,  2098, 11976,     1]]]), 'attention_mask': tensor([[[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+          1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+          1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+          1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+          1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+          1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]]])}}
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+
+Before Sampling 40.6% (4472 out of 11019)

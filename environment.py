@@ -27,7 +27,7 @@ class Environment:
         return ret
 
     def topical_coherence(self, summary):
-        tokens = text.lower().split()
+        tokens = summary.lower().split()
         ret = 0
         for t in tokens:
             if t in self.keywords:

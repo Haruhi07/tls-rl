@@ -65,7 +65,7 @@ def main():
 
     def rl(cluster):
         input_ids = cluster['input_ids_dict']['input_ids'].to(device)
-        source = cluster['source']
+        source = list(cluster['source'])
         for iter in range(args.episodes):
             rewards = []
             values = []
@@ -193,7 +193,6 @@ def main():
     data_loader = build_dataloader(args, tokenizer)
     for epoch in range(args.epochs):
         for data in data_loader:
-            print(data)
             topic, clusters, timelines = data
             print("topic: ", topic)
             # Define Environment

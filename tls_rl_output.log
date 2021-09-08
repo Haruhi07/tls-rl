@@ -1,7 +1,7 @@
  
  University of Bristol ACRC HPC Bluepebble Service
  -------------------------------------------------
- Job tls_rl, jobid 3608750.bp1, username hs20307 - started execution at 02:37:08 Wed 08/09/21 on node bp1-gpu00030.data.bp.acrc.priv
+ Job tls_rl, jobid 3608751.bp1, username hs20307 - started execution at 02:40:22 Wed 08/09/21 on node bp1-gpu00008.data.bp.acrc.priv
  
 adding bpoil_bbc into dataset...
 topic:  ('bpoil_bbc',)

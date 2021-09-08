@@ -10,13 +10,16 @@ from collections import Counter
 class Environment:
     def __init__(self, args, device, keywords=None):
         self.keywords = None
+        self.args = args
         self.lq_evaluater = PegasusForConditionalGeneration.from_pretrained(args.model_name).to(device)
         self.encoder = SentenceTransformer('paraphrase-distilroberta-base-v1')
         self.weights = [0.25, 0.25, 0.25, 0.25]
 
     def update_keywords(self, keywords):
         self.keywords = keywords
+        self.keywords_embeddings = self.encoder.encode(keywords)
 
+    # R1
     def factual_consistency(self, source, summary):
         source_embedding = self.encoder.encode(source)
         summary_embedding = self.encoder.encode([summary])
@@ -26,14 +29,18 @@ class Environment:
         print("cos_sim = ", ret)
         return ret
 
-    def topical_coherence(self, summary):
-        tokens = summary.lower().split()
-        ret = 0
-        for t in tokens:
-            if t in self.keywords:
-                ret += 1
+    # R2
+    def topical_coherence(self, summary_embedding):
+        ret = cosine_similarity(self.keywords_embeddings, summary_embedding)
         return ret
 
+    # R3
+    def language_quality(self, input_ids, decoder_input_ids):
+        loss = self.lq_evaluater(input_ids=input_ids, labels=decoder_input_ids).loss
+        loss = (self.args.alpha - loss) / self.args.alpha
+        return loss
+
+    # R4
     def repetition_punishment(self, summary):
         tokens = summary.lower().split()
         cnt = Counter(tokens)
@@ -44,16 +51,13 @@ class Environment:
                 rep += v
         return 1 - 1.0 * rep / len(tokens)
 
-    def language_quality(self, input_ids, decoder_input_ids):
-        loss = self.lq_evaluater(input_ids=input_ids, labels=decoder_input_ids).loss
-        loss = (args.alpha - loss) / args.alpha
-        return loss
-
     def calc_reward(self, batch):
         source = batch['source']
         summary = batch['summary']
         input_ids = batch['input_ids']
         decoder_input_ids = batch['decoder_input_ids']
+
+        summary_embedding = self.encoder.encode([summary])
 
         ret = self.weights[0] * self.topical_coherence(summary=summary) \
             + self.weights[1] * self.factual_consistency(source=source, summary=summary) \

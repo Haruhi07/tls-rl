@@ -6,5 +6,5 @@ Traceback (most recent call last):
   File "/work/hs20307/tls-rl/rl.py", line 102, in rl
     reward = env.calc_reward(batch)
   File "/work/hs20307/tls-rl/environment.py", line 62, in calc_reward
-    ret = self.weights[0] * self.topical_coherence(summary=summary) \
+    ret = self.weights[0] * self.topical_coherence(summary=summary_embedding) \
 TypeError: topical_coherence() got an unexpected keyword argument 'summary'

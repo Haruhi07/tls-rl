@@ -59,7 +59,7 @@ class Environment:
 
         summary_embedding = self.encoder.encode([summary])
 
-        ret = self.weights[0] * self.topical_coherence(summary=summary_embedding) \
+        ret = self.weights[0] * self.topical_coherence(summary_embedding=summary_embedding) \
             + self.weights[1] * self.factual_consistency(source=source, summary=summary) \
             + self.weights[2] * self.language_quality(input_ids=input_ids, decoder_input_ids=decoder_input_ids) \
             + self.weights[3] * self.repetition_punishment(summary=summary)

@@ -26,12 +26,13 @@ class Environment:
         print("source_embedding = ", source_embedding)
         print("summary_embedding = ", summary_embedding)
         ret = cosine_similarity(source_embedding, summary_embedding)
-        print("cos_sim = ", ret)
+        print("R1 = ", ret)
         return ret
 
     # R2
     def topical_coherence(self, summary_embedding):
         ret = cosine_similarity(self.keywords_embeddings, summary_embedding)
+        print("R2 = ", ret)
         return ret
 
     # R3

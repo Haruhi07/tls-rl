@@ -8,7 +8,7 @@ from collections import Counter
 
 
 class Environment:
-    def __init__(self, args, device, keywords):
+    def __init__(self, args, device, keywords=None):
         self.keywords = None
         self.lq_evaluater = PegasusForConditionalGeneration.from_pretrained(args.model_name).to(device)
         self.encoder = SentenceTransformer('paraphrase-distilroberta-base-v1')

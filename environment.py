@@ -18,10 +18,10 @@ class Environment:
         self.keywords = keywords
 
     def factual_consistency(self, source, summary):
-        print("source = ", source)
-        print("summary = ", summary)
         source_embedding = self.encoder.encode(source)
         summary_embedding = self.encoder.encode(summary)
+        print("source_embedding = ", source)
+        print("summary_embedding = ", summary)
         ret = cosine_similarity(source_embedding, summary_embedding)
         print("cos_sim = ", ret)
         return ret

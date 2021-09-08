@@ -1,7 +1,7 @@
  
  University of Bristol ACRC HPC Bluepebble Service
  -------------------------------------------------
- Job tls_rl, jobid 3608735.bp1, username hs20307 - started execution at 02:12:41 Wed 08/09/21 on node bp1-gpu00030.data.bp.acrc.priv
+ Job tls_rl, jobid 3608746.bp1, username hs20307 - started execution at 02:21:42 Wed 08/09/21 on node bp1-gpu00030.data.bp.acrc.priv
  
 adding bpoil_bbc into dataset...
 topic:  ('bpoil_bbc',)
@@ -28,5 +28,5 @@ Before training:  45.4% (11011 out of 24268)
           1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]]])}}
 
 Before Sampling 45.4% (11011 out of 24268)
-source =  ("` Oil slick ' protest against BP at the British Museum The British Museum says it is grateful to BP for its support An oil-like substance has been poured around one of the British Museum 's statues by activists urging it to end its sponsorship deal with BP . The targeted relic , Hoa Hakananai'a , is a giant carving of a human head and torso and is about 1,000 years old . A group called Culture Beyond Oil carried out the protest . A similar protest targeted Tate Britain in June . The British Museum said the substance involved was molasses , which had not damaged the Easter Island statue ",)
-summary =  Haka
+source_embedding =  ("` Oil slick ' protest against BP at the British Museum The British Museum says it is grateful to BP for its support An oil-like substance has been poured around one of the British Museum 's statues by activists urging it to end its sponsorship deal with BP . The targeted relic , Hoa Hakananai'a , is a giant carving of a human head and torso and is about 1,000 years old . A group called Culture Beyond Oil carried out the protest . A similar protest targeted Tate Britain in June . The British Museum said the substance involved was molasses , which had not damaged the Easter Island statue ",)
+summary_embedding =  Haka

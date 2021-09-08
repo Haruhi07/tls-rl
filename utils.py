@@ -28,7 +28,6 @@ def first_n_sents(text, n=5):
     sentences = text.split('.')
     n_sentences = len(sentences)
     ret = '.'.join(sentences[:min(n, n_sentences)])
-    print("ret == ", ret)
     return ret
 
 def format_decoder_input(t):

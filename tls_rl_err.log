@@ -1,12 +1,12 @@
 Traceback (most recent call last):
   File "/work/hs20307/tls-rl/rl.py", line 210, in <module>
     main()
-  File "/work/hs20307/tls-rl/rl.py", line 206, in main
-    reward = rl(tokenized_cluster)
-  File "/work/hs20307/tls-rl/rl.py", line 102, in rl
-    reward = env.calc_reward(batch)
-  File "/work/hs20307/tls-rl/environment.py", line 60, in calc_reward
-    + self.weights[2] * self.language_quality(input_ids=input_ids, decoder_input_ids=decoder_input_ids) \
-  File "/work/hs20307/tls-rl/environment.py", line 49, in language_quality
-    loss = (args.alpha - loss) / args.alpha
-NameError: name 'args' is not defined
+  File "/work/hs20307/tls-rl/rl.py", line 200, in main
+    env.update_keywords(keywords)
+  File "/work/hs20307/tls-rl/environment.py", line 20, in update_keywords
+    self.keywords_embeddings = self.encoder.encode(keywords)
+  File "/home/hs20307/.conda/envs/env/lib/python3.9/site-packages/sentence_transformers/SentenceTransformer.py", line 152, in encode
+    sentences_sorted = [sentences[idx] for idx in length_sorted_idx]
+  File "/home/hs20307/.conda/envs/env/lib/python3.9/site-packages/sentence_transformers/SentenceTransformer.py", line 152, in <listcomp>
+    sentences_sorted = [sentences[idx] for idx in length_sorted_idx]
+TypeError: 'set' object is not subscriptable

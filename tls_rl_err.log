@@ -1,2 +1,18 @@
-/home/hs20307/.conda/envs/env/lib/python3.9/site-packages/torch/cuda/__init__.py:52: UserWarning: CUDA initialization: CUDA driver initialization failed, you might not have a CUDA gpu. (Triggered internally at  /opt/conda/conda-bld/pytorch_1623448255797/work/c10/cuda/CUDAFunctions.cpp:115.)
-  return torch._C._cuda_getDeviceCount() > 0
+Traceback (most recent call last):
+  File "/work/hs20307/tls-rl/rl.py", line 211, in <module>
+    main()
+  File "/work/hs20307/tls-rl/rl.py", line 207, in main
+    reward = rl(tokenized_cluster)
+  File "/work/hs20307/tls-rl/rl.py", line 102, in rl
+    reward = env.calc_reward(batch)
+  File "/work/hs20307/tls-rl/environment.py", line 59, in calc_reward
+    + self.weights[1] * self.factual_consistency(source=source, summary=summary) \
+  File "/work/hs20307/tls-rl/environment.py", line 23, in factual_consistency
+    source_embedding = self.encoder.encode(source)
+  File "/home/hs20307/.conda/envs/env/lib/python3.9/site-packages/sentence_transformers/SentenceTransformer.py", line 156, in encode
+    features = self.tokenize(sentences_batch)
+  File "/home/hs20307/.conda/envs/env/lib/python3.9/site-packages/sentence_transformers/SentenceTransformer.py", line 309, in tokenize
+    return self._first_module().tokenize(texts)
+  File "/home/hs20307/.conda/envs/env/lib/python3.9/site-packages/sentence_transformers/models/Transformer.py", line 89, in tokenize
+    batch2.append(text_tuple[1])
+IndexError: tuple index out of range

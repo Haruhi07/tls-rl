@@ -19,7 +19,7 @@ class Environment:
 
     def factual_consistency(self, source, summary):
         source_embedding = self.encoder.encode(source)
-        summary_embedding = self.encoder.encode(summary)
+        summary_embedding = [self.encoder.encode(summary)]
         print("source_embedding = ", source_embedding)
         print("summary_embedding = ", summary_embedding)
         ret = cosine_similarity(source_embedding, summary_embedding)

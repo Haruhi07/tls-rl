@@ -17,7 +17,7 @@ class Environment:
 
     def update_keywords(self, keywords):
         self.keywords = list(keywords)
-        self.keywords_embeddings = self.encoder.encode(keywords)
+        self.keywords_embeddings = self.encoder.encode(self.keywords)
 
     # R1
     def factual_consistency(self, source, summary):

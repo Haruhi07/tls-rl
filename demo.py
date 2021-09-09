@@ -1,15 +1,23 @@
 from transformers import PegasusForConditionalGeneration, PegasusTokenizer
 import torch
-src_text = [
-    """ PG&E stated it scheduled the blackouts in response to forecasts for high winds amid dry conditions. The aim is to reduce the risk of wildfires. Nearly 800 thousand customers were scheduled to be affected by the shutoffs which were expected to last through at least midday tomorrow."""
-]
+from datasets import load_dataset
 
-model_name = 'google/pegasus-xsum'
+
+dataset_name = 'cnn_dailymail'
+dataset_version = '3.0.0'
+model_name = 'sshleifer/distill-pegasus-cnn-16-4'
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
+
+dataset = load_dataset(dataset_name, dataset_version, split='train')
+print(dataset)
 tokenizer = PegasusTokenizer.from_pretrained(model_name)
 model = PegasusForConditionalGeneration.from_pretrained(model_name).to(device)
-batch = tokenizer(src_text, truncation=True, padding='longest', return_tensors="pt").to(device)
-translated = model(input_ids=batch['input_ids'])
-print(translated)
-tgt_text = tokenizer.batch_decode(translated, skip_special_tokens=True)
-assert tgt_text[0] == "California's largest electricity provider has turned off power to hundreds of thousands of customers."
+
+dataset = dataset.map(lambda e: tokenizer(e['article'], truncation=True, padding='max_length'), batched=True)
+dataset = dataset.map(lambda e: tokenizer(e['highlights'], truncation=True, padding='max_length'), batched=True)
+dataset.set_format(type='torch', columns=['article', 'highlights', 'id'])
+dataloader = torch.utils.data.DataLoader(dataset, batch_size=32)
+
+for it in dataloader:
+    print(it)
+    break

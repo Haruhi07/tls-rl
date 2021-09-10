@@ -1,13 +1,13 @@
 #!/bin/sh
 
 # Job name
-#PBS -N tls_rl
+#PBS -N demo
 
 # Output file
-#PBS -o tls_rl_output.log
+#PBS -o demo_output.log
 
 # Error file
-#PBS -e tls_rl_err.log
+#PBS -e demo_err.log
 
 # request resources and set limits
 #PBS -l walltime=72:00:00

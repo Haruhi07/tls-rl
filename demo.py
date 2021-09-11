@@ -8,7 +8,7 @@ dataset_name = 'cnn_dailymail'
 dataset_version = '3.0.0'
 model_name = 'sshleifer/distill-pegasus-cnn-16-4'
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
-cache_dir = pathlib.Path('~/work/hs20307/huggingface')
+cache_dir = pathlib.Path('/work/hs20307/huggingface')
 
 dataset = load_dataset(dataset_name, dataset_version, split='test', cache_dir=cache_dir/'datasets')
 print(dataset)

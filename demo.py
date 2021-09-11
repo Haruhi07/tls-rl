@@ -16,15 +16,14 @@ tokenizer = PegasusTokenizer.from_pretrained(model_name, cache_dir=cache_dir/'tr
 model = PegasusForConditionalGeneration.from_pretrained(model_name, cache_dir=cache_dir/'transformers').to(device)
 
 dataset = dataset.map(lambda e: tokenizer(e['highlights'], truncation=True, padding='max_length'), batched=True)
-dataset = dataset.map(lambda e: {'labels': e['input_ids']})
-dataset = dataset.map(lambda e: tokenizer(e['article'], truncation=True, padding='max_length'), batched=True)
+dataset = dataset.map(lambda e: {'labels': e['input_ids'].to(device)})
+dataset = dataset.map(lambda e: tokenizer(e['article'], truncation=True, padding='max_length').to(device), batched=True)
 dataset.set_format(type='torch', columns=['input_ids', 'attention_mask', 'labels'])
 dataloader = torch.utils.data.DataLoader(dataset, batch_size=4)
 
 max_loss = 0
 
 for it in dataloader:
-    it = it.to(device)
     result_dict = model(**it)
     loss_list = result_dict.loss
     batch_maxloss = max(loss_list)

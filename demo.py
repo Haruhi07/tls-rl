@@ -24,6 +24,7 @@ dataloader = torch.utils.data.DataLoader(dataset, batch_size=4)
 max_loss = 0
 
 for it in dataloader:
+    it = it.to(device)
     result_dict = model(**it)
     loss_list = result_dict.loss
     batch_maxloss = max(loss_list)

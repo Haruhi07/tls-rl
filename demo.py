@@ -1,5 +1,6 @@
 from transformers import PegasusForConditionalGeneration, PegasusTokenizer
 import torch
+import torch.nn as nn
 from datasets import load_dataset
 import pathlib
 
@@ -15,6 +16,7 @@ dataset = load_dataset(dataset_name, dataset_version, split='test', cache_dir=ca
 print(dataset)
 tokenizer = PegasusTokenizer.from_pretrained(model_name, cache_dir=cache_dir/'transformers')
 model = PegasusForConditionalGeneration.from_pretrained(model_name, cache_dir=cache_dir/'transformers').to(device)
+model = nn.DataParallel(model)
 
 dataset = dataset.map(lambda e: tokenizer(e['highlights'], truncation=True, padding='max_length'), batched=True)
 dataset = dataset.map(lambda e: {'labels': e['input_ids']})
@@ -28,7 +30,8 @@ for it in dataloader:
     input_ids = it['input_ids'].to(device)
     attention_mask = it['attention_mask'].to(device)
     labels = it['labels'].to(device)
-    result_dict = model(input_ids=input_ids, attention_mask=attention_mask, labels=labels)
+    with torch.no_grad():
+        result_dict = model(input_ids=input_ids, attention_mask=attention_mask, labels=labels)
     loss_list = result_dict.loss
     batch_maxloss = max(loss_list)
     max_loss = max(max_loss, batch_maxloss)

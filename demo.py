@@ -11,8 +11,8 @@ model_name = 'sshleifer/distill-pegasus-cnn-16-4'
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 #cache_dir = pathlib.Path('/work/hs20307/huggingface')
 cache_dir = pathlib.Path('~/.cache/huggingface')
-
-dataset = load_dataset(dataset_name, dataset_version, split='test', cache_dir=cache_dir/'datasets')
+# 14.9684 on test set
+dataset = load_dataset(dataset_name, dataset_version, split='train', cache_dir=cache_dir/'datasets')
 print(dataset)
 tokenizer = PegasusTokenizer.from_pretrained(model_name, cache_dir=cache_dir/'transformers')
 model = PegasusForConditionalGeneration.from_pretrained(model_name, cache_dir=cache_dir/'transformers').to(device)

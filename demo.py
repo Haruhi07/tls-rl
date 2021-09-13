@@ -11,8 +11,7 @@ model_name = 'sshleifer/distill-pegasus-cnn-16-4'
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 #cache_dir = pathlib.Path('/work/hs20307/huggingface')
 cache_dir = pathlib.Path('~/.cache/huggingface')
-# 14.9684 on test set
-dataset = load_dataset(dataset_name, dataset_version, split='train', cache_dir=cache_dir/'datasets')
+dataset = load_dataset(dataset_name, dataset_version, split='validation', cache_dir=cache_dir/'datasets')
 print(dataset)
 tokenizer = PegasusTokenizer.from_pretrained(model_name, cache_dir=cache_dir/'transformers')
 model = PegasusForConditionalGeneration.from_pretrained(model_name, cache_dir=cache_dir/'transformers').to(device)
@@ -37,3 +36,4 @@ for it in dataloader:
     max_loss = max(max_loss, batch_maxloss)
 
 print("max_loss = ", max_loss)
+# 14.9684 on test set

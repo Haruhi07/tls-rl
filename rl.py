@@ -211,8 +211,9 @@ def main():
                 reward = rl(tokenized_cluster)
                 print(reward)
 
-    model_state = {'actor': actor.state_dict(), 'critic': critic.state_dict()}
-    torch.save(model_state, model_path/'model.pt')
+    critic_state = critic.state_dict()
+    torch.save(critic_state, model_path/'critic.pt')
+    actor.save_pretrained(save_directory=model_path/'actor.pt')
 
 if __name__ == "__main__":
     main()

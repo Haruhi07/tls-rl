@@ -35,6 +35,8 @@ def main():
     parser = ArgumentParser()
     # Configuration
     parser.add_argument("--dataset", type=str, required=True)
+    parser.add_argument("--model_path", type=str, default='./models')
+    parser.add_argument("--result_path", type=str, default='./results')
     # RL
     parser.add_argument("--epochs", type=int, default=5)
     parser.add_argument("--lr", type=float, default=0.01)
@@ -44,6 +46,7 @@ def main():
     parser.add_argument("--test_size", type=int, default=10)
     parser.add_argument("--epsilon", type=float, default=0.01)
     parser.add_argument("--gamma", type=float, default=0.99)
+    parser.add_argument("--alpha", type=float, default=15.0)
     parser.add_argument("--nfirst", type=int, default=5)
     parser.add_argument("--model_name", type=str, default="sshleifer/distill-pegasus-cnn-16-4")
     args = parser.parse_args()
@@ -51,6 +54,8 @@ def main():
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
     #model_name = 'google/pegasus-multi_news'
     model_name = args.model_name
+    model_path = pathlib.Path(args.model_path)
+    result_path = pathlib.Path(args.result_path)
     tokenizer = PegasusTokenizer.from_pretrained(model_name)
     actor = PegasusForConditionalGeneration.from_pretrained(model_name).to(device)
     state_size = tokenizer.vocab_size
@@ -205,6 +210,9 @@ def main():
                 print(tokenized_cluster)
                 reward = rl(tokenized_cluster)
                 print(reward)
+
+    model_state = {'actor': actor.state_dict(), 'critic': critic.state_dict()}
+    torch.save(model_state, model_path/'model.pt')
 
 if __name__ == "__main__":
     main()

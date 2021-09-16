@@ -11,7 +11,7 @@
 
 # request resources and set limits
 #PBS -l walltime=72:00:00
-#PBS -l select=1:ncpus=8:ngpus=4:mem=32GB
+#PBS -l select=1:ncpus=8:ngpus=4:mem=32GB:gputype=RTX3090
 #:ompthreads=24
 # 'select' chooses number of nodes.
 

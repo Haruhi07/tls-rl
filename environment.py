@@ -21,18 +21,18 @@ class Environment:
         self.keywords_embeddings = self.encoder.encode(self.keywords)
 
     # R1
-    def factual_consistency(self, source, summary):
+    def factual_consistency(self, source_embedding, summary_embedding):
         source_embedding = self.encoder.encode(source)
         summary_embedding = self.encoder.encode([summary])
         print("source_embedding = ", source_embedding)
         print("summary_embedding = ", summary_embedding)
-        ret = cosine_similarity(source_embedding, summary_embedding)
+        ret = sum(cosine_similarity(source_embedding, summary_embedding) / len(source))
         print("R1 = ", ret)
         return ret
 
     # R2
     def topical_coherence(self, summary_embedding):
-        ret = cosine_similarity(self.keywords_embeddings, summary_embedding)
+        ret = sum(cosine_similarity(summary_embedding, self.keywords_embeddings) / len(self.keywords))
         print("R2 = ", ret)
         return ret
 
@@ -59,10 +59,11 @@ class Environment:
         input_ids = batch['input_ids']
         decoder_input_ids = batch['decoder_input_ids']
 
+        source_embedding = self.encoder.encode(source)
         summary_embedding = self.encoder.encode([summary])
 
-        ret = self.weights[0] * self.topical_coherence(summary_embedding=summary_embedding) \
-            + self.weights[1] * self.factual_consistency(source=source, summary=summary) \
-            + self.weights[2] * self.language_quality(input_ids=input_ids, decoder_input_ids=decoder_input_ids) \
-            + self.weights[3] * self.repetition_punishment(summary=summary)
+        ret = self.weights[0] * self.topical_coherence(summary_embedding=summary_embedding) + \
+              self.weights[1] * self.factual_consistency(source_embedding=source_embedding, summary_embedding=summary_embedding) + \
+              self.weights[2] * self.language_quality(input_ids=input_ids, decoder_input_ids=decoder_input_ids) + \
+              self.weights[3] * self.repetition_punishment(summary=summary)
         return ret

@@ -8,13 +8,13 @@ from collections import Counter
 
 
 class Environment:
-    def __init__(self, args, device, keywords=None):
+    def __init__(self, args, device, weights=[0.25, 0.25, 0.25, 0.25], keywords=None):
         self.keywords = None
         self.keywords_embeddings = None
         self.args = args
         self.lq_evaluater = PegasusForConditionalGeneration.from_pretrained(args.model_name).to(device)
         self.encoder = SentenceTransformer('paraphrase-distilroberta-base-v1')
-        self.weights = [0.25, 0.25, 0.25, 0.25]
+        self.weights = weights
 
     def update_keywords(self, keywords):
         self.keywords = list(keywords)

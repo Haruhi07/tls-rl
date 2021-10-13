@@ -7,39 +7,60 @@ from argparse import ArgumentParser
 from xml.etree import ElementTree
 
 
-def annotate(source_article_path, heideltime_path):
-    apply_heideltime = heideltime_path / 'apply-heideltime.jar'
-    heideltime_config = heideltime_path / 'config.props'
-    subprocess.run([
-        'java',
-        '-jar',
-        str(apply_heideltime),
-        str(heideltime_config),
-        str(source_article_path),
-        'txt'
-    ])
+def annotate(source_article_path, dct):
+    os.chdir('heideltime-standalone')
+    apply_heideltime = 'de.unihd.dbs.heideltime.standalone.jar'
+    heideltime_config = 'config.props'
+    output_file = str(source_article_path)+'.timeml'
+    f = open(output_file, 'w')
+    cmd = f"java -jar {apply_heideltime} {source_article_path} -t NEWS -dct {dct}"
+    print(f'process: {cmd}...')
+    timeml = os.popen(cmd).read()
+    print(timeml, file=f)
+    #subprocess.run([
+    #    'java',
+    #    '-jar',
+    #    str(apply_heideltime),
+    #    str(source_article_path),
+    #    '-c',
+    #    str(heideltime_config),
+    #    '-t',
+    #    'NEWS',
+    #    '-dct',
+    #    dct,
+    #    '>',
+    #    output_file
+    #])
+    os.chdir('..')
 
 topics = ['haiti_bbc', 'IraqWar_guardian', 'LibyaWar_cnn', 'LibyaWar_reuters', 'MJ_bbc', 'SyrianCrisis_bbc', 'SyrianCrisis_reuters']
 
-def annotate_articles(source_path, heideltime_path):
+def annotate_articles(source_path):
     for topic in sorted(os.listdir(source_path)):
     #for topic in topics:
+        if topic == '.DS_Store':
+            continue
         print("Annotating articles in topic: {}".format(topic))
 
         date_path = source_path / topic / "InputDocs"
         for date in sorted(os.listdir(date_path)):
-            articles_path = date_path / date
-            print(articles_path)
-            if not articles_path.is_dir():
+            if date == '.DS_Store':
                 continue
-            annotated = False
-            #annotate(articles_path, heideltime_path)
-            for file in os.listdir(articles_path):
-                if 'timeml' in file:
-                    annotated = True
-                    break
-            if not annotated:
-                annotate(articles_path, heideltime_path)
+            articles_folder_path = date_path / date
+            for article in os.listdir(articles_folder_path):
+                if article == '.DS_Store':
+                    continue
+                article_path = articles_folder_path / article
+                if 'timeml' in article:
+                    continue
+                annotated = False
+                annotate(article_path, date)
+                #for file in os.listdir(articles_path):
+                #    if 'timeml' in file:
+                #        annotated = True
+                #        break
+                #if not annotated:
+                #    annotate(articles_path)
 
 
 def extract_dates(annotated_text):
@@ -93,6 +114,8 @@ def extract_dates(annotated_text):
 
 def convert_articles(source_path, target_path):
     for topic in sorted(os.listdir(source_path)):
+        if topic == '.DS_Store':
+            continue
         print("Converting articles in topic: {}".format(topic))
         article_list = []
 
@@ -105,6 +128,8 @@ def convert_articles(source_path, target_path):
         date_path = source_path / topic / "InputDocs"
 
         for date in sorted(os.listdir(date_path)):
+            if date == '.DS_Store':
+                continue
             articles_path = date_path / date
             if not articles_path.is_dir():
                 continue
@@ -124,7 +149,6 @@ def convert_articles(source_path, target_path):
                 annotated_text = source_annotated_article.read()
                 dct = date
                 dates = extract_dates(annotated_text)
-
                 data = {"uid": uid, "dct": dct, "dates": dates, "text": text}
                 article_list.append(data)
 
@@ -134,6 +158,8 @@ def convert_articles(source_path, target_path):
 
 def convert_timelines(source_path, target_path):
     for topic in sorted(os.listdir(source_path)):
+        if topic == '.DS_Store':
+            continue
         print("Converting timelines in topic: {}".format(topic))
 
         target_topic_path = target_path / topic
@@ -172,8 +198,7 @@ def convert_timelines(source_path, target_path):
 def main():
     parser = ArgumentParser()
     # Load arguments
-    parser.add_argument("--heideltime", required=True, help="location of heideltime")
-    parser.add_argument("--source", type=str, default="Dataset/tls-rl-dataset/t17")
+    parser.add_argument("--source", type=str, default="/Users/yeyuxuan/Dataset/tls-rl-dataset/t17")
     parser.add_argument("--target", type=str, default="./dataset/t17")
     args = parser.parse_args()
 
@@ -182,14 +207,13 @@ def main():
     target_path = pathlib.Path(args.target)
     print(source_path)
     print(target_path)
-    heideltime_path = pathlib.Path(args.heideltime)
 
     if not source_path.exists():
         raise FileNotFoundError('Dataset not found in {}'.format(args.source))
     if not target_path.exists():
         target_path.mkdir(exist_ok=True)
 
-    annotate_articles(source_path, heideltime_path)
+    annotate_articles(source_path)
     convert_articles(source_path, target_path)
     convert_timelines(source_path, target_path)
 

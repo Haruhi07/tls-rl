@@ -3,10 +3,11 @@ import pathlib
 import arrow
 import datetime
 import string
+import utils
+
 from spacy.lang.en.stop_words import STOP_WORDS
 from collections import defaultdict
 from tilse.data.timelines import Timeline as TilseTimeline
-from news_tls import utils
 from pprint import pprint
 
 PUNCT_SET = set(string.punctuation)
